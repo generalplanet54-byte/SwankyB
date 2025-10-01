@@ -1,0 +1,252 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const products = await getCollection('products', ({ data }) => {
+  return data.published === true;
+});
+
+const featuredProducts = products.filter(product => product.data.featured).slice(0, 6);
+---
+
+<Layout 
+  title="SwankyBoyz - Premium Tech Gadgets & Lifestyle Products"
+  description="Discover the latest tech gadgets, lifestyle products, and luxury accessories. Expert reviews, honest recommendations, and exclusive deals on premium products."
+>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-5xl md:text-7xl font-bold mb-6">
+        Swanky<span class="text-yellow-400">Boyz</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
+        Discover premium tech gadgets, lifestyle products, and luxury accessories. 
+        Expert reviews and honest recommendations for the modern lifestyle.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#featured-products" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
+          Explore Products
+        </a>
+        <a href="/category/audio" class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
+          Latest Reviews
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section id="featured-products" class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Hand-picked premium products that deliver exceptional value and performance.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {featuredProducts.map((product) => (
+          <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+            <div class="relative">
+              <img 
+                src={product.data.image} 
+                alt={product.data.title}
+                class="w-full h-48 object-cover"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                  {product.data.category}
+                </span>
+              </div>
+              {product.data.originalPrice && (
+                <div class="absolute top-4 right-4">
+                  <span class="bg-red-500 text-white px-2 py-1 rounded text-sm font-semibold">
+                    Sale
+                  </span>
+                </div>
+              )}
+            </div>
+            
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <div class="flex items-center">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <svg 
+                      class={`h-4 w-4 ${i < Math.floor(product.data.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                  <span class="text-sm text-gray-500 ml-2">({product.data.rating})</span>
+                </div>
+              </div>
+              
+              <h3 class="text-xl font-bold text-gray-900 mb-2">
+                <a href={`/products/${product.slug}`} class="hover:text-blue-600 transition-colors">
+                  {product.data.title}
+                </a>
+              </h3>
+              
+              <div class="flex items-center space-x-2 mb-4">
+                <span class="text-2xl font-bold text-green-600">{product.data.price}</span>
+                {product.data.originalPrice && (
+                  <span class="text-lg text-gray-500 line-through">{product.data.originalPrice}</span>
+                )}
+              </div>
+              
+              <a 
+                href={`https://amazon.com/dp/${product.data.asin}?tag=swankyboyz-20`}
+                target="_blank"
+                rel="nofollow sponsored"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
+              >
+                <span>View on Amazon</span>
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+              
+              <p class="text-xs text-gray-500 mt-2 text-center">
+                We may earn a commission from this link
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Shop by Category</h2>
+        <p class="text-xl text-gray-600">Explore our curated collections</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="/category/audio" class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+          <img src="https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Audio" class="w-full h-48 object-cover group-hover:scale-105 transition-transform" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="text-xl font-bold">Audio</h3>
+            <p class="text-sm opacity-90">Headphones & Speakers</p>
+          </div>
+        </a>
+        
+        <a href="/category/smart-home" class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+          <img src="https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Smart Home" class="w-full h-48 object-cover group-hover:scale-105 transition-transform" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="text-xl font-bold">Smart Home</h3>
+            <p class="text-sm opacity-90">Automation & Control</p>
+          </div>
+        </a>
+        
+        <a href="/category/wearables" class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+          <img src="https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Wearables" class="w-full h-48 object-cover group-hover:scale-105 transition-transform" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="text-xl font-bold">Wearables</h3>
+            <p class="text-sm opacity-90">Smartwatches & Fitness</p>
+          </div>
+        </a>
+        
+        <a href="/category/office-furniture" class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+          <img src="https://images.pexels.com/photos/4050320/pexels-photo-4050320.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Office" class="w-full h-48 object-cover group-hover:scale-105 transition-transform" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="text-xl font-bold">Office</h3>
+            <p class="text-sm opacity-90">Furniture & Productivity</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="bg-gradient-to-r from-blue-600 to-purple-700 py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-4xl font-bold text-white mb-4">Stay Updated</h2>
+      <p class="text-xl text-blue-100 mb-8">
+        Get the latest product reviews, exclusive deals, and insider tips delivered to your inbox.
+      </p>
+      
+      <form class="max-w-lg mx-auto flex gap-4">
+        <input 
+          type="email" 
+          placeholder="Enter your email" 
+          class="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50"
+          required
+        />
+        <button 
+          type="submit"
+          class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold px-8 py-3 rounded-lg transition-colors"
+        >
+          Subscribe
+        </button>
+      </form>
+      
+      <p class="text-sm text-blue-200 mt-4">
+        No spam, unsubscribe anytime. We respect your privacy.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <h3 class="text-2xl font-bold mb-4">SwankyBoyz</h3>
+          <p class="text-gray-300 mb-6 max-w-md">
+            Your trusted source for premium tech gadgets, lifestyle products, and luxury accessories. 
+            Expert reviews and honest recommendations since 2024.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Categories</h4>
+          <ul class="space-y-2">
+            <li><a href="/category/audio" class="text-gray-400 hover:text-white transition-colors">Audio</a></li>
+            <li><a href="/category/smart-home" class="text-gray-400 hover:text-white transition-colors">Smart Home</a></li>
+            <li><a href="/category/wearables" class="text-gray-400 hover:text-white transition-colors">Wearables</a></li>
+            <li><a href="/category/office-furniture" class="text-gray-400 hover:text-white transition-colors">Office</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2">
+            <li><a href="/privacy-policy" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="/affiliate-disclosure" class="text-gray-400 hover:text-white transition-colors">Affiliate Disclosure</a></li>
+            <li><a href="/admin" class="text-gray-400 hover:text-white transition-colors">Admin</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">
+          © 2024 SwankyBoyz.com. All rights reserved.
+        </p>
+        <p class="text-gray-400 text-sm mt-2 md:mt-0">
+          Affiliate links may earn us a commission at no extra cost to you.
+        </p>
+      </div>
+    </div>
+  </footer>
+</Layout>

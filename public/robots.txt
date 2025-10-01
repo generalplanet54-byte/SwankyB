@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Block admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Allow important files
+Allow: /sitemap.xml
+Allow: /*.css
+Allow: /*.js
+
+# Sitemap location
+Sitemap: https://swankyboyz.com/sitemap.xml

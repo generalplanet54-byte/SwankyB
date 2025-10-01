@@ -1,0 +1,236 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: product,
+  }));
+}
+
+type Props = CollectionEntry<'products'>;
+
+const product = Astro.props;
+const { Content } = await product.render();
+
+const affiliateUrl = `https://amazon.com/dp/${product.data.asin}?tag=swankyboyz-20`;
+---
+
+<Layout 
+  title={product.data.seoTitle}
+  description={product.data.seoDescription}
+  image={product.data.image}
+>
+  <!-- Affiliate Disclosure -->
+  <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+    <div class="max-w-7xl mx-auto">
+      <p class="text-sm text-yellow-800">
+        <strong>Affiliate Disclosure:</strong> This page contains affiliate links. We may earn a commission 
+        from purchases made through these links at no additional cost to you. This helps support our 
+        independent testing and review process.
+      </p>
+    </div>
+  </div>
+
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Product Header -->
+    <header class="mb-8">
+      <div class="flex items-center space-x-2 mb-4">
+        <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+          {product.data.category}
+        </span>
+        {product.data.tags.map((tag) => (
+          <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm">
+            #{tag}
+          </span>
+        ))}
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        {product.data.title}
+      </h1>
+
+      <div class="flex items-center justify-between flex-wrap gap-4 mb-8">
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center">
+            {Array.from({ length: 5 }, (_, i) => (
+              <svg 
+                class={`h-5 w-5 ${i < Math.floor(product.data.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+            <span class="text-lg font-semibold ml-2">
+              {product.data.rating} ({product.data.reviewCount?.toLocaleString()} reviews)
+            </span>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <div class="text-right">
+            <div class="flex items-center space-x-2">
+              <span class="text-3xl font-bold text-green-600">{product.data.price}</span>
+              {product.data.originalPrice && (
+                <span class="text-xl text-gray-500 line-through">{product.data.originalPrice}</span>
+              )}
+            </div>
+            {product.data.originalPrice && (
+              <p class="text-sm text-green-600 font-medium">
+                Save {Math.round((1 - parseFloat(product.data.price.replace('$', '')) / parseFloat(product.data.originalPrice.replace('$', ''))) * 100)}%
+              </p>
+            )}
+          </div>
+          
+          <a 
+            href={affiliateUrl}
+            target="_blank"
+            rel="nofollow sponsored"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-lg text-lg transition-colors flex items-center space-x-2"
+            onclick="gtag('event', 'click', { 'event_category': 'affiliate', 'event_label': product.data.asin });"
+          >
+            <span>Buy on Amazon</span>
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <img
+        src={product.data.image}
+        alt={product.data.title}
+        class="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg mb-8"
+      />
+    </header>
+
+    <!-- Product Content -->
+    <div class="prose prose-lg max-w-none mb-12">
+      <Content />
+    </div>
+
+    <!-- Pros and Cons -->
+    {(product.data.pros.length > 0 || product.data.cons.length > 0) && (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        {product.data.pros.length > 0 && (
+          <div class="bg-green-50 p-6 rounded-xl">
+            <h3 class="text-xl font-bold text-green-800 mb-4 flex items-center">
+              <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Pros
+            </h3>
+            <ul class="space-y-2">
+              {product.data.pros.map((pro) => (
+                <li class="flex items-start">
+                  <svg class="h-5 w-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-green-700">{pro}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {product.data.cons.length > 0 && (
+          <div class="bg-red-50 p-6 rounded-xl">
+            <h3 class="text-xl font-bold text-red-800 mb-4 flex items-center">
+              <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              Cons
+            </h3>
+            <ul class="space-y-2">
+              {product.data.cons.map((con) => (
+                <li class="flex items-start">
+                  <svg class="h-5 w-5 text-red-600 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-red-700">{con}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    )}
+
+    <!-- Specifications -->
+    {product.data.specifications && (
+      <div class="bg-gray-50 p-6 rounded-xl mb-12">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Specifications</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Object.entries(product.data.specifications).map(([key, value]) => (
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="font-medium text-gray-700 capitalize">{key.replace('_', ' ')}</span>
+              <span class="text-gray-900">{value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Call to Action -->
+    <div class="bg-blue-50 p-8 rounded-xl text-center">
+      <h3 class="text-2xl font-bold text-gray-900 mb-4">Ready to Buy?</h3>
+      <p class="text-gray-600 mb-6">
+        Get the {product.data.title} with fast, free shipping and Amazon's trusted customer service.
+      </p>
+      
+      <a 
+        href={affiliateUrl}
+        target="_blank"
+        rel="nofollow sponsored"
+        class="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-lg text-lg transition-colors"
+        onclick="gtag('event', 'purchase_intent', { 'event_category': 'affiliate', 'event_label': product.data.asin });"
+      >
+        <span>Buy Now on Amazon</span>
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+      
+      <p class="text-sm text-gray-500 mt-4">
+        Current price: {product.data.price} • Free shipping with Prime
+      </p>
+    </div>
+  </article>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.data.title,
+    "description": product.data.seoDescription,
+    "image": product.data.image,
+    "brand": {
+      "@type": "Brand",
+      "name": product.data.brand
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": product.data.rating,
+      "reviewCount": product.data.reviewCount
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": product.data.price.replace('$', ''),
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": affiliateUrl
+    }
+  })} />
+
+  <!-- Affiliate Disclosure Footer -->
+  <div class="bg-yellow-50 border-t-4 border-yellow-400 p-4 mt-8">
+    <div class="max-w-7xl mx-auto text-center">
+      <p class="text-sm text-yellow-800">
+        <strong>Important:</strong> As an Amazon Associate, we earn from qualifying purchases. 
+        This doesn't affect the price you pay, but it helps support our independent product testing and reviews.
+      </p>
+    </div>
+  </div>
+</Layout>

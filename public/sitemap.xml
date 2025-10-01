@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://swankyboyz.com/</loc>
+    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Product Pages -->
+  <url>
+    <loc>https://swankyboyz.com/products/sony-wh1000xm5</loc>
+    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://swankyboyz.com/products/apple-airpods-pro-2</loc>
+    <lastmod>2024-01-14T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://swankyboyz.com/products/amazon-echo-dot-5</loc>
+    <lastmod>2024-01-13T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://swankyboyz.com/products/apple-watch-series-9</loc>
+    <lastmod>2024-01-12T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://swankyboyz.com/products/herman-miller-aeron</loc>
+    <lastmod>2024-01-11T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Category Pages -->
+  <url>
+    <loc>https://swankyboyz.com/category/audio</loc>
+    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://swankyboyz.com/category/smart-home</loc>
+    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://swankyboyz.com/category/wearables</loc>
+    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://swankyboyz.com/category/office-furniture</loc>
+    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://swankyboyz.com/privacy-policy</loc>
+    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://swankyboyz.com/affiliate-disclosure</loc>
+    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>
