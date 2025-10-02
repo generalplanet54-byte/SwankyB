@@ -10,11 +10,11 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
 
   const categories = [
-    { name: 'Tech Gadgets', slug: 'tech-gadgets' },
-    { name: 'Lifestyle', slug: 'lifestyle' },
-    { name: 'Productivity', slug: 'productivity' },
-    { name: 'Fitness', slug: 'fitness' },
-    { name: 'Luxury Accessories', slug: 'luxury-accessories' }
+    { name: 'Skincare', slug: 'skincare' },
+    { name: 'Audio', slug: 'audio' },
+    { name: 'Accessories', slug: 'accessories' },
+    { name: 'Fragrance', slug: 'fragrance' },
+    { name: 'Grooming', slug: 'grooming' }
   ];
 
   const handleSearch = (e: React.FormEvent) => {

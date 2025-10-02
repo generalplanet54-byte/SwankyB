@@ -22,19 +22,19 @@ const Hero: React.FC = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Link
-              to="/category/tech-gadgets"
+              to="/category/skincare"
               className="bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 inline-flex items-center space-x-2"
             >
               <TrendingUp className="h-5 w-5" />
-              <span>Explore Tech Gadgets</span>
+              <span>Explore Skincare</span>
             </Link>
             
             <Link
-              to="/category/lifestyle"
+              to="/category/audio"
               className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 inline-flex items-center space-x-2"
             >
               <Star className="h-5 w-5" />
-              <span>Lifestyle Products</span>
+              <span>Premium Audio</span>
             </Link>
           </div>
           

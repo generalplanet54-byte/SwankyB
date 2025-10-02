@@ -5,43 +5,43 @@ import { Smartphone, Heart, Briefcase, Dumbbell, Gem, ArrowRight } from 'lucide-
 const CategoryShowcase: React.FC = () => {
   const categories = [
     {
-      name: 'Tech Gadgets',
-      slug: 'tech-gadgets',
+      name: 'Skincare',
+      slug: 'skincare',
+      icon: Heart,
+      description: 'Premium skincare products from Kiehl\'s, Clinique, and luxury brands',
+      image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=500',
+      color: 'from-pink-500 to-rose-600'
+    },
+    {
+      name: 'Audio',
+      slug: 'audio',
       icon: Smartphone,
-      description: 'Latest smartphones, laptops, and innovative tech accessories',
+      description: 'Premium wireless earbuds from Sony, Apple, Bose, and more',
       image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=500',
       color: 'from-blue-500 to-purple-600'
     },
     {
-      name: 'Lifestyle',
-      slug: 'lifestyle',
-      icon: Heart,
-      description: 'Home decor, wellness products, and daily life enhancers',
-      image: 'https://images.pexels.com/photos/7207142/pexels-photo-7207142.jpeg?auto=compress&cs=tinysrgb&w=500',
-      color: 'from-pink-500 to-rose-600'
-    },
-    {
-      name: 'Productivity',
-      slug: 'productivity',
+      name: 'Accessories',
+      slug: 'accessories',
       icon: Briefcase,
-      description: 'Office essentials, organization tools, and efficiency boosters',
-      image: 'https://images.pexels.com/photos/4050320/pexels-photo-4050320.jpeg?auto=compress&cs=tinysrgb&w=500',
+      description: 'Premium wallets from The Ridge, Bellroy, Ekster, and more',
+      image: 'https://images.pexels.com/photos/8148577/pexels-photo-8148577.jpeg?auto=compress&cs=tinysrgb&w=500',
       color: 'from-green-500 to-teal-600'
     },
     {
-      name: 'Fitness',
-      slug: 'fitness',
-      icon: Dumbbell,
-      description: 'Workout gear, health monitors, and athletic accessories',
-      image: 'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=500',
+      name: 'Fragrance',
+      slug: 'fragrance',
+      icon: Gem,
+      description: 'Luxury fragrances from Tom Ford, Creed, and premium brands',
+      image: 'https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=500',
       color: 'from-orange-500 to-red-600'
     },
     {
-      name: 'Luxury Accessories',
-      slug: 'luxury-accessories',
-      icon: Gem,
-      description: 'Premium accessories, jewelry, and high-end lifestyle products',
-      image: 'https://images.pexels.com/photos/8148577/pexels-photo-8148577.jpeg?auto=compress&cs=tinysrgb&w=500',
+      name: 'Grooming',
+      slug: 'grooming',
+      icon: Dumbbell,
+      description: 'Men\'s grooming essentials and premium care products',
+      image: 'https://images.pexels.com/photos/3685530/pexels-photo-3685530.jpeg?auto=compress&cs=tinysrgb&w=500',
       color: 'from-yellow-500 to-amber-600'
     }
   ];

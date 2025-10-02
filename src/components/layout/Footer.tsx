@@ -93,11 +93,11 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Categories</h4>
             <ul className="space-y-2">
-              <li><Link to="/category/tech-gadgets" className="text-gray-400 hover:text-white transition-colors duration-200">Tech Gadgets</Link></li>
-              <li><Link to="/category/lifestyle" className="text-gray-400 hover:text-white transition-colors duration-200">Lifestyle</Link></li>
-              <li><Link to="/category/productivity" className="text-gray-400 hover:text-white transition-colors duration-200">Productivity</Link></li>
-              <li><Link to="/category/fitness" className="text-gray-400 hover:text-white transition-colors duration-200">Fitness</Link></li>
-              <li><Link to="/category/luxury-accessories" className="text-gray-400 hover:text-white transition-colors duration-200">Luxury Accessories</Link></li>
+              <li><Link to="/category/skincare" className="text-gray-400 hover:text-white transition-colors duration-200">Skincare</Link></li>
+              <li><Link to="/category/audio" className="text-gray-400 hover:text-white transition-colors duration-200">Audio</Link></li>
+              <li><Link to="/category/accessories" className="text-gray-400 hover:text-white transition-colors duration-200">Accessories</Link></li>
+              <li><Link to="/category/fragrance" className="text-gray-400 hover:text-white transition-colors duration-200">Fragrance</Link></li>
+              <li><Link to="/category/grooming" className="text-gray-400 hover:text-white transition-colors duration-200">Grooming</Link></li>
             </ul>
           </div>
 

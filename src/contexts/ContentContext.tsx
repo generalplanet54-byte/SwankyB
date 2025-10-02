@@ -56,11 +56,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [articles, setArticles] = useState<Article[]>(launchArticles);
   
   const categories = [
-    'Tech Gadgets',
-    'Lifestyle',
-    'Productivity',
-    'Fitness',
-    'Luxury Accessories'
+    'Skincare',
+    'Audio',
+    'Accessories',
+    'Fragrance',
+    'Grooming'
   ];
 
   const addArticle = (articleData: Omit<Article, 'id' | 'publishedAt' | 'updatedAt'>) => {
