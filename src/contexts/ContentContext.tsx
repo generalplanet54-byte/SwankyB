@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { launchArticles } from '../data/launchArticles';
+import { supabase, Article as DBArticle, Product as DBProduct } from '../lib/supabase';
 
 export interface Article {
   id: string;
@@ -36,6 +36,7 @@ export interface AffiliateProduct {
 interface ContentContextType {
   articles: Article[];
   categories: string[];
+  loading: boolean;
   addArticle: (article: Omit<Article, 'id' | 'publishedAt' | 'updatedAt'>) => void;
   updateArticle: (id: string, updates: Partial<Article>) => void;
   deleteArticle: (id: string) => void;
@@ -53,14 +54,88 @@ export const useContent = () => {
 };
 
 export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [articles, setArticles] = useState<Article[]>(launchArticles);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchArticles();
+  }, []);
+
+  const fetchArticles = async () => {
+    try {
+      setLoading(true);
+      const { data: articlesData, error: articlesError } = await supabase
+        .from('articles')
+        .select('*')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false });
+
+      if (articlesError) throw articlesError;
+
+      const { data: articleProductsData, error: articleProductsError } = await supabase
+        .from('article_products')
+        .select(`
+          article_id,
+          display_order,
+          products (*)
+        `)
+        .order('display_order', { ascending: true });
+
+      if (articleProductsError) throw articleProductsError;
+
+      const formattedArticles: Article[] = (articlesData || []).map((article: DBArticle) => {
+        const relatedProducts = (articleProductsData || [])
+          .filter((ap: any) => ap.article_id === article.id)
+          .map((ap: any) => {
+            const product = ap.products;
+            return {
+              id: product.id,
+              name: product.name,
+              description: product.description,
+              price: product.price ? `$${product.price}` : '',
+              originalPrice: product.original_price ? `$${product.original_price}` : undefined,
+              image: product.image_url,
+              affiliateUrl: product.amazon_url,
+              rating: product.rating || 0,
+              provider: 'amazon' as const,
+              category: product.category
+            };
+          });
+
+        return {
+          id: article.id,
+          title: article.title,
+          slug: article.slug,
+          excerpt: article.excerpt,
+          content: article.content,
+          author: article.author,
+          publishedAt: article.published_at,
+          updatedAt: article.updated_at,
+          featuredImage: article.featured_image,
+          category: article.category,
+          tags: article.tags || [],
+          readTime: article.read_time,
+          featured: false,
+          seoTitle: article.meta_title || article.title,
+          seoDescription: article.meta_description || article.excerpt,
+          affiliateProducts: relatedProducts
+        };
+      });
+
+      setArticles(formattedArticles);
+    } catch (error) {
+      console.error('Error fetching articles:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   const categories = [
-    'Skincare',
-    'Audio',
-    'Accessories',
-    'Fragrance',
-    'Grooming'
+    'Footwear',
+    'Smartphones',
+    'Laptops',
+    'Technology',
+    'Health & Wellness'
   ];
 
   const addArticle = (articleData: Omit<Article, 'id' | 'publishedAt' | 'updatedAt'>) => {
@@ -152,6 +227,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     <ContentContext.Provider value={{
       articles,
       categories,
+      loading,
       addArticle,
       updateArticle,
       deleteArticle,
