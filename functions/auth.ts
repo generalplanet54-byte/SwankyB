@@ -1,4 +1,11 @@
-const JWT_SECRET = process.env.JWT_SECRET || 'a3b515fdb1dc6326a411c9a882188f5303aa62b87c48ae296b97de0cf0de9564';
+
+
+// JWT_SECRET will be set in each function handler from env
+let JWT_SECRET: string = '';
+export function setJWTSecret(secret: string) {
+  JWT_SECRET = secret;
+}
+
 
 interface User {
   id: string;
@@ -32,8 +39,14 @@ const users: User[] = [
 function toBase64(input: ArrayBuffer): string {
   return btoa(String.fromCharCode(...new Uint8Array(input)));
 }
-function fromBase64(str: string): Uint8Array {
-  return Uint8Array.from(atob(str), c => c.charCodeAt(0));
+function fromBase64(str: string): ArrayBuffer {
+  const binary = atob(str);
+  const len = binary.length;
+  const buffer = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    buffer[i] = binary.charCodeAt(i);
+  }
+  return buffer.buffer;
 }
 
 /**
@@ -54,6 +67,7 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
  * JWT signing & verification (HS256, WebCrypto)
  */
 async function getKey(secret: string, usage: KeyUsage): Promise<CryptoKey> {
+  if (!secret) throw new Error('JWT_SECRET is not set');
   return crypto.subtle.importKey(
     "raw",
     new TextEncoder().encode(secret),
