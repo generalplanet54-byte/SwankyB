@@ -8,7 +8,7 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
  * Instead export a fallback client that returns rejected promises with a clear error.
  * This prevents the entire app from being a blank page and makes the failure visible.
  */
-const SUPABASE_CONFIGURED = !!supabaseUrl && !!supabaseAnonKey;
+export const SUPABASE_CONFIGURED = !!supabaseUrl && !!supabaseAnonKey;
 
 function createFallbackClient(): any {
   const err = new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your build environment.');
