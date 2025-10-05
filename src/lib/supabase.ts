@@ -1,13 +1,42 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
+/**
+ * If env vars are missing at build time, don't throw during module import.
+ * Instead export a fallback client that returns rejected promises with a clear error.
+ * This prevents the entire app from being a blank page and makes the failure visible.
+ */
+const SUPABASE_CONFIGURED = !!supabaseUrl && !!supabaseAnonKey;
+
+function createFallbackClient(): any {
+  const err = new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your build environment.');
+  const tableHandler = {
+    get(_t: any, prop: string) {
+      // common chainable methods used in this project
+      if (prop === 'select' || prop === 'insert' || prop === 'update' || prop === 'delete') {
+        return async () => ({ data: null, error: err });
+      }
+      // methods like .eq(), .order() that return a chainable object
+      return () => ({ select: async () => ({ data: null, error: err }) });
+    }
+  } as any;
+
+  return new Proxy({}, {
+    get(_target, prop: string) {
+      if (prop === 'from') {
+        return (_tableName: string) => new Proxy({}, tableHandler);
+      }
+      // any other method returns a rejected promise for clarity
+      return async () => ({ data: null, error: err });
+    }
+  });
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase: SupabaseClient | any = SUPABASE_CONFIGURED
+  ? createClient(supabaseUrl as string, supabaseAnonKey as string)
+  : createFallbackClient();
 
 export interface Product {
   id: string;
