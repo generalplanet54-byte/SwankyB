@@ -1,6 +1,10 @@
-import { verifyJWT, changePassword } from '../../auth';
+
+
+import { verifyJWT, changePassword, setJWTSecret } from '../../auth';
 
 export async function onRequestPost(context: any) {
+  // Set JWT_SECRET from env for Cloudflare Pages Functions
+  setJWTSecret(context.env?.JWT_SECRET || '');
   try {
     const cookieHeader = context.request.headers.get('Cookie');
     
@@ -12,7 +16,7 @@ export async function onRequestPost(context: any) {
     }
     
     const cookies = Object.fromEntries(
-      cookieHeader.split('; ').map(cookie => cookie.split('='))
+      cookieHeader.split('; ').map((cookie: string) => cookie.split('='))
     );
     
     const token = cookies['auth-token'];
