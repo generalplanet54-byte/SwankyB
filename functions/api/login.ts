@@ -1,6 +1,10 @@
-import { authenticateUser, createJWT } from '../auth';
+
+
+import { authenticateUser, createJWT, setJWTSecret } from '../auth';
 
 export async function onRequestPost(context: any) {
+  // Set JWT_SECRET from env for Cloudflare Pages Functions
+  setJWTSecret(context.env?.JWT_SECRET || '');
   try {
     const { username, password } = await context.request.json();
     
