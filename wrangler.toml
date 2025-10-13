@@ -1,0 +1,11 @@
+# Cloudflare Wrangler configuration for Pages
+# Docs: https://developers.cloudflare.com/pages/framework-guides/deploy-a-vite-site/
+
+name = "swankyb"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-10-13"
+
+# Runtime env vars are set in the Cloudflare Pages project settings.
+# Do NOT commit secrets here.
+# [vars]
+# JWT_SECRET = ""

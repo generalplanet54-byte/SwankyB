@@ -1,3 +1,43 @@
+# SwankyBoyz Automated Affiliate Blog
+
+This is a Vite + React + TypeScript project with Tailwind CSS.
+
+## Deploying on Cloudflare Pages
+
+This project is ready for Cloudflare Pages. It uses:
+- Static build via Vite to `dist/`
+- Pages Functions from `functions/` (login/logout/admin endpoints)
+
+### Requirements
+- Cloudflare account
+- Wrangler CLI (installed as devDependency)
+- Environment variables set in Pages project settings:
+  - `VITE_SUPABASE_URL`
+  - `VITE_SUPABASE_ANON_KEY`
+  - `JWT_SECRET` (used by Pages Functions for auth)
+
+### One-time setup
+1. Log in:
+   ```bash
+   npx wrangler login
+   ```
+2. (Optional) Create the Pages project in the Cloudflare dashboard and link to your repo, or deploy via CLI.
+
+### Deploy via CLI
+1. Build locally:
+   ```bash
+   npm run build
+   ```
+2. Deploy to Pages:
+   ```bash
+   npx wrangler pages deploy dist --project-name swankyb
+   ```
+
+Notes:
+- Pages automatically picks up functions under `functions/`.
+- Configure env vars in the Cloudflare Pages dashboard → Settings → Environment Variables.
+- Do not commit secrets.
+
 # Premium Affiliate Marketing Website
 
 A high-performance affiliate marketing platform featuring SEO-optimized content, product reviews, and seamless Amazon affiliate integration. Built with React, TypeScript, Vite, Tailwind CSS, and Supabase.
