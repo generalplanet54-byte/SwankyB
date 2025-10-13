@@ -134,8 +134,6 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     'Footwear',
     'Smartphones',
     'Laptops',
-    'Audio Equipment',
-    'Wearables',
     'Technology',
     'Health & Wellness'
   ];
