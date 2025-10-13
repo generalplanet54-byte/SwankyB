@@ -1,445 +1,181 @@
-# Premium Affiliate Marketing Website
+SwankyB
 
-A high-performance affiliate marketing platform featuring SEO-optimized content, product reviews, and seamless Amazon affiliate integration. Built with React, TypeScript, Vite, Tailwind CSS, and Supabase.
+## ☁️ Deployment to Cloudflare Pages
 
-## Features
+### Option A: GitHub Integration (Recommended)
 
-- **SEO-Optimized Content**: Meta tags, structured data, and semantic HTML for maximum search visibility
-- **Database-Driven**: All products and articles stored in Supabase for easy management
-- **Responsive Design**: Beautiful, modern design that works perfectly on all devices
-- **Amazon Affiliate Integration**: Automatic affiliate link tracking and management
-- **Performance Optimized**: Fast page loads with Vite and optimized images
-- **Dark Mode Support**: Automatic theme switching based on user preference
-
-## Tech Stack
-
-- **Frontend**: React 18, TypeScript, Tailwind CSS
-- **Build Tool**: Vite
-- **Database**: Supabase (PostgreSQL)
-- **Icons**: Lucide React
-- **Routing**: React Router DOM
-
-## Prerequisites
-
-- Node.js 18+ and npm
-- Supabase account (database is pre-configured)
-- Git for version control
-
-## Local Development
-
-### 1. Install Dependencies
-
-```bash
-npm install
-```
-
-### 2. Environment Variables
-
-The `.env` file is already configured with Supabase credentials:
-
-```env
-VITE_SUPABASE_URL=https://wuwczwpfnswwctumvqsq.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-```
-
-### 3. Run Development Server
-
-```bash
-npm run dev
-```
-
-Visit `http://localhost:5173` to see your site.
-
-### 4. Build for Production
-
-```bash
-npm run build
-```
-
-The production build will be in the `dist` directory.
-
-## Database Structure
-
-### Products Table
-- 17 pre-loaded products (footwear, smartphones, laptops)
-- Categories: Footwear, Smartphones, Laptops
-- Includes: prices, ratings, affiliate links, SEO metadata
-
-### Articles Table
-- 6 comprehensive, SEO-optimized articles
-- Topics: Nike Cortez, Orthopedic Shoes, Foldable Phones, Gaming Phones, Flagships, MacBooks
-- Includes: featured images, read times, tags, SEO metadata
-
-### Article-Product Relationships
-- Articles automatically linked to related products
-- Display order maintained for consistent presentation
-
-## Deployment
-
-### Option 1: Deploy to Cloudflare Pages (Recommended)
-
-Cloudflare Pages offers free hosting with excellent performance and automatic SSL.
+This is the easiest method with automatic deployments on every push.
 
 #### Step 1: Push to GitHub
 
 ```bash
-# Initialize git repository (if not already done)
+# Initialize git repository
 git init
 git add .
-git commit -m "Initial commit: Production-ready affiliate site"
+git commit -m "Initial: Production-ready affiliate blog"
 git branch -M main
 
-# Create a new repository on GitHub, then:
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+# Create GitHub repository and push
+git remote add origin git@github.com:<USERNAME>/<REPO>.git
 git push -u origin main
 ```
 
 #### Step 2: Connect to Cloudflare Pages
 
-1. **Go to Cloudflare Dashboard**
-   - Visit [Cloudflare Dashboard](https://dash.cloudflare.com)
-   - Click on **Pages** in the sidebar
-   - Click **"Create a project"**
+1. **Login to Cloudflare Dashboard**
+   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com)
+   - Navigate to **Pages** in the sidebar
 
-2. **Connect to Git**
+2. **Create New Project**
+   - Click **"Create a project"**
    - Select **"Connect to Git"**
    - Choose **GitHub** and authorize Cloudflare
    - Select your repository
 
 3. **Configure Build Settings**
    ```
-   Framework preset: Vite
+   Framework preset: Astro
    Build command: npm run build
    Build output directory: dist
    Root directory: (leave empty)
-   Node version: 18 or higher
    ```
 
-4. **Add Environment Variables**
-   In Settings → Environment variables, add:
+4. **Set Environment Variables**
+   In the Cloudflare Pages dashboard, go to **Settings** → **Environment variables**:
+   
    ```
-   VITE_SUPABASE_URL=https://wuwczwpfnswwctumvqsq.supabase.co
-   VITE_SUPABASE_ANON_KEY=your-anon-key
+   NODE_ENV=production
+   AFFILIATE_TAG=swankyboyz-20
+   JWT_SECRET=your-super-secret-jwt-key-min-32-chars
+   ADMIN_EMAIL=admin@yourdomain.com
+   SENDGRID_API_KEY=your-sendgrid-api-key
+   SITE_URL=https://yourdomain.com
    ```
 
 5. **Deploy**
    - Click **"Save and Deploy"**
-   - Cloudflare will build and deploy your site
-   - You'll get a URL like `your-project.pages.dev`
-   - Every push to `main` triggers automatic deployment
+   - Cloudflare will automatically build and deploy your site
+   - Future pushes to `main` branch will trigger automatic deployments
 
-#### Step 3: Add Custom Domain (Optional)
+#### Step 3: Custom Domain (Optional)
 
-1. In Cloudflare Pages dashboard, click **"Custom domains"**
-2. Click **"Set up a custom domain"**
-3. Enter your domain (e.g., `yoursite.com`)
-4. Follow DNS configuration instructions
-5. SSL certificate is automatically provisioned
+1. **Add Custom Domain**
+   - In Pages dashboard, go to **Custom domains**
+   - Click **"Set up a custom domain"**
+   - Enter your domain (e.g., `swankyboyz.com`)
 
-### Option 2: Deploy to GitHub Pages
+2. **Configure DNS**
+   - Add a CNAME record pointing to your Pages URL
+   - Or use Cloudflare as your DNS provider for automatic configuration
 
-GitHub Pages offers free hosting for static sites.
+3. **SSL Certificate**
+   - Cloudflare automatically provisions SSL certificates
+   - Your site will be available over HTTPS
 
-#### Step 1: Update Configuration
+### Option B: CLI Deployment with Wrangler
 
-Add to `vite.config.ts`:
+For manual deployments or CI/CD pipelines.
 
-```typescript
-export default defineConfig({
-  base: '/YOUR_REPO_NAME/',
-  // ... rest of config
-});
-```
-
-#### Step 2: Install gh-pages
+#### Step 1: Install Wrangler
 
 ```bash
-npm install --save-dev gh-pages
-```
-
-#### Step 3: Add Deploy Script
-
-Add to `package.json`:
-
-```json
-{
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  }
-}
-```
-
-#### Step 4: Deploy
-
-```bash
-npm run deploy
-```
-
-Your site will be live at `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
-
-#### Step 5: Enable GitHub Pages
-
-1. Go to your GitHub repository
-2. Click **Settings** → **Pages**
-3. Under "Source", select branch `gh-pages`
-4. Click **Save**
-
-### Option 3: Manual CLI Deployment to Cloudflare
-
-For more control or CI/CD integration:
-
-```bash
-# Install Wrangler CLI
 npm install -g wrangler@latest
-
-# Login to Cloudflare
 wrangler login
+```
 
-# Create Pages project
+#### Step 2: Create Pages Project
+
+```bash
+# Create a new Pages project
 wrangler pages project create your-project-name
+```
 
-# Build your site
+#### Step 3: Build and Deploy
+
+```bash
+# Build the site
 npm run build
 
-# Deploy
+# Deploy to Cloudflare Pages
 wrangler pages deploy ./dist --project-name=your-project-name
 ```
 
-## SEO Optimization
-
-All content is optimized for search engines:
-
-### Meta Tags
-- Unique title and description for each page
-- Open Graph tags for social media
-- Twitter Card tags
-- Canonical URLs
-
-### Structured Data
-- Product schema for rich snippets
-- Article schema for content
-- Organization schema
-- BreadcrumbList schema
-
-### Best Practices
-- Semantic HTML5 markup
-- Proper heading hierarchy (H1 → H2 → H3)
-- Alt text for all images
-- Clean URL structure
-- XML sitemap at `/sitemap.xml`
-- Robots.txt at `/robots.txt`
-
-### Performance
-- Lighthouse score: 95+ (all metrics)
-- Core Web Vitals optimized
-- Lazy loading for images
-- Code splitting
-- Optimized bundle size
-
-## Affiliate Link Tracking
-
-All Amazon affiliate links include:
-- Your affiliate tag
-- UTM parameters for analytics
-- `rel="nofollow sponsored"` attributes
-- Click tracking in analytics
-
-### Link Format
-```
-https://amzn.to/XXXXXXX?tag=YOUR_TAG&utm_source=site&utm_medium=affiliate
-```
-
-## Content Management
-
-### Adding New Products
-
-Products are stored in Supabase. To add new products:
-
-1. Access Supabase dashboard
-2. Navigate to Table Editor → `products`
-3. Insert new row with:
-   - name, slug, description
-   - category, subcategory
-   - amazon_url (your affiliate link)
-   - image_url (product image)
-   - price, original_price
-   - rating, review_count
-   - features (JSON array)
-   - meta_title, meta_description, meta_keywords
-   - is_featured, is_trending flags
-
-### Adding New Articles
-
-Articles are also in Supabase:
-
-1. Navigate to Table Editor → `articles`
-2. Insert new row with:
-   - title, slug, excerpt
-   - content (HTML)
-   - category, tags (array)
-   - author, featured_image
-   - read_time
-   - meta_title, meta_description, meta_keywords
-   - is_published flag
-
-3. Link to products via `article_products` table
-
-## Analytics Setup
-
-### Google Analytics 4
-
-1. Create GA4 property
-2. Get Measurement ID (G-XXXXXXXXXX)
-3. Add to your `index.html`:
-
-```html
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
-```
-
-### Google Search Console
-
-1. Visit [Google Search Console](https://search.google.com/search-console)
-2. Add your property (domain or URL prefix)
-3. Verify ownership (DNS or HTML file)
-4. Submit your sitemap: `https://yoursite.com/sitemap.xml`
-
-### Amazon Affiliate Tracking
-
-Monitor your Amazon Associates account for:
-- Click-through rates
-- Conversion rates
-- Earnings by product
-- Top performing links
-
-## Maintenance
-
-### Regular Updates
+#### Step 4: Set Environment Variables via CLI
 
 ```bash
-# Update dependencies
-npm update
-
-# Check for security vulnerabilities
-npm audit
-
-# Fix vulnerabilities
-npm audit fix
+# Set production environment variables
+wrangler pages secret put JWT_SECRET --project-name=your-project-name
+wrangler pages secret put AFFILIATE_TAG --project-name=your-project-name
+wrangler pages secret put SENDGRID_API_KEY --project-name=your-project-name
 ```
 
-### Content Updates
+### Option C: GitHub Actions CI/CD
 
-- Add new products as they become available
-- Update prices and availability
-- Refresh article content quarterly
-- Monitor and update broken links
-- Add seasonal content
+For automated testing and deployment pipeline.
 
-### Performance Monitoring
+#### Step 1: Set GitHub Secrets
 
-- Run Lighthouse audits monthly
-- Monitor Core Web Vitals
-- Check page load times
-- Review mobile performance
-- Test on multiple devices
-
-## Troubleshooting
-
-### Build Errors
-
-**"Cannot find module"**
-```bash
-rm -rf node_modules package-lock.json
-npm install
-```
-
-**TypeScript errors**
-```bash
-npm run build
-```
-Check the error messages and fix type issues.
-
-### Supabase Connection Issues
-
-**"Failed to fetch"**
-- Verify VITE_SUPABASE_URL is correct
-- Check VITE_SUPABASE_ANON_KEY is valid
-- Ensure RLS policies allow public read access
-- Check browser console for CORS errors
-
-### Deployment Issues
-
-**Cloudflare Build Fails**
-- Check build command is `npm run build`
-- Verify output directory is `dist`
-- Ensure Node version is 18+
-- Review build logs for specific errors
-
-**GitHub Pages 404**
-- Verify `base` in vite.config.ts matches repo name
-- Check gh-pages branch exists
-- Ensure GitHub Pages is enabled in settings
-
-## Project Structure
+In your GitHub repository, go to **Settings** → **Secrets and variables** → **Actions**:
 
 ```
-├── src/
-│   ├── components/       # React components
-│   │   ├── common/       # Reusable components
-│   │   ├── layout/       # Layout components
-│   │   ├── pages/        # Page components
-│   │   └── sections/     # Section components
-│   ├── contexts/         # React Context providers
-│   │   ├── AffiliateContext.tsx
-│   │   ├── ContentContext.tsx
-│   │   └── ThemeContext.tsx
-│   ├── lib/              # Utilities and configs
-│   │   └── supabase.ts   # Supabase client
-│   ├── App.tsx           # Main app component
-│   └── main.tsx          # Entry point
-├── public/               # Static assets
-│   ├── robots.txt        # Search engine instructions
-│   └── sitemap.xml       # XML sitemap
-├── .env                  # Environment variables
-├── package.json          # Dependencies
-├── vite.config.ts        # Vite configuration
-└── tailwind.config.js    # Tailwind CSS config
+CLOUDFLARE_API_TOKEN=your-cloudflare-api-token
+CLOUDFLARE_ACCOUNT_ID=your-account-id
+CLOUDFLARE_PAGES_PROJECT=your-project-name
+AFFILIATE_TAG=swankyboyz-20
+JWT_SECRET=your-jwt-secret
+SENDGRID_API_KEY=your-sendgrid-key
 ```
 
-## Support
+#### Step 2: GitHub Actions Workflow
 
-For issues or questions:
-1. Check this README
-2. Review error messages in console
-3. Check Supabase dashboard
-4. Review build logs
-5. Test in incognito mode
+The included `.github/workflows/ci.yml` will automatically:
+- Run tests on every push
+- Check for broken links
+- Run accessibility tests
+- Deploy to Cloudflare Pages on successful builds
 
-## License
+### Post-Deployment Checklist
 
-This project is proprietary. All rights reserved.
+After successful deployment:
 
----
+- [ ] **Verify site loads**: Check your domain loads correctly
+- [ ] **Test admin login**: Access `/admin` with credentials
+- [ ] **Check affiliate links**: Ensure all Amazon links work
+- [ ] **Validate SEO**: Run Lighthouse audit
+- [ ] **Test forms**: Newsletter signup, contact forms
+- [ ] **Mobile responsiveness**: Test on various devices
+- [ ] **SSL certificate**: Ensure HTTPS is working
 
-## Quick Start Checklist
+### Monitoring and Maintenance
 
-- [ ] Install dependencies: `npm install`
-- [ ] Start dev server: `npm run dev`
-- [ ] Review products in Supabase
-- [ ] Test all affiliate links
-- [ ] Customize branding and content
-- [ ] Build for production: `npm run build`
-- [ ] Push to GitHub
-- [ ] Deploy to Cloudflare Pages
-- [ ] Add custom domain
-- [ ] Set up Google Analytics
-- [ ] Submit sitemap to Google
-- [ ] Monitor performance and earnings
+1. **Analytics Setup**
+   - Add Google Analytics 4 tracking ID
+   - Set up Google Search Console
+   - Monitor Core Web Vitals
 
-Your affiliate marketing website is ready to generate commissions!
+2. **Performance Monitoring**
+   - Use Cloudflare Analytics
+   - Set up uptime monitoring
+   - Monitor affiliate link performance
+
+3. **Security Updates**
+   - Regularly update dependencies
+   - Monitor security advisories
+   - Review access logs
+
+### Troubleshooting Common Issues
+
+**Build Failures:**
+- Check Node.js version compatibility
+- Verify all dependencies are installed
+- Review build logs in Cloudflare dashboard
+
+**Environment Variables:**
+- Ensure all required variables are set
+- Check variable names match exactly
+- Verify secrets are properly encoded
+
+**Domain Issues:**
+- Verify DNS records are correct
+- Check SSL certificate status
+- Ensure domain is properly configured
