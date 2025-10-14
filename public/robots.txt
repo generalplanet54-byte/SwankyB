@@ -11,4 +11,4 @@ Allow: /*.css
 Allow: /*.js
 
 # Sitemap location
-Sitemap: https://swankyboyz.com/sitemap.xml
+Sitemap: https://swankyb.com/sitemap.xml

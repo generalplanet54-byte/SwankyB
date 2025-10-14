@@ -1,89 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://swankyboyz.com/</loc>
-    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <loc>https://swankyb.com/</loc>
+    <lastmod>2025-10-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Product Pages -->
   <url>
-    <loc>https://swankyboyz.com/products/sony-wh1000xm5</loc>
-    <lastmod>2024-01-15T00:00:00Z</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://swankyb.com/articles</loc>
+    <lastmod>2025-10-14</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-  
   <url>
-    <loc>https://swankyboyz.com/products/apple-airpods-pro-2</loc>
-    <lastmod>2024-01-14T00:00:00Z</lastmod>
+    <loc>https://swankyb.com/category/skincare</loc>
+    <lastmod>2025-10-14</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
-  
   <url>
-    <loc>https://swankyboyz.com/products/amazon-echo-dot-5</loc>
-    <lastmod>2024-01-13T00:00:00Z</lastmod>
+    <loc>https://swankyb.com/category/audio</loc>
+    <lastmod>2025-10-14</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
-  
   <url>
-    <loc>https://swankyboyz.com/products/apple-watch-series-9</loc>
-    <lastmod>2024-01-12T00:00:00Z</lastmod>
+    <loc>https://swankyb.com/category/accessories</loc>
+    <lastmod>2025-10-14</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
-  
   <url>
-    <loc>https://swankyboyz.com/products/herman-miller-aeron</loc>
-    <lastmod>2024-01-11T00:00:00Z</lastmod>
+    <loc>https://swankyb.com/category/fragrance</loc>
+    <lastmod>2025-10-14</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
-  
-  <!-- Category Pages -->
   <url>
-    <loc>https://swankyboyz.com/category/audio</loc>
-    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <loc>https://swankyb.com/category/grooming</loc>
+    <lastmod>2025-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swankyb.com/article/premium-skincare-luxury-beauty-products-review</loc>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  
   <url>
-    <loc>https://swankyboyz.com/category/smart-home</loc>
-    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <loc>https://swankyb.com/article/premium-wireless-earbuds-2024-audio-guide</loc>
+    <lastmod>2025-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  
   <url>
-    <loc>https://swankyboyz.com/category/wearables</loc>
-    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <loc>https://swankyb.com/article/ultimate-mens-wallet-guide-premium-leather</loc>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  
   <url>
-    <loc>https://swankyboyz.com/category/office-furniture</loc>
-    <lastmod>2024-01-15T00:00:00Z</lastmod>
+    <loc>https://swankyb.com/article/luxury-fragrances-modern-gentleman-guide</loc>
+    <lastmod>2025-01-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  
-  <!-- Legal Pages -->
   <url>
-    <loc>https://swankyboyz.com/privacy-policy</loc>
-    <lastmod>2024-01-15T00:00:00Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  
-  <url>
-    <loc>https://swankyboyz.com/affiliate-disclosure</loc>
-    <lastmod>2024-01-15T00:00:00Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://swankyb.com/article/complete-guide-premium-mens-grooming</loc>
+    <lastmod>2025-01-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

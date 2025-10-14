@@ -4,6 +4,7 @@ import Footer from './components/layout/Footer';
 import Homepage from './components/pages/Homepage';
 import CategoryPage from './components/pages/CategoryPage';
 import ArticlePage from './components/pages/ArticlePage';
+import ArticlesListPage from './components/pages/ArticlesListPage';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AdminLogin from './components/admin/AdminLogin';
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute';
@@ -22,6 +23,7 @@ function App() {
               <main className="flex-grow">
                 <Routes>
                   <Route path="/" element={<Homepage />} />
+                  <Route path="/articles" element={<ArticlesListPage />} />
                   <Route path="/category/:categorySlug" element={<CategoryPage />} />
                   <Route path="/article/:articleSlug" element={<ArticlePage />} />
                   <Route path="/admin" element={<AdminLogin />} />
