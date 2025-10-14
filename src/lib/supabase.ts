@@ -1,7 +1,7 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_BOLT_DATABASE_URL || import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_BOLT_DATABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 /**
  * If env vars are missing at build time, don't throw during module import.
@@ -11,7 +11,7 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 export const SUPABASE_CONFIGURED = !!supabaseUrl && !!supabaseAnonKey;
 
 function createFallbackClient(): any {
-  const err = new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your build environment.');
+  const err = new Error('Supabase is not configured. Set VITE_BOLT_DATABASE_URL and VITE_BOLT_DATABASE_ANON_KEY (or VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY) in your build environment.');
   const tableHandler = {
     get(_t: any, prop: string) {
       // common chainable methods used in this project

@@ -1,43 +1,3 @@
-# SwankyBoyz Automated Affiliate Blog
-
-This is a Vite + React + TypeScript project with Tailwind CSS.
-
-## Deploying on Cloudflare Pages
-
-This project is ready for Cloudflare Pages. It uses:
-- Static build via Vite to `dist/`
-- Pages Functions from `functions/` (login/logout/admin endpoints)
-
-### Requirements
-- Cloudflare account
-- Wrangler CLI (installed as devDependency)
-- Environment variables set in Pages project settings:
-  - `VITE_SUPABASE_URL`
-  - `VITE_SUPABASE_ANON_KEY`
-  - `JWT_SECRET` (used by Pages Functions for auth)
-
-### One-time setup
-1. Log in:
-   ```bash
-   npx wrangler login
-   ```
-2. (Optional) Create the Pages project in the Cloudflare dashboard and link to your repo, or deploy via CLI.
-
-### Deploy via CLI
-1. Build locally:
-   ```bash
-   npm run build
-   ```
-2. Deploy to Pages:
-   ```bash
-   npx wrangler pages deploy dist --project-name swankyb
-   ```
-
-Notes:
-- Pages automatically picks up functions under `functions/`.
-- Configure env vars in the Cloudflare Pages dashboard → Settings → Environment Variables.
-- Do not commit secrets.
-
 # Premium Affiliate Marketing Website
 
 A high-performance affiliate marketing platform featuring SEO-optimized content, product reviews, and seamless Amazon affiliate integration. Built with React, TypeScript, Vite, Tailwind CSS, and Supabase.
@@ -258,6 +218,27 @@ All content is optimized for search engines:
 
 ### Structured Data
 - Product schema for rich snippets
+
+## Supabase connection troubleshooting
+
+If the site builds but no articles or products appear, it's usually because the Supabase client wasn't configured at build time. The frontend expects the following environment variables to be present during the Vite build:
+
+- VITE_SUPABASE_URL
+- VITE_SUPABASE_ANON_KEY
+
+Important notes:
+
+- Vite only exposes env variables prefixed with `VITE_` to the client bundle. Make sure the keys above include the `VITE_` prefix.
+- For local development, copy `.env.example` to `.env` and fill the values, then run `npm run dev` or `npm run build`.
+- For Cloudflare Pages deployments, add the environment variables in the Pages project settings (Settings → Environment variables) for the Production environment so they are available at build time.
+
+If you still see the error message "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your build environment.", verify:
+
+1. You committed the build to `dist` (for manual deployments) or Cloudflare built your site and the vars were set in Pages settings.
+2. The values match the Supabase project's URL and anon key.
+3. The anon key is valid (try a request from curl or Postman to your Supabase REST endpoint).
+
+For automated CI/CD (GitHub Actions), set repository secrets and pass them to the build step so Vite can embed them during `npm run build`.
 - Article schema for content
 - Organization schema
 - BreadcrumbList schema

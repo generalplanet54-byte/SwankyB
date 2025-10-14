@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase, Article as DBArticle, Product as DBProduct } from '../lib/supabase';
+import { supabase, SUPABASE_CONFIGURED, Article as DBArticle } from '../lib/supabase';
+import { launchArticles } from '../data/launchArticles';
 
 export interface Article {
   id: string;
@@ -64,6 +65,12 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const fetchArticles = async () => {
     try {
       setLoading(true);
+      // If Supabase wasn't configured at build time (common in Bolt/StackBlitz),
+      // fall back to the bundled `launchArticles` so the site still shows content.
+      if (!SUPABASE_CONFIGURED) {
+        setArticles(launchArticles);
+        return;
+      }
       const { data: articlesData, error: articlesError } = await supabase
         .from('articles')
         .select('*')
@@ -125,6 +132,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setArticles(formattedArticles);
     } catch (error) {
       console.error('Error fetching articles:', error);
+      // If Supabase query fails for any reason, fall back to bundled launchArticles
+      // so the UI remains populated. This mirrors behavior on StackBlitz/Bolt.
+      setArticles(launchArticles);
     } finally {
       setLoading(false);
     }

@@ -1,0 +1,39 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: npm run build
+
+      - name: Install Wrangler
+        run: npm install -g wrangler@latest
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          # Create the Pages project if it doesn't exist (idempotent)
+          wrangler pages project create ${{ github.repository | replace('/','-') }} --account-id=$CF_ACCOUNT_ID || true
+          # Deploy the built site
+          wrangler pages deploy ./dist --project-name=${{ github.repository | replace('/','-') }} --account-id=$CF_ACCOUNT_ID

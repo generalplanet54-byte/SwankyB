@@ -1,11 +1,20 @@
-# Cloudflare Wrangler configuration for Pages
-# Docs: https://developers.cloudflare.com/pages/framework-guides/deploy-a-vite-site/
+name = "swankyb-pages"
 
-name = "swankyb"
-pages_build_output_dir = "dist"
+# Cloudflare Pages config - keep build command and set output dir
 compatibility_date = "2025-10-13"
 
-# Runtime env vars are set in the Cloudflare Pages project settings.
-# Do NOT commit secrets here.
-# [vars]
-# JWT_SECRET = ""
+[build]
+	command = "npm run build"
+
+# Directory where Pages will find the generated static site
+[site]
+bucket = "./dist"
+main = "index.js"
+
+# Also set pages_build_output_dir for wrangler dev server compatibility
+pages_build_output_dir = "./dist"
+
+# Environment variables for Supabase (Bolt Database)
+[vars]
+VITE_BOLT_DATABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1d2N6d3BmbnN3d2N0dW12cXNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1Mzg4ODMsImV4cCI6MjA3NTExNDg4M30.EGziTHFcFPQprqmSrvvfxzEEHY2HVuknezkpGidd3UA"
+VITE_BOLT_DATABASE_URL = "https://wuwczwpfnswwctumvqsq.supabase.co"
