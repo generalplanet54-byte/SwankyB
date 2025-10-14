@@ -65,12 +65,68 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const fetchArticles = async () => {
     try {
       setLoading(true);
+
+      // Try server-side public endpoint first (Cloudflare Pages function)
+      try {
+        const res = await fetch('/api/content');
+        if (res.ok) {
+          const json = await res.json();
+          const articlesData = json.articles || [];
+          const articleProductsData = json.article_products || [];
+
+          const formattedArticles: Article[] = (articlesData || []).map((article: DBArticle) => {
+            const relatedProducts = (articleProductsData || [])
+              .filter((ap: any) => ap.article_id === article.id)
+              .map((ap: any) => {
+                const product = ap.products;
+                return {
+                  id: product.id,
+                  name: product.name,
+                  description: product.description,
+                  price: product.price ? `$${product.price}` : '',
+                  originalPrice: product.original_price ? `$${product.original_price}` : undefined,
+                  image: product.image_url,
+                  affiliateUrl: product.amazon_url,
+                  rating: product.rating || 0,
+                  provider: 'amazon' as const,
+                  category: product.category
+                };
+              });
+
+            return {
+              id: article.id,
+              title: article.title,
+              slug: article.slug,
+              excerpt: article.excerpt,
+              content: article.content,
+              author: article.author,
+              publishedAt: article.published_at,
+              updatedAt: article.updated_at,
+              featuredImage: article.featured_image,
+              category: article.category,
+              tags: article.tags || [],
+              readTime: article.read_time,
+              featured: false,
+              seoTitle: article.meta_title || article.title,
+              seoDescription: article.meta_description || article.excerpt,
+              affiliateProducts: relatedProducts
+            };
+          });
+
+          setArticles(formattedArticles);
+          return;
+        }
+      } catch (err) {
+        // fallback to client-side Supabase if server endpoint unavailable
+      }
+
       // If Supabase wasn't configured at build time (common in Bolt/StackBlitz),
       // fall back to the bundled `launchArticles` so the site still shows content.
       if (!SUPABASE_CONFIGURED) {
         setArticles(launchArticles);
         return;
       }
+
       const { data: articlesData, error: articlesError } = await supabase
         .from('articles')
         .select('*')

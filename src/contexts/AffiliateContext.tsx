@@ -46,6 +46,32 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const fetchProducts = async () => {
     try {
       setLoading(true);
+      // Prefer server-side public endpoint
+      try {
+        const res = await fetch('/api/content');
+        if (res.ok) {
+          const json = await res.json();
+          const productsData = json.products || [];
+          const formattedProducts: AffiliateProduct[] = (productsData || []).map((product: DBProduct) => ({
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            price: product.price ? `$${product.price}` : '',
+            originalPrice: product.original_price ? `$${product.original_price}` : undefined,
+            image: product.image_url,
+            affiliateUrl: product.amazon_url,
+            rating: product.rating || 0,
+            provider: 'amazon' as const,
+            category: product.category,
+            commission: 10.0
+          }));
+          setProducts(formattedProducts);
+          return;
+        }
+      } catch (err) {
+        // fallback to client-side supabase
+      }
+
       const { data, error } = await supabase
         .from('products')
         .select('*')

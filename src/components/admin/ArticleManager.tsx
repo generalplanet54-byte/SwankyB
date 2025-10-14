@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
-import { Plus, CreditCard as Edit, Trash2, Eye, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Plus, CreditCard as Edit, Trash2, Eye } from 'lucide-react';
 import { useContent } from '../../contexts/ContentContext';
 import { Link } from 'react-router-dom';
 
 const ArticleManager: React.FC = () => {
   const { articles, deleteArticle } = useContent();
+  const [adminArticles, setAdminArticles] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await fetch('/api/admin/articles', { credentials: 'include' });
+        if (!mounted) return;
+        if (res.ok) {
+          const data = await res.json();
+          setAdminArticles(data.articles || []);
+        }
+      } catch (err) {
+        // ignore, use client-side articles
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -18,9 +36,28 @@ const ArticleManager: React.FC = () => {
   });
 
   const handleDeleteArticle = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this article?')) {
-      deleteArticle(id);
-    }
+    if (!window.confirm('Are you sure you want to delete this article?')) return;
+    (async () => {
+      try {
+        const res = await fetch('/api/admin/articles', {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        if (res.ok) {
+          await res.json().catch(() => null);
+          setAdminArticles(prev => (prev || []).filter(a => a.id !== id));
+          // also update client-side fallback
+          deleteArticle(id);
+        } else {
+          const err = await res.json().catch(() => ({}));
+          alert(err.error || 'Failed to delete');
+        }
+      } catch (err) {
+        alert('Network error while deleting article');
+      }
+    })();
   };
 
   return (
@@ -30,7 +67,33 @@ const ArticleManager: React.FC = () => {
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
           Article Management
         </h2>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+        <button
+          onClick={async () => {
+            const title = prompt('Title');
+            if (!title) return;
+            const slug = prompt('Slug (url-friendly)') || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            const excerpt = prompt('Excerpt') || '';
+            const content = prompt('Content (HTML)') || '';
+            const author = prompt('Author', 'Admin') || 'Admin';
+            try {
+              const res = await fetch('/api/admin/articles', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, slug, excerpt, content, author, category: 'Tech', tags: [], is_published: true })
+              });
+              if (res.ok) {
+                const data = await res.json();
+                setAdminArticles(prev => [data.article, ...(prev || [])]);
+              } else {
+                const err = await res.json().catch(() => ({}));
+                alert(err.error || 'Failed to create article');
+              }
+            } catch (err) { alert('Network error'); }
+          }
+          }
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200"
+        >
           <Plus className="h-5 w-5" />
           <span>New Article</span>
         </button>
@@ -98,7 +161,7 @@ const ArticleManager: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredArticles.map((article) => (
+            {(adminArticles || filteredArticles).map((article) => (
               <tr key={article.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
                 <td className="p-4">
                   <div>
@@ -136,6 +199,25 @@ const ArticleManager: React.FC = () => {
                       <Eye className="h-4 w-4" />
                     </Link>
                     <button
+                      onClick={async () => {
+                        const newTitle = prompt('Title', article.title) || article.title;
+                        const updates = { title: newTitle };
+                        try {
+                          const res = await fetch('/api/admin/articles', {
+                            method: 'PUT',
+                            credentials: 'include',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: article.id, updates })
+                          });
+                          if (res.ok) {
+                            const json = await res.json();
+                            setAdminArticles(prev => (prev || []).map(a => a.id === article.id ? json.article : a));
+                          } else {
+                            const err = await res.json().catch(() => ({}));
+                            alert(err.error || 'Failed to update');
+                          }
+                        } catch (err) { alert('Network error'); }
+                      }}
                       className="p-1 text-gray-500 hover:text-green-600 transition-colors duration-200"
                       title="Edit Article"
                     >

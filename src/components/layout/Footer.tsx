@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Zap, Mail, Twitter, Instagram, Youtube, Facebook } from 'lucide-react';
 
@@ -18,6 +18,22 @@ const Footer: React.FC = () => {
   };
 
   const currentYear = new Date().getFullYear();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await fetch('/api/admin/me', { credentials: 'include' });
+        if (!mounted) return;
+        setIsAdmin(res.ok);
+      } catch (err) {
+        if (!mounted) return;
+        setIsAdmin(false);
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -109,7 +125,9 @@ const Footer: React.FC = () => {
               <li><Link to="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">Terms of Service</Link></li>
               <li><Link to="/affiliate-disclosure" className="text-gray-400 hover:text-white transition-colors duration-200">Affiliate Disclosure</Link></li>
               <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors duration-200">Contact Us</Link></li>
-              <li><Link to="/admin" className="text-gray-400 hover:text-white transition-colors duration-200">Admin</Link></li>
+              {isAdmin && (
+                <li><Link to="/admin" className="text-gray-400 hover:text-white transition-colors duration-200">Admin</Link></li>
+              )}
             </ul>
           </div>
         </div>

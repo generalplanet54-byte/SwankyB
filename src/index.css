@@ -1,3 +1,87 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom article content styles to ensure readability */
+@layer utilities {
+  .article-content {
+    /* Ensure headings are properly styled and visible */
+    & h1, & h2, & h3, & h4, & h5, & h6 {
+      @apply font-bold tracking-tight text-gray-900 dark:text-white;
+      margin-top: 1.5em;
+      margin-bottom: 0.75em;
+    }
+    
+    & h1 {
+      @apply text-4xl;
+      margin-top: 2em;
+      margin-bottom: 1em;
+    }
+    
+    & h2 {
+      @apply text-3xl;
+      margin-top: 1.75em;
+      margin-bottom: 0.875em;
+    }
+    
+    & h3 {
+      @apply text-2xl;
+      margin-top: 1.5em;
+      margin-bottom: 0.75em;
+    }
+    
+    & h4 {
+      @apply text-xl;
+      margin-top: 1.25em;
+      margin-bottom: 0.625em;
+    }
+    
+    /* Ensure paragraphs have proper styling and spacing */
+    & p {
+      @apply text-gray-800 dark:text-gray-200 leading-relaxed;
+      margin-bottom: 1em;
+      line-height: 1.7;
+    }
+    
+    /* Style lists properly */
+    & ul, & ol {
+      @apply text-gray-800 dark:text-gray-200;
+      margin-bottom: 1em;
+    }
+    
+    & li {
+      @apply text-gray-800 dark:text-gray-200;
+      margin-bottom: 0.5em;
+    }
+    
+    /* Ensure strong/bold text is visible */
+    & strong, & b {
+      @apply text-gray-900 dark:text-white font-semibold;
+    }
+    
+    /* Links styling */
+    & a {
+      @apply text-blue-600 dark:text-blue-400 hover:underline;
+    }
+    
+    /* Blockquote styling */
+    & blockquote {
+      @apply border-l-4 border-blue-500 pl-4 text-gray-700 dark:text-gray-300 italic;
+      margin: 1.5em 0;
+    }
+    
+    /* Code styling */
+    & code {
+      @apply bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-1 py-0.5 rounded text-sm;
+    }
+    
+    & pre {
+      @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto;
+      margin: 1em 0;
+    }
+    
+    & pre code {
+      @apply bg-transparent p-0;
+    }
+  }
+}

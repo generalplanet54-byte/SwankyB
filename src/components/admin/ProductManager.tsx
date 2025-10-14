@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, CreditCard as Edit, Trash2, ExternalLink, Star } from 'lucide-react';
 import { useAffiliate } from '../../contexts/AffiliateContext';
 
 const ProductManager: React.FC = () => {
   const { products, deleteProduct } = useAffiliate();
   const [searchTerm, setSearchTerm] = useState('');
+  const [adminProducts, setAdminProducts] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await fetch('/api/admin/products', { credentials: 'include' });
+        if (!mounted) return;
+        if (res.ok) {
+          const data = await res.json();
+          setAdminProducts(data.products || []);
+        }
+      } catch (err) {
+        // ignore - fallback to client products
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const categories = ['all', 'Tech Gadgets', 'Lifestyle', 'Productivity', 'Fitness', 'Luxury Accessories'];
@@ -16,9 +34,27 @@ const ProductManager: React.FC = () => {
   });
 
   const handleDeleteProduct = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
-      deleteProduct(id);
-    }
+    if (!window.confirm('Are you sure you want to delete this product?')) return;
+    (async () => {
+      try {
+        const res = await fetch('/api/admin/products', {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        if (res.ok) {
+          await res.json().catch(() => null);
+          setAdminProducts(prev => (prev || []).filter(p => p.id !== id));
+          deleteProduct(id);
+        } else {
+          const err = await res.json().catch(() => ({}));
+          alert(err.error || 'Failed to delete');
+        }
+      } catch (err) {
+        alert('Network error while deleting product');
+      }
+    })();
   };
 
   const renderStars = (rating: number) => {
@@ -41,7 +77,31 @@ const ProductManager: React.FC = () => {
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
           Product Management
         </h2>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+        <button
+          onClick={async () => {
+            const name = prompt('Product name');
+            if (!name) return;
+            const slug = prompt('Slug') || name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            const price = parseFloat(prompt('Price', '0') || '0');
+            const amazon_url = prompt('Affiliate URL', '') || '';
+            try {
+              const res = await fetch('/api/admin/products', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, slug, description: '', category: 'Tech', price, amazon_url, image_url: '' })
+              });
+              if (res.ok) {
+                const data = await res.json();
+                setAdminProducts(prev => [data.product, ...(prev || [])]);
+              } else {
+                const err = await res.json().catch(() => ({}));
+                alert(err.error || 'Failed to create product');
+              }
+            } catch (err) { alert('Network error'); }
+          }}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200"
+        >
           <Plus className="h-5 w-5" />
           <span>Add Product</span>
         </button>
@@ -99,7 +159,7 @@ const ProductManager: React.FC = () => {
 
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProducts.map((product) => (
+  {(adminProducts || filteredProducts).map((product) => (
           <div key={product.id} className="bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden">
             <div className="relative">
               <img
@@ -154,6 +214,25 @@ const ProductManager: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <button
+                    onClick={async () => {
+                      const newName = prompt('Name', product.name) || product.name;
+                      const updates = { name: newName };
+                      try {
+                        const res = await fetch('/api/admin/products', {
+                          method: 'PUT',
+                          credentials: 'include',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ id: product.id, updates })
+                        });
+                        if (res.ok) {
+                          const json = await res.json();
+                          setAdminProducts(prev => (prev || []).map(p => p.id === product.id ? json.product : p));
+                        } else {
+                          const err = await res.json().catch(() => ({}));
+                          alert(err.error || 'Failed to update');
+                        }
+                      } catch (err) { alert('Network error'); }
+                    }}
                     className="p-1 text-gray-500 hover:text-green-600 transition-colors duration-200"
                     title="Edit Product"
                   >
