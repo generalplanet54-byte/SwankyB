@@ -7,7 +7,7 @@ export interface SitemapUrl {
   priority: string;
 }
 
-export const generateSitemapUrls = (domain: string = 'https://swankyb.com'): SitemapUrl[] => {
+export const generateSitemapUrls = (domain: string = 'https://swankyboyz.com'): SitemapUrl[] => {
   const currentDate = new Date().toISOString().split('T')[0];
   
   // Static routes
@@ -65,7 +65,7 @@ export const generateSitemapXML = (urls: SitemapUrl[]): string => {
  * @param domain - The base domain for the website
  * @returns XML sitemap as a string
  */
-export const generateCompleteSitemap = (domain: string = 'https://swankyb.com'): string => {
+export const generateCompleteSitemap = (domain: string = 'https://swankyboyz.com'): string => {
   const urls = generateSitemapUrls(domain);
   return generateSitemapXML(urls);
 };
@@ -75,7 +75,7 @@ export const generateCompleteSitemap = (domain: string = 'https://swankyb.com'):
  * @param domain - The base domain for the website
  * @returns Object with sitemap statistics
  */
-export const getSitemapStats = (domain: string = 'https://swankyb.com') => {
+export const getSitemapStats = (domain: string = 'https://swankyboyz.com') => {
   const urls = generateSitemapUrls(domain);
   
   const stats = {

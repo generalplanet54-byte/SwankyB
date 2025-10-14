@@ -93,7 +93,7 @@ const extractArticlesFromFile = () => {
   }
 };
 
-const DOMAIN = 'https://swankyb.com'; // Replace with your actual domain
+const DOMAIN = 'https://swankyboyz.com'; // Replace with your actual domain
 const LAST_MOD = new Date().toISOString().split('T')[0];
 
 // Get articles data
