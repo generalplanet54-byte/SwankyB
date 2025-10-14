@@ -1,23 +1,51 @@
 import React, { useState } from 'react';
 import { Zap, Image, FileText, Wand2, Download } from 'lucide-react';
 import { useContent } from '../../contexts/ContentContext';
+import { useAffiliate } from '../../contexts/AffiliateContext';
 
 const AIContentGenerator: React.FC = () => {
   const { generateArticle, addArticle, categories } = useContent();
+  const { products } = useAffiliate();
   const [topic, setTopic] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedContent, setGeneratedContent] = useState<any>(null);
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [affiliateOverrides, setAffiliateOverrides] = useState<Record<string,string>>({});
 
   const handleGenerateArticle = async () => {
     if (!topic.trim()) return;
 
     setIsGenerating(true);
     try {
-      const article = await generateArticle(topic, selectedCategory);
-      setGeneratedContent(article);
+      const res = await fetch('/api/admin/generate-article', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic, category: selectedCategory })
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const article = json.article;
+        // Normalize fields for frontend preview
+        const normalized = {
+          ...article,
+          title: article.title || `The Ultimate Guide to ${topic}`,
+          excerpt: article.excerpt || article.seoDescription || '',
+          content: article.content || article.html || '',
+          readTime: article.readTime || article.read_time || '6 min read',
+          seoTitle: article.seoTitle || article.meta_title || '',
+          seoDescription: article.seoDescription || article.meta_description || '',
+        };
+        setGeneratedContent(normalized);
+      } else {
+        const err = await res.json().catch(() => ({}));
+        console.error('Generation error:', err.error || 'Unknown');
+        alert('Failed to generate article: ' + (err.error || 'Unknown'));
+      }
     } catch (error) {
       console.error('Failed to generate article:', error);
+      alert('Failed to generate article: ' + (error as any).message);
     } finally {
       setIsGenerating(false);
     }
@@ -25,11 +53,38 @@ const AIContentGenerator: React.FC = () => {
 
   const handlePublishArticle = () => {
     if (generatedContent) {
-      addArticle(generatedContent);
+      // Attach selected products and apply affiliate URL overrides
+      const affiliateProducts = (selectedProducts || []).map(pid => {
+        const prod = products.find(p => p.id === pid);
+        if (!prod) return null;
+        return {
+          id: prod.id,
+          name: prod.name,
+          description: prod.description,
+          price: prod.price,
+          originalPrice: prod.originalPrice,
+          image: prod.image,
+          affiliateUrl: affiliateOverrides[pid] || prod.affiliateUrl,
+          rating: prod.rating,
+          provider: prod.provider,
+          category: prod.category
+        };
+      }).filter(Boolean);
+
+      const articleToAdd = { ...generatedContent, affiliateProducts };
+      addArticle(articleToAdd);
       setGeneratedContent(null);
       setTopic('');
       alert('Article published successfully!');
     }
+  };
+
+  const toggleProductSelection = (id: string) => {
+    setSelectedProducts(prev => prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]);
+  };
+
+  const handleAffiliateOverrideChange = (id: string, url: string) => {
+    setAffiliateOverrides(prev => ({ ...prev, [id]: url }));
   };
 
   const handleGenerateImage = () => {
@@ -194,6 +249,31 @@ const AIContentGenerator: React.FC = () => {
               <p className="text-gray-800 dark:text-gray-200">
                 {generatedContent.content.replace(/<[^>]*>/g, '').substring(0, 200)}...
               </p>
+            </div>
+
+            {/* Product selection for affiliate placement */}
+            <div className="mt-6">
+              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Select Related Products</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {products.map(prod => (
+                  <label key={prod.id} className={`p-3 rounded-lg border ${selectedProducts.includes(prod.id) ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 dark:border-gray-700'} flex items-start space-x-3`}>
+                    <input type="checkbox" checked={selectedProducts.includes(prod.id)} onChange={() => toggleProductSelection(prod.id)} className="mt-1" />
+                    <div>
+                      <div className="font-medium text-gray-900 dark:text-white">{prod.name}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">{prod.category} • {prod.price}</div>
+                      <div className="mt-2">
+                        <label className="text-xs text-gray-600 dark:text-gray-300">Affiliate URL override (optional)</label>
+                        <input
+                          value={affiliateOverrides[prod.id] || ''}
+                          onChange={(e) => handleAffiliateOverrideChange(prod.id, e.target.value)}
+                          placeholder={prod.affiliateUrl}
+                          className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+                        />
+                      </div>
+                    </div>
+                  </label>
+                ))}
+              </div>
             </div>
           </div>
         </div>
