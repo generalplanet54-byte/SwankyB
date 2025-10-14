@@ -1,8 +1,6 @@
-/* The following directives require Tailwind CSS processing via PostCSS or a compatible build tool */
-/* @tailwind directives removed: ensure Tailwind CSS is used in your build process if needed */
-/* base styles would go here */
-/* component styles would go here */
-/* utility styles would go here */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Custom article content styles to ensure readability */
 @layer utilities {
@@ -12,109 +10,76 @@
   .article-content h4,
   .article-content h5,
   .article-content h6 {
-    font-weight: bold;
-    letter-spacing: -0.015em;
-    color: #111827;
+    @apply font-bold tracking-tight text-gray-900 dark:text-white;
     margin-top: 1.5em;
     margin-bottom: 0.75em;
   }
 
   .article-content h1 {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+    @apply text-4xl;
     margin-top: 2em;
     margin-bottom: 1em;
-    /* @apply text-3xl; */
   }
 
   .article-content h2 {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
+    @apply text-3xl;
     margin-top: 1.75em;
     margin-bottom: 0.875em;
-    /* @apply text-3xl; */
   }
 
   .article-content h3 {
-    font-size: 1.5rem;
-    line-height: 2rem;
+    @apply text-2xl;
     margin-top: 1.5em;
     margin-bottom: 0.75em;
-    /* @apply text-2xl; */
   }
 
   .article-content h4 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+    @apply text-xl;
     margin-top: 1.25em;
     margin-bottom: 0.625em;
-    color: #1f2937;
-    /* @apply text-xl; */
   }
 
   .article-content p {
-    /* @apply text-gray-800 dark:text-gray-200 leading-relaxed; */
-    color: #1f2937;
+    @apply text-gray-800 dark:text-gray-200 leading-relaxed;
     margin-bottom: 1em;
+    line-height: 1.7;
   }
 
   .article-content ul,
   .article-content ol {
-    color: #1f2937;
+    @apply text-gray-800 dark:text-gray-200;
     margin-bottom: 1em;
   }
 
   .article-content li {
-    color: #111827;
-    font-weight: 600;
+    @apply text-gray-800 dark:text-gray-200;
     margin-bottom: 0.5em;
   }
 
   .article-content a {
-    color: #2563eb;
-    text-decoration: underline;
-    background-color: transparent;
-    padding: 0;
-    border-radius: 0.25rem;
+    @apply text-blue-600 dark:text-blue-400 hover:underline;
   }
 
   .article-content strong,
   .article-content b {
-    /* @apply text-gray-900 dark:text-white font-semibold; */
-    font-weight: 600;
-    color: #111827;
+    @apply text-gray-900 dark:text-white font-semibold;
   }
 
   .article-content blockquote {
-    /* @apply border-l-4 border-blue-500 pl-4 text-gray-700 dark:text-gray-300 italic; */
-    border-left: 4px solid #3b82f6;
-    padding-left: 1rem;
-    color: #374151;
-    font-style: italic;
+    @apply border-l-4 border-blue-500 pl-4 text-gray-700 dark:text-gray-300 italic;
     margin: 1.5em 0;
   }
 
   .article-content code {
-    /* @apply bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-1 py-0.5 rounded text-sm; */
-    background-color: #f3f4f6;
-    color: #111827;
-    padding: 0.125rem 0.25rem;
-    border-radius: 0.25rem;
-    font-size: 0.95em;
+    @apply bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-1 py-0.5 rounded text-sm;
   }
 
   .article-content pre {
-    /* @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto; */
-    background-color: #f3f4f6;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    overflow-x: auto;
+    @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto;
     margin: 1em 0;
   }
 
   .article-content pre code {
-    /* @apply bg-transparent p-0; */
-    background-color: transparent;
-    padding: 0;
+    @apply bg-transparent p-0;
   }
 }
