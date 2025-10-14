@@ -1,87 +1,120 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* The following directives require Tailwind CSS processing via PostCSS or a compatible build tool */
+/* @tailwind directives removed: ensure Tailwind CSS is used in your build process if needed */
+/* base styles would go here */
+/* component styles would go here */
+/* utility styles would go here */
 
 /* Custom article content styles to ensure readability */
 @layer utilities {
-  .article-content {
-    /* Ensure headings are properly styled and visible */
-    & h1, & h2, & h3, & h4, & h5, & h6 {
-      @apply font-bold tracking-tight text-gray-900 dark:text-white;
-      margin-top: 1.5em;
-      margin-bottom: 0.75em;
-    }
-    
-    & h1 {
-      @apply text-4xl;
-      margin-top: 2em;
-      margin-bottom: 1em;
-    }
-    
-    & h2 {
-      @apply text-3xl;
-      margin-top: 1.75em;
-      margin-bottom: 0.875em;
-    }
-    
-    & h3 {
-      @apply text-2xl;
-      margin-top: 1.5em;
-      margin-bottom: 0.75em;
-    }
-    
-    & h4 {
-      @apply text-xl;
-      margin-top: 1.25em;
-      margin-bottom: 0.625em;
-    }
-    
-    /* Ensure paragraphs have proper styling and spacing */
-    & p {
-      @apply text-gray-800 dark:text-gray-200 leading-relaxed;
-      margin-bottom: 1em;
-      line-height: 1.7;
-    }
-    
-    /* Style lists properly */
-    & ul, & ol {
-      @apply text-gray-800 dark:text-gray-200;
-      margin-bottom: 1em;
-    }
-    
-    & li {
-      @apply text-gray-800 dark:text-gray-200;
-      margin-bottom: 0.5em;
-    }
-    
-    /* Ensure strong/bold text is visible */
-    & strong, & b {
-      @apply text-gray-900 dark:text-white font-semibold;
-    }
-    
-    /* Links styling */
-    & a {
-      @apply text-blue-600 dark:text-blue-400 hover:underline;
-    }
-    
-    /* Blockquote styling */
-    & blockquote {
-      @apply border-l-4 border-blue-500 pl-4 text-gray-700 dark:text-gray-300 italic;
-      margin: 1.5em 0;
-    }
-    
-    /* Code styling */
-    & code {
-      @apply bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-1 py-0.5 rounded text-sm;
-    }
-    
-    & pre {
-      @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto;
-      margin: 1em 0;
-    }
-    
-    & pre code {
-      @apply bg-transparent p-0;
-    }
+  .article-content h1,
+  .article-content h2,
+  .article-content h3,
+  .article-content h4,
+  .article-content h5,
+  .article-content h6 {
+    font-weight: bold;
+    letter-spacing: -0.015em;
+    color: #111827;
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+  }
+
+  .article-content h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    /* @apply text-3xl; */
+  }
+
+  .article-content h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    margin-top: 1.75em;
+    margin-bottom: 0.875em;
+    /* @apply text-3xl; */
+  }
+
+  .article-content h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+    /* @apply text-2xl; */
+  }
+
+  .article-content h4 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin-top: 1.25em;
+    margin-bottom: 0.625em;
+    color: #1f2937;
+    /* @apply text-xl; */
+  }
+
+  .article-content p {
+    /* @apply text-gray-800 dark:text-gray-200 leading-relaxed; */
+    color: #1f2937;
+    margin-bottom: 1em;
+  }
+
+  .article-content ul,
+  .article-content ol {
+    color: #1f2937;
+    margin-bottom: 1em;
+  }
+
+  .article-content li {
+    color: #111827;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+  }
+
+  .article-content a {
+    color: #2563eb;
+    text-decoration: underline;
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0.25rem;
+  }
+
+  .article-content strong,
+  .article-content b {
+    /* @apply text-gray-900 dark:text-white font-semibold; */
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .article-content blockquote {
+    /* @apply border-l-4 border-blue-500 pl-4 text-gray-700 dark:text-gray-300 italic; */
+    border-left: 4px solid #3b82f6;
+    padding-left: 1rem;
+    color: #374151;
+    font-style: italic;
+    margin: 1.5em 0;
+  }
+
+  .article-content code {
+    /* @apply bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-1 py-0.5 rounded text-sm; */
+    background-color: #f3f4f6;
+    color: #111827;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.95em;
+  }
+
+  .article-content pre {
+    /* @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto; */
+    background-color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1em 0;
+  }
+
+  .article-content pre code {
+    /* @apply bg-transparent p-0; */
+    background-color: transparent;
+    padding: 0;
   }
 }
