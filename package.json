@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate-sitemap": "node scripts/generate-sitemap.js"
+    "generate-sitemap": "node scripts/generate-sitemap.js",
+    "sync-bolt-content": "node scripts/sync-bolt-content.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
