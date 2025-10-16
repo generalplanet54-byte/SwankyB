@@ -1,14 +1,14 @@
 import { seoDefaults } from './config';
 import type { JsonLd, MetaTag, SeoInput } from './types';
 
-const joinUrl = (base: string, path: string | undefined) => {
+const resolveUrl = (base: string, path: string | undefined) => {
   if (!path) return base;
   if (path.startsWith('http')) return path;
   return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
 };
 
 export const resolveSeo = (input: SeoInput = {}) => {
-  const canonical = joinUrl(seoDefaults.baseUrl, input.canonical);
+  const canonical = resolveUrl(seoDefaults.baseUrl, input.canonical);
 
   return {
     title: input.title ?? seoDefaults.siteName,
