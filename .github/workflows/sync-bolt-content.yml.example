@@ -1,0 +1,68 @@
+name: Sync Bolt AI Content
+
+# This is an EXAMPLE workflow for automatically syncing content from Bolt AI database
+# To enable this workflow:
+# 1. Rename this file from sync-bolt-content.yml.example to sync-bolt-content.yml
+# 2. Add repository secrets in GitHub Settings > Secrets and variables > Actions:
+#    - BOLT_DATABASE_URL
+#    - BOLT_DATABASE_ANON_KEY
+# 3. Commit and push the renamed file
+
+on:
+  # Run automatically every day at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * *'
+  
+  # Allow manual triggering from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync-content:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Sync content from Bolt AI database
+        run: npm run sync-bolt-content
+        env:
+          VITE_BOLT_DATABASE_URL: ${{ secrets.BOLT_DATABASE_URL }}
+          VITE_BOLT_DATABASE_ANON_KEY: ${{ secrets.BOLT_DATABASE_ANON_KEY }}
+      
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code src/data/launchArticles.ts || echo "changed=true" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push changes
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add src/data/launchArticles.ts
+          git commit -m "chore: sync content from Bolt AI database [skip ci]"
+          git push
+      
+      - name: Create summary
+        run: |
+          echo "## Bolt AI Content Sync" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.git-check.outputs.changed }}" == "true" ]; then
+            echo "✅ Content was synced and committed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No changes detected - content is up to date" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Sync completed at: $(date)" >> $GITHUB_STEP_SUMMARY
