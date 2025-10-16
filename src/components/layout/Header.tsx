@@ -9,6 +9,11 @@ const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
+  const primaryLinks = [
+    { name: 'Journal', href: '/articles' },
+    { name: 'Reviews', href: '/reviews' }
+  ];
+
   const categories = [
     { name: 'Skincare', slug: 'skincare' },
     { name: 'Audio', slug: 'audio' },
@@ -39,6 +44,15 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
+            {primaryLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-semibold"
+              >
+                {link.name}
+              </Link>
+            ))}
             {categories.map((category) => (
               <Link
                 key={category.slug}
@@ -94,6 +108,16 @@ const Header: React.FC = () => {
         {isMenuOpen && (
           <div className="lg:hidden py-4 border-t border-gray-200 dark:border-gray-700">
             <nav className="flex flex-col space-y-4">
+              {primaryLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-semibold"
+                >
+                  {link.name}
+                </Link>
+              ))}
               {categories.map((category) => (
                 <Link
                   key={category.slug}

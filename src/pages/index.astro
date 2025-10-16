@@ -1,17 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../sections/Hero.astro';
+import ProductSpotlights from '../sections/ProductSpotlights.astro';
 import About from '../sections/About.astro';
+import EditorialSpotlight from '../sections/EditorialSpotlight.astro';
 import Experience from '../sections/Experience.astro';
 import Gallery from '../sections/Gallery.astro';
 import Book from '../sections/Book.astro';
 import Contact from '../sections/Contact.astro';
 import Footer from '../components/Footer.astro';
+import { spotlightProducts } from '../data/spotlightProducts';
+import { buildProductCollectionJsonLd } from '../lib/seo/meta';
+
+const homepageStructuredData = buildProductCollectionJsonLd(spotlightProducts);
 ---
 
 <Layout
   title="SwankyBoyz — Luxury grooming, bold experiences, definitive taste"
   description="SwankyBoyz curates elite grooming rituals, wardrobe playbooks, and concierge experiences engineered for modern gentlemen who own every room."
+  structuredData={homepageStructuredData}
 >
   <main>
     <Hero
@@ -21,7 +28,9 @@ import Footer from '../components/Footer.astro';
       ctaPrimary={{ label: 'Explore the experience', href: '#experience' }}
       ctaSecondary={{ label: 'Join the list', href: '#contact' }}
     />
+    <ProductSpotlights />
     <About />
+    <EditorialSpotlight />
     <Experience />
     <Gallery />
     <Book />

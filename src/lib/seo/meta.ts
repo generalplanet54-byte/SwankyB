@@ -1,6 +1,29 @@
 import { seoDefaults } from './config';
 import type { JsonLd, MetaTag, SeoInput } from './types';
 
+export interface ProductForJsonLd {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  image: string;
+  brand: string;
+  price: number;
+  priceCurrency?: string;
+  ratingValue: number;
+  reviewCount: number;
+  reviewBody: string;
+  author: string;
+  availability?: string;
+  asin?: string;
+}
+
+const defaultAvailability = 'https://schema.org/InStock';
+const defaultCurrency = 'USD';
+
+const formatRating = (rating: number) => Number(rating.toFixed(1));
+const formatPrice = (price: number) => price.toFixed(2);
+
 const resolveUrl = (base: string, path: string | undefined) => {
   if (!path) return base;
   if (path.startsWith('http')) return path;
@@ -116,5 +139,77 @@ export const buildArticleJsonLd = (input: SeoInput): JsonLd | null => {
       url: seoDefaults.baseUrl,
     },
     image: seo.image?.src,
+  } satisfies JsonLd;
+};
+
+export const buildProductReviewJsonLd = (product: ProductForJsonLd): JsonLd => {
+  const availability = product.availability ?? defaultAvailability;
+  const priceCurrency = product.priceCurrency ?? defaultCurrency;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    sku: product.id,
+    ...(product.asin ? { mpn: product.asin } : {}),
+    name: product.name,
+    image: product.image,
+    description: product.description,
+    brand: {
+      '@type': 'Brand',
+      name: product.brand,
+    },
+    url: product.url,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: formatRating(product.ratingValue),
+      reviewCount: product.reviewCount,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    review: {
+      '@type': 'Review',
+      reviewBody: product.reviewBody,
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: formatRating(product.ratingValue),
+        bestRating: 5,
+        worstRating: 1,
+      },
+      author: {
+        '@type': 'Person',
+        name: product.author,
+      },
+    },
+    offers: {
+      '@type': 'Offer',
+      url: product.url,
+      price: formatPrice(product.price),
+      priceCurrency,
+      availability,
+    },
+  } satisfies JsonLd;
+};
+
+export const buildProductCollectionJsonLd = (products: ProductForJsonLd[]): JsonLd => {
+  const itemListElement = products.map((product, index) => {
+    const productSchema = buildProductReviewJsonLd(product);
+    const { ['@context']: _context, ...productWithoutContext } = productSchema as Record<string, unknown>;
+
+    return {
+      '@type': 'ListItem',
+      position: index + 1,
+      name: product.name,
+      url: product.url,
+      item: productWithoutContext,
+    };
+  });
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'SwankyBoyz Grooming Spotlight',
+    description: 'Curated grooming essentials reviewed by the SwankyBoyz editorial desk.',
+    itemListOrder: 'https://schema.org/ItemListOrderAscending',
+    itemListElement,
   } satisfies JsonLd;
 };

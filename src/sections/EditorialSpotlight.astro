@@ -1,0 +1,56 @@
+---
+import { launchArticles } from '../data/launchArticles';
+
+const featuredArticles = launchArticles.filter((article) => article.featured).slice(0, 3);
+---
+<section id="editorial" class="bg-charcoal py-24">
+  <div class="container space-y-12">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl space-y-4">
+        <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">Journal Highlights</p>
+        <h2 class="font-display text-4xl leading-tight text-off-white sm:text-5xl">
+          The intelligence shaping how modern gentlemen live, dress, and invest in themselves.
+        </h2>
+        <p class="text-base text-off-white/70">
+          Long form reports, field tested routines, and product breakdowns crafted by the SwankyBoyz editorial desk.
+        </p>
+      </div>
+      <a
+        class="inline-flex items-center gap-3 self-start rounded-full border border-off-white/30 px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-off-white transition hover:border-champagne/80 hover:text-champagne"
+        href="/articles"
+      >
+        View all features
+      </a>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+      {featuredArticles.map((article) => (
+        <article class="flex h-full flex-col overflow-hidden rounded-3xl border border-off-white/10 bg-[#161616]">
+          <img
+            src={article.featuredImage}
+            alt={article.title}
+            loading="lazy"
+            class="h-56 w-full object-cover"
+          />
+          <div class="flex flex-1 flex-col gap-6 p-8">
+            <div class="space-y-3">
+              <p class="text-xs uppercase tracking-[0.3em] text-champagne/80">{article.category}</p>
+              <h3 class="font-display text-2xl text-off-white">{article.title}</h3>
+              <p class="text-sm text-off-white/70">{article.excerpt}</p>
+            </div>
+            <div class="mt-auto flex items-center justify-between text-xs uppercase tracking-[0.25em] text-off-white/50">
+              <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+              <span>{article.readTime}</span>
+            </div>
+            <a
+              class="inline-flex items-center justify-center rounded-full border border-off-white/30 px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-off-white transition hover:border-champagne/80 hover:text-champagne"
+              href={`/articles/${article.slug}`}
+            >
+              Read the guide
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

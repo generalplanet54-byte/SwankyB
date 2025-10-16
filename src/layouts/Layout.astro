@@ -1,3 +1,4 @@
+import Header from '../components/Header.astro';
 import type { SeoInput } from '../lib/seo';
 import {
   buildArticleJsonLd,
@@ -50,7 +51,48 @@ const additionalJsonLd = props.structuredData
     ))}
   </head>
   <body class="min-h-screen bg-charcoal text-off-white">
+    <Header />
     <slot />
+
+    <script is:inline>
+      const endpoint = '/api/affiliate-click';
+
+      const hashAffiliateClick = (anchor) => {
+        const payload = {
+          productId: anchor.dataset.affiliateId || null,
+          productName: anchor.dataset.affiliateName || null,
+          productUrl: anchor.dataset.affiliateProductUrl || null,
+          affiliateUrl: anchor.dataset.affiliateUrl || anchor.href,
+          source: anchor.dataset.affiliateSource || window.location.pathname,
+        };
+
+        const body = JSON.stringify(payload);
+
+        if (navigator.sendBeacon) {
+          const blob = new Blob([body], { type: 'application/json' });
+          navigator.sendBeacon(endpoint, blob);
+        } else {
+          fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body,
+            keepalive: true,
+          }).catch(() => {});
+        }
+      };
+
+      const registerAffiliateLinks = () => {
+        document.querySelectorAll('[data-affiliate-link]').forEach((anchor) => {
+          anchor.addEventListener('click', () => hashAffiliateClick(anchor), { passive: true });
+        });
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', registerAffiliateLinks);
+      } else {
+        registerAffiliateLinks();
+      }
+    </script>
 
     {analyticsToken && (
       <script

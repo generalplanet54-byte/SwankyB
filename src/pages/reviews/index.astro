@@ -1,0 +1,85 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { spotlightProducts } from '../../data/spotlightProducts';
+import { buildProductCollectionJsonLd } from '../../lib/seo/meta';
+
+const productCollectionStructuredData = buildProductCollectionJsonLd(spotlightProducts);
+---
+<Layout
+  title="Product Reviews | SwankyBoyz"
+  description="Hands on reviews of grooming essentials tested by the SwankyBoyz editorial team."
+  canonical="/reviews"
+  structuredData={productCollectionStructuredData}
+>
+  <main class="bg-[#101010] py-24">
+    <div class="container space-y-16">
+      <header class="max-w-3xl space-y-4 text-off-white">
+        <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">Editor Benchmarks</p>
+        <h1 class="font-display text-4xl leading-tight sm:text-5xl">
+          Grooming hardware that masters performance, longevity, and polish.
+        </h1>
+        <p class="text-base text-off-white/70">
+          We spend weeks with every tool before recommending it. Expect detailed testing notes, maintenance tips, and
+          honest tradeoffs.
+        </p>
+      </header>
+
+      <div class="rounded-3xl border border-off-white/10 bg-charcoal/80 p-6 text-sm text-off-white/70">
+        <strong class="font-semibold uppercase tracking-[0.25em] text-champagne/80">Affiliate disclosure:</strong>
+        <span class="ml-2">
+          SwankyBoyz participates in the Amazon Services LLC Associates Program. We may earn a commission when you buy
+          through links on our site. Pricing and availability can change at the retailer's discretion.
+        </span>
+      </div>
+
+      <div class="grid gap-10 lg:grid-cols-3">
+        {spotlightProducts.map((product) => (
+          <article class="flex h-full flex-col rounded-3xl border border-off-white/10 bg-charcoal/70 p-8">
+            <img
+              src={product.image}
+              alt={product.name}
+              loading="lazy"
+              class="h-56 w-full rounded-2xl object-cover"
+            />
+            <div class="mt-6 flex flex-1 flex-col gap-4 text-off-white/80">
+              <p class="text-xs uppercase tracking-[0.3em] text-champagne/80">{product.tagline}</p>
+              <h2 class="font-display text-2xl text-off-white">{product.name}</h2>
+              <p class="text-sm">{product.summary}</p>
+              <div class="mt-2 flex items-center justify-between text-sm">
+                <span>Rating {product.ratingValue.toFixed(1)} / 5</span>
+                <span>{product.reviewCount.toLocaleString()} reader impressions</span>
+              </div>
+              <div class="mt-auto flex flex-wrap gap-3 text-xs uppercase tracking-[0.25em] text-off-white/60">
+                {product.badges.map((badge) => (
+                  <span class="rounded-full border border-off-white/20 px-4 py-2">{badge}</span>
+                ))}
+              </div>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a
+                class="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-transparent bg-champagne px-5 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-charcoal transition hover:bg-champagne/90"
+                href={product.affiliateUrl}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+                data-affiliate-link
+                data-affiliate-id={product.id}
+                data-affiliate-name={product.name}
+                data-affiliate-url={product.affiliateUrl}
+                data-affiliate-product-url={product.url}
+                data-affiliate-source="reviews:list"
+              >
+                Shop Amazon
+              </a>
+              <a
+                class="inline-flex items-center justify-center rounded-full border border-off-white/30 px-5 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-off-white transition hover:border-champagne/80 hover:text-champagne"
+                href={`/reviews/${product.slug}`}
+              >
+                Read review
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>
