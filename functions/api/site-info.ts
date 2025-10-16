@@ -1,4 +1,4 @@
-export const onRequest = async (context) => {
+export const onRequest = async (context: any) => {
   const { request } = context;
   const url = new URL(request.url);
 
