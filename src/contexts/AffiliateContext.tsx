@@ -135,28 +135,38 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const trackClick = (productId: string) => {
-    // In a real implementation, this would send analytics data
-    console.log('Tracking affiliate click:', productId);
-    
-    // Add UTM parameters for tracking
-    const product = products.find(p => p.id === productId);
-    if (!product) {
-      return;
-    }
+    const product = products.find((p) => p.id === productId);
+    if (!product) return;
+
+    const payload = {
+      productId: product.id,
+      productName: product.name,
+      productUrl: typeof window !== 'undefined' ? window.location.href : undefined,
+      affiliateUrl: product.affiliateUrl,
+      source: 'react-app',
+    };
+
+    const endpoint = '/api/affiliate-click';
+    const body = JSON.stringify(payload);
 
     try {
-      const url = new URL(product.affiliateUrl);
-      const timestamp = Date.now().toString();
-      url.searchParams.append('utm_source', 'swankyboyz');
-      url.searchParams.append('utm_medium', 'affiliate');
-      url.searchParams.append('utm_campaign', `product_${productId}`);
-      url.searchParams.append('utm_content', timestamp);
-      window.open(url.toString(), '_blank', 'noopener,noreferrer');
+      if (navigator?.sendBeacon) {
+        const blob = new Blob([body], { type: 'application/json' });
+        navigator.sendBeacon(endpoint, blob);
+      } else {
+        void fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body,
+          keepalive: true,
+        });
+      }
     } catch (error) {
-      const separator = product.affiliateUrl.includes('?') ? '&' : '?';
-      const fallbackUrl = `${product.affiliateUrl}${separator}utm_source=swankyboyz&utm_medium=affiliate&utm_campaign=product_${productId}&utm_content=${Date.now()}`;
-      window.open(fallbackUrl, '_blank', 'noopener,noreferrer');
+      console.error('Failed to record affiliate click', error);
     }
+
+    const trackingUrl = `${product.affiliateUrl}?utm_source=swankyboyz&utm_medium=affiliate&utm_campaign=product_${productId}&utm_content=${Date.now()}`;
+    window.open(trackingUrl, '_blank', 'noopener,noreferrer');
   };
 
   const getProductsByCategory = (category: string): AffiliateProduct[] => {

@@ -1,0 +1,31 @@
+---
+const navItems = [
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Journal', href: '/articles' },
+  { label: 'Reviews', href: '/reviews' },
+  { label: 'Concierge', href: '/#contact' },
+];
+---
+<header class="sticky top-0 z-50 border-b border-off-white/10 bg-[rgba(10,10,10,0.92)] backdrop-blur">
+  <div class="container flex flex-col gap-5 py-6 md:flex-row md:items-center md:justify-between">
+    <a
+      class="flex items-center gap-3 text-off-white transition hover:text-champagne"
+      href="/"
+      aria-label="SwankyBoyz home"
+    >
+      <span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-off-white/20 text-sm uppercase tracking-[0.3em]">SB</span>
+      <span class="font-display text-2xl uppercase tracking-[0.5em]">SwankyBoyz</span>
+    </a>
+
+    <nav class="flex flex-wrap gap-4 text-xs uppercase tracking-[0.35em] text-off-white/70 md:gap-8" aria-label="Primary">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="rounded-full border border-transparent px-5 py-2 transition hover:border-champagne/80 hover:text-champagne"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
