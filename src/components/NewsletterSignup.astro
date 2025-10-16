@@ -1,0 +1,40 @@
+---
+interface NewsletterSignupProps {
+  action?: string;
+  headline?: string;
+  subcopy?: string;
+}
+
+const {
+  action = '/api/newsletter',
+  headline = 'Stay in the inner circle',
+  subcopy = 'Monthly intel, no fluff. Exclusive drops, insider itineraries, and grooming moves that command the room.',
+} = Astro.props as NewsletterSignupProps;
+---
+<section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-charcoal via-charcoal/80 to-black p-12 shadow-luxury">
+  <div class="absolute inset-y-0 right-0 hidden h-full w-1/2 bg-[radial-gradient(circle_at_top,_rgba(212,175,55,0.25),_transparent_65%)] sm:block" aria-hidden="true"></div>
+  <div class="relative z-10 max-w-2xl space-y-6">
+    <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">Newsletter</p>
+    <h2 class="font-display text-4xl leading-tight text-off-white">{headline}</h2>
+    <p class="text-off-white/70 text-base">{subcopy}</p>
+    <form class="flex flex-col gap-4 sm:flex-row" action={action} method="post">
+      <label class="sr-only" for="newsletter-email">Email address</label>
+      <input
+        id="newsletter-email"
+        type="email"
+        name="email"
+        required
+        autocomplete="email"
+        placeholder="you@domain.com"
+        class="w-full rounded-full border border-off-white/20 bg-charcoal/80 px-6 py-3 text-sm text-off-white placeholder:text-off-white/40 focus:border-champagne focus:outline-none focus:ring-2 focus:ring-champagne/60"
+      />
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center rounded-full bg-champagne px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-charcoal transition hover:bg-champagne/90"
+      >
+        Join the list
+      </button>
+    </form>
+    <p class="text-xs uppercase tracking-[0.2em] text-off-white/50">We respect privacy. Unsubscribe in one click.</p>
+  </div>
+</section>

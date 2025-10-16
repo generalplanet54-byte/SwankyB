@@ -1,0 +1,41 @@
+---
+import Button from '../components/Button.astro';
+---
+<section id="book" class="relative overflow-hidden bg-black py-24">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(212,175,55,0.18),_transparent_55%)]" aria-hidden="true"></div>
+  <div class="container relative grid gap-12 lg:grid-cols-[1.2fr_1fr]">
+    <div class="space-y-6">
+      <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">Book</p>
+      <h2 class="font-display text-4xl leading-tight sm:text-5xl">
+        Ready for the Swanky treatment?
+      </h2>
+      <p class="text-base text-off-white/70">
+        Tell us the occasion and the stakes — our concierge team will deliver grooming talent, looks, reservations, and
+        moodboards that keep the entire night in your control.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <Button href="#contact" variant="primary" size="lg">Request access</Button>
+        <Button href="mailto:hello@swankyboyz.com" variant="secondary" size="lg">Email concierge</Button>
+      </div>
+    </div>
+
+    <div class="space-y-6 rounded-3xl border border-off-white/10 bg-charcoal/70 p-8">
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-champagne/60">Ideal for</p>
+        <ul class="mt-4 space-y-3 text-sm text-off-white/70">
+          <li>Investor summits & executive retreats</li>
+          <li>Launch weekends & album drops</li>
+          <li>Bachelor experiences with zero downtime</li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-champagne/60">Toolkit includes</p>
+        <ul class="mt-4 space-y-3 text-sm text-off-white/70">
+          <li>Elite grooming squad & on-call stylists</li>
+          <li>Executive transport and suite curation</li>
+          <li>Priority holds at partner venues</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

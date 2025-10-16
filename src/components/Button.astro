@@ -1,0 +1,47 @@
+---
+interface ButtonProps {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'base' | 'lg';
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  ariaLabel?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'base',
+  type = 'button',
+  class: extraClasses = '',
+  ariaLabel,
+} = Astro.props as ButtonProps;
+
+const baseClasses =
+  'inline-flex items-center justify-center rounded-full uppercase tracking-[0.3em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2';
+
+const variantClasses: Record<typeof variant, string> = {
+  primary:
+    'bg-champagne text-charcoal hover:bg-champagne/90 focus-visible:outline-champagne shadow-luxury',
+  secondary:
+    'border border-off-white/60 text-off-white hover:border-champagne hover:text-champagne',
+  ghost: 'text-off-white/70 hover:text-off-white',
+};
+
+const sizeClasses: Record<typeof size, string> = {
+  base: 'px-8 py-3 text-xs font-semibold',
+  lg: 'px-10 py-4 text-sm font-semibold',
+};
+
+const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${extraClasses}`.trim();
+const label = Astro.slots.has('default') ? undefined : 'Explore';
+---
+{href ? (
+  <a class={classes} href={href} aria-label={ariaLabel}>
+    <slot>{label}</slot>
+  </a>
+) : (
+  <button class={classes} type={type} aria-label={ariaLabel}>
+    <slot>{label}</slot>
+  </button>
+)}

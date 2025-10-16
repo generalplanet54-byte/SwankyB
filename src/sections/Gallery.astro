@@ -1,0 +1,58 @@
+<section id="gallery" class="relative bg-charcoal py-24">
+  <div class="container space-y-10">
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div class="max-w-2xl space-y-4">
+        <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">Gallery</p>
+        <h2 class="font-display text-4xl leading-tight sm:text-5xl">Fragments from the SwankyBoyz lens.</h2>
+        <p class="text-base text-off-white/60">
+          Shoots from penthouse lounges, barber suites, and nights that run past sunrise. Use these as moodboards or a
+          reminder to keep raising the bar.
+        </p>
+      </div>
+      <div class="text-xs uppercase tracking-[0.3em] text-off-white/50">Swipe for more drops coming soon.</div>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-6">
+      {[
+        {
+          src: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80',
+          caption: 'Tailored evenings',
+          span: 'md:col-span-3',
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=900&q=80',
+          caption: 'Signature pour',
+          span: 'md:col-span-3',
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=900&q=80',
+          caption: 'Midnight arrival',
+          span: 'md:col-span-2',
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80',
+          caption: 'Grooming ritual',
+          span: 'md:col-span-2',
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=80',
+          caption: 'Private terrace',
+          span: 'md:col-span-2',
+        },
+      ].map((item) => (
+        <figure class={`group relative overflow-hidden rounded-3xl border border-off-white/10 bg-black/30 ${item.span}`}>
+          <img
+            class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            src={item.src}
+            alt={item.caption}
+            loading="lazy"
+          />
+          <figcaption class="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-black/80 via-black/30 to-transparent px-6 py-4 text-xs uppercase tracking-[0.3em] text-off-white/70">
+            <span>{item.caption}</span>
+            <span aria-hidden="true">→</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
