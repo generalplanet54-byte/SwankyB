@@ -24,6 +24,7 @@ export interface SeoInput {
   noIndex?: boolean;
   section?: string;
   tags?: string[];
+  structuredData?: JsonLd | JsonLd[];
 }
 
 export interface MetaTag {

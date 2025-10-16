@@ -15,6 +15,11 @@ const organizationJsonLd = buildOrganizationJsonLd();
 const articleJsonLd = buildArticleJsonLd(props);
 const analyticsToken =
   import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN ?? import.meta.env.PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN;
+const additionalJsonLd = props.structuredData
+  ? Array.isArray(props.structuredData)
+    ? props.structuredData
+    : [props.structuredData]
+  : [];
 ---
 
 <!DOCTYPE html>
@@ -40,6 +45,9 @@ const analyticsToken =
     {articleJsonLd && (
       <script type="application/ld+json" is:inline>{JSON.stringify(articleJsonLd)}</script>
     )}
+    {additionalJsonLd.map((entry) => (
+      <script type="application/ld+json" is:inline>{JSON.stringify(entry)}</script>
+    ))}
   </head>
   <body class="min-h-screen bg-charcoal text-off-white">
     <slot />
