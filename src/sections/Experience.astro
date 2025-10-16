@@ -1,0 +1,45 @@
+<section id="experience" class="bg-[#111112] py-24">
+  <div class="container space-y-12">
+    <div class="mx-auto max-w-2xl text-center space-y-4">
+      <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">Experience</p>
+      <h2 class="font-display text-4xl leading-tight sm:text-5xl">
+        Curated rituals, signature spaces, unforgettable nights.
+      </h2>
+      <p class="text-base text-off-white/60">
+        Whether you are preparing for a capital raise, a black-tie gala, or an impromptu weekend with your inner circle,
+        our playbooks deliver composure under pressure with zero guesswork.
+      </p>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+      {[
+        {
+          title: 'Grooming Lab',
+          copy:
+            'Elite barbers, skincare chemists, and fragrance curators crafting routines that feel bespoke and effortless.',
+        },
+        {
+          title: 'Wardrobe Command',
+          copy:
+            'Tailored capsules, travel-ready fits, and styling advisors who understand the pace of boardrooms and jet bridges.',
+        },
+        {
+          title: 'After Hours Index',
+          copy:
+            'Reservations, suites, and speakeasy access sourced from our private concierge network — polished and discreet.',
+        },
+      ].map((feature) => (
+        <article class="flex flex-col justify-between gap-6 rounded-3xl border border-off-white/10 bg-charcoal/60 p-8 shadow-luxury">
+          <div class="space-y-4">
+            <h3 class="font-display text-2xl text-off-white">{feature.title}</h3>
+            <p class="text-sm text-off-white/70">{feature.copy}</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-champagne/70">
+            <span>Preview dossier</span>
+            <span aria-hidden="true">→</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

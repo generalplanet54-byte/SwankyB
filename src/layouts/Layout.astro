@@ -1,136 +1,55 @@
----
-export interface Props {
-  title: string;
-  description?: string;
-  image?: string;
-  canonical?: string;
-  noindex?: boolean;
-}
+import type { SeoInput } from '../lib/seo';
+import {
+  buildArticleJsonLd,
+  buildMetaTags,
+  buildOrganizationJsonLd,
+  resolveSeo,
+} from '../lib/seo';
 
-const { 
-  title, 
-  description = "SwankyBoyz - Your ultimate destination for tech gadgets, lifestyle products, and luxury accessories. Expert reviews and honest recommendations.",
-  image = "/og-image.jpg",
-  canonical,
-  noindex = false
-} = Astro.props;
+type Props = SeoInput;
 
-const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site);
-const imageURL = new URL(image, Astro.site);
+const props = Astro.props as Props;
+const seo = resolveSeo(props);
+const metaTags = buildMetaTags(props);
+const organizationJsonLd = buildOrganizationJsonLd();
+const articleJsonLd = buildArticleJsonLd(props);
+const analyticsToken =
+  import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN ?? import.meta.env.PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    
-    <!-- SEO Meta Tags -->
-    <title>{title}</title>
-    <link rel="canonical" href={canonicalURL} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={imageURL} />
-    <meta property="og:site_name" content="SwankyBoyz" />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={imageURL} />
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "SwankyBoyz",
-        "url": "https://swankyboyz.com",
-        "logo": "https://swankyboyz.com/logo.png",
-        "description": "Expert reviews and recommendations for tech gadgets, lifestyle products, and luxury accessories.",
-        "sameAs": [
-          "https://twitter.com/swankyboyz",
-          "https://instagram.com/swankyboyz",
-          "https://youtube.com/@swankyboyz"
-        ]
-      }
-    </script>
-    
-    <!-- Analytics -->
-    {import.meta.env.PROD && (
-      <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
-      </script>
+  <meta name="generator" content={Astro.generator} />
+  <title>{seo.title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    {metaTags.map((entry) =>
+      entry.tag === 'meta' ? (
+        <meta {...entry.attrs} />
+      ) : (
+        <link {...entry.attrs} />
+      )
+    )}
+
+    <script type="application/ld+json" is:inline>{JSON.stringify(organizationJsonLd)}</script>
+    {articleJsonLd && (
+      <script type="application/ld+json" is:inline>{JSON.stringify(articleJsonLd)}</script>
     )}
   </head>
-  <body>
+  <body class="min-h-screen bg-charcoal text-off-white">
     <slot />
-    
-    <!-- Cookie Consent -->
-    <div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
-      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="flex-1">
-          <p class="text-sm">
-            We use cookies to enhance your experience and analyze our traffic. 
-            <a href="/privacy-policy" class="underline hover:no-underline">Learn more</a>
-          </p>
-        </div>
-        <div class="flex gap-2">
-          <button id="accept-cookies" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium">
-            Accept All
-          </button>
-          <button id="reject-cookies" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded text-sm font-medium">
-            Reject
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <script>
-      // Cookie consent functionality
-      const cookieConsent = document.getElementById('cookie-consent');
-      const acceptBtn = document.getElementById('accept-cookies');
-      const rejectBtn = document.getElementById('reject-cookies');
-      
-      // Show consent banner if no preference is set
-      if (!localStorage.getItem('cookie-consent')) {
-        cookieConsent?.classList.remove('hidden');
-      }
-      
-      acceptBtn?.addEventListener('click', () => {
-        localStorage.setItem('cookie-consent', 'accepted');
-        cookieConsent?.classList.add('hidden');
-        // Enable analytics
-        if (typeof gtag !== 'undefined') {
-          gtag('consent', 'update', {
-            'analytics_storage': 'granted'
-          });
-        }
-      });
-      
-      rejectBtn?.addEventListener('click', () => {
-        localStorage.setItem('cookie-consent', 'rejected');
-        cookieConsent?.classList.add('hidden');
-        // Disable analytics
-        if (typeof gtag !== 'undefined') {
-          gtag('consent', 'update', {
-            'analytics_storage': 'denied'
-          });
-        }
-      });
-    </script>
+
+    {analyticsToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${analyticsToken}"}`}
+      ></script>
+    )}
   </body>
 </html>
