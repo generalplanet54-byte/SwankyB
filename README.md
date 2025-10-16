@@ -273,13 +273,42 @@ https://amzn.to/XXXXXXX?tag=YOUR_TAG&utm_source=site&utm_medium=affiliate
 
 ## Content Management
 
+### Bolt AI Database Integration
+
+This project uses a Bolt AI Supabase database as the primary content source. Content can be managed in two ways:
+
+1. **Direct Database Updates** - Modify content in the Bolt AI database (real-time updates)
+2. **Local Sync** - Sync database content to local files for faster loading
+
+#### Syncing Content from Bolt AI Database
+
+When content is updated in the Bolt AI database, sync it to your local files:
+
+```bash
+npm run sync-bolt-content
+```
+
+This will:
+- Fetch all published articles and products from Bolt AI database
+- Update `src/data/launchArticles.ts` with the latest content
+- Provide a fallback for when the database is unavailable
+
+**When to sync:**
+- After adding/updating articles in the database
+- After modifying product information
+- Before deploying to production for faster initial load
+- When working offline (uses cached content)
+
+For detailed information about the sync process, see [BOLT_SYNC_README.md](BOLT_SYNC_README.md).
+
 ### Adding New Products
 
-Products are stored in Supabase. To add new products:
+Products are stored in the Bolt AI Supabase database. To add new products:
 
-1. Access Supabase dashboard
-2. Navigate to Table Editor → `products`
-3. Insert new row with:
+1. Access Supabase dashboard at https://supabase.com/dashboard
+2. Navigate to your project (wuwczwpfnswwctumvqsq)
+3. Go to Table Editor → `products`
+4. Insert new row with:
    - name, slug, description
    - category, subcategory
    - amazon_url (your affiliate link)
@@ -289,10 +318,11 @@ Products are stored in Supabase. To add new products:
    - features (JSON array)
    - meta_title, meta_description, meta_keywords
    - is_featured, is_trending flags
+5. Run `npm run sync-bolt-content` to update local files
 
 ### Adding New Articles
 
-Articles are also in Supabase:
+Articles are also in the Bolt AI database:
 
 1. Navigate to Table Editor → `articles`
 2. Insert new row with:
@@ -302,9 +332,9 @@ Articles are also in Supabase:
    - author, featured_image
    - read_time
    - meta_title, meta_description, meta_keywords
-   - is_published flag
-
+   - is_published flag (set to `true` to publish)
 3. Link to products via `article_products` table
+4. Run `npm run sync-bolt-content` to update local files
 
 ## Analytics Setup
 
@@ -451,8 +481,9 @@ This project is proprietary. All rights reserved.
 ## Quick Start Checklist
 
 - [ ] Install dependencies: `npm install`
+- [ ] Sync content from Bolt AI database: `npm run sync-bolt-content`
 - [ ] Start dev server: `npm run dev`
-- [ ] Review products in Supabase
+- [ ] Review products in Supabase (Bolt AI database)
 - [ ] Test all affiliate links
 - [ ] Customize branding and content
 - [ ] Build for production: `npm run build`
@@ -464,4 +495,16 @@ This project is proprietary. All rights reserved.
 - [ ] Monitor performance and earnings
 
 Your affiliate marketing website is ready to generate commissions!
+
+## Keeping Content Updated
+
+To ensure your site always has the latest content from Bolt AI:
+
+1. Regularly check the Bolt AI database for updates
+2. Run `npm run sync-bolt-content` to pull latest changes
+3. Test locally with `npm run dev`
+4. Commit and deploy changes
+
+See [BOLT_SYNC_README.md](BOLT_SYNC_README.md) for detailed sync documentation.
+
 # Updated Tue Oct 14 18:28:05 UTC 2025
