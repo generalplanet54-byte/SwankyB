@@ -2,17 +2,10 @@ name = "swankyb-pages"
 
 # Cloudflare Pages config - keep build command and set output dir
 compatibility_date = "2025-10-13"
+pages_build_output_dir = "dist"
 
 [build]
-	command = "npm run build"
-
-# Directory where Pages will find the generated static site
-[site]
-bucket = "./dist"
-main = "index.js"
-
-# Also set pages_build_output_dir for wrangler dev server compatibility
-pages_build_output_dir = "./dist"
+command = "npm run build"
 
 # Environment variables for Supabase (Bolt Database)
 [vars]
