@@ -34,6 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           src={product.image}
           alt={product.name}
           className="w-full h-48 object-cover"
+          loading="lazy"
         />
         {product.originalPrice && (
           <div className="absolute top-4 right-4">

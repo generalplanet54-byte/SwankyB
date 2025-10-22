@@ -15,6 +15,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
           src={article.featuredImage}
           alt={article.title}
           className="w-full h-48 object-cover"
+          loading="lazy"
         />
         <div className="absolute top-4 left-4">
           <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
