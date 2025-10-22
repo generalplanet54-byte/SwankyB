@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase, SUPABASE_CONFIGURED, Article as DBArticle } from '../lib/supabase';
 import { launchArticles } from '../data/launchArticles';
 
@@ -196,7 +196,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
   
-  const categories = [
+  const categories = useMemo(() => [
     'Footwear',
     'Smartphones',
     'Laptops',
@@ -204,9 +204,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     'Wearables',
     'Technology',
     'Health & Wellness'
-  ];
+  ], []);
 
-  const addArticle = (articleData: Omit<Article, 'id' | 'publishedAt' | 'updatedAt'>) => {
+  const addArticle = useCallback((articleData: Omit<Article, 'id' | 'publishedAt' | 'updatedAt'>) => {
     const newArticle: Article = {
       ...articleData,
       id: Date.now().toString(),
@@ -214,21 +214,21 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       updatedAt: new Date().toISOString(),
     };
     setArticles(prev => [newArticle, ...prev]);
-  };
+  }, []);
 
-  const updateArticle = (id: string, updates: Partial<Article>) => {
+  const updateArticle = useCallback((id: string, updates: Partial<Article>) => {
     setArticles(prev => prev.map(article => 
       article.id === id 
         ? { ...article, ...updates, updatedAt: new Date().toISOString() }
         : article
     ));
-  };
+  }, []);
 
-  const deleteArticle = (id: string) => {
+  const deleteArticle = useCallback((id: string) => {
     setArticles(prev => prev.filter(article => article.id !== id));
-  };
+  }, []);
 
-  const generateArticle = async (topic: string, category: string): Promise<Article> => {
+  const generateArticle = useCallback(async (topic: string, category: string): Promise<Article> => {
     // Simulate AI content generation
     await new Promise(resolve => setTimeout(resolve, 2000));
     
@@ -255,9 +255,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     };
 
     return newArticle;
-  };
+  }, []);
 
-  const generateArticleContent = (topic: string, category: string): string => {
+  const generateArticleContent = useCallback((topic: string, category: string): string => {
     return `
 <h2>Introduction to ${topic}</h2>
 <p>In today's fast-paced world, finding the right ${topic} can make all the difference in your ${category.toLowerCase()} journey. Our team at SwankyBoyz has spent countless hours researching, testing, and reviewing the best options available in the market.</p>
@@ -289,18 +289,20 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 <h2>Conclusion</h2>
 <p>Investing in quality ${topic} is an investment in your ${category.toLowerCase()} success. Take your time to research, compare options, and choose products that align with your specific requirements and budget.</p>
     `.trim();
-  };
+  }, []);
+
+  const value = useMemo(() => ({
+    articles,
+    categories,
+    loading,
+    addArticle,
+    updateArticle,
+    deleteArticle,
+    generateArticle
+  }), [articles, categories, loading, addArticle, updateArticle, deleteArticle, generateArticle]);
 
   return (
-    <ContentContext.Provider value={{
-      articles,
-      categories,
-      loading,
-      addArticle,
-      updateArticle,
-      deleteArticle,
-      generateArticle
-    }}>
+    <ContentContext.Provider value={value}>
       {children}
     </ContentContext.Provider>
   );
