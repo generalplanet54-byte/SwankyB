@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useContent } from '../../contexts/ContentContext';
 import ArticleCard from '../common/ArticleCard';
 import ProductCard from '../common/ProductCard';
+import Breadcrumb from '../common/Breadcrumb';
 import { useAffiliate } from '../../contexts/AffiliateContext';
 
 const CategoryPage: React.FC = () => {
@@ -26,6 +27,13 @@ const CategoryPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: categoryName },
+        ]}
+      />
+
       {/* Category Header */}
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { ExternalLink, Star } from 'lucide-react';
 import { AffiliateProduct } from '../../contexts/AffiliateContext';
 import { useAffiliate } from '../../contexts/AffiliateContext';
@@ -7,12 +7,12 @@ interface ProductCardProps {
   product: AffiliateProduct;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
   const { trackClick } = useAffiliate();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     trackClick(product.id);
-  };
+  }, [trackClick, product.id]);
 
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, index) => (
@@ -34,6 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           src={product.image}
           alt={product.name}
           className="w-full h-48 object-cover"
+          loading="lazy"
         />
         {product.originalPrice && (
           <div className="absolute top-4 right-4">
@@ -90,6 +91,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
     </div>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;
