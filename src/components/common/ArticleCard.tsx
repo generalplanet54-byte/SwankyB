@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, User, ArrowRight } from 'lucide-react';
 import { Article } from '../../contexts/ContentContext';
@@ -7,7 +7,7 @@ interface ArticleCardProps {
   article: Article;
 }
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
+const ArticleCard: React.FC<ArticleCardProps> = memo(({ article }) => {
   return (
     <article className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <div className="relative">
@@ -62,6 +62,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       </div>
     </article>
   );
-};
+});
+
+ArticleCard.displayName = 'ArticleCard';
 
 export default ArticleCard;

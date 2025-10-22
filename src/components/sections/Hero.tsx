@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { TrendingUp, Star, Zap } from 'lucide-react';
 
-const Hero: React.FC = () => {
+const Hero: React.FC = memo(() => {
   return (
     <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 text-white py-20">
       <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -56,6 +56,8 @@ const Hero: React.FC = () => {
       </div>
     </section>
   );
-};
+});
+
+Hero.displayName = 'Hero';
 
 export default Hero;
