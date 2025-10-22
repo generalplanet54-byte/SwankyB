@@ -1,8 +1,28 @@
 import createSupabaseFromEnv from '../../src/lib/supabase-cloudflare';
+import { launchProducts } from '../../src/data/launchProducts';
+import { launchArticles } from '../../src/data/launchArticles';
+
+const jsonResponse = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json' }
+  });
+
+const fallbackPayload = {
+  products: launchProducts,
+  articles: launchArticles
+};
 
 export async function onRequest(context: any) {
   const env = context.env || {};
-  const supabase = createSupabaseFromEnv(env);
+  let supabase;
+
+  try {
+    supabase = createSupabaseFromEnv(env);
+  } catch (error) {
+    console.warn('⚠️  Falling back to launch content – Supabase env missing/unavailable:', error);
+    return jsonResponse(fallbackPayload);
+  }
 
   try {
     const [{ data: products, error: pErr }, { data: articles, error: aErr }] = await Promise.all([
@@ -13,14 +33,9 @@ export async function onRequest(context: any) {
     if (pErr) throw pErr;
     if (aErr) throw aErr;
 
-    return new Response(JSON.stringify({ products, articles }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return jsonResponse({ products, articles });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: String(err) }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    console.error('❌  Falling back to launch content – Supabase query failed:', err);
+    return jsonResponse(fallbackPayload);
   }
 }
