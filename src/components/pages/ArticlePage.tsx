@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Clock, User, Calendar, Share2, Tag } from 'lucide-react';
 import { useContent } from '../../contexts/ContentContext';
 import ProductCard from '../common/ProductCard';
+import Breadcrumb from '../common/Breadcrumb';
 import { useAffiliate } from '../../contexts/AffiliateContext';
 
 const ArticlePage: React.FC = () => {
@@ -45,6 +46,14 @@ const ArticlePage: React.FC = () => {
 
   return (
     <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Articles', href: '/articles' },
+          { label: article.title },
+        ]}
+      />
+
       {/* Article Header */}
       <header className="mb-12">
         <div className="flex items-center flex-wrap gap-2 mb-6">

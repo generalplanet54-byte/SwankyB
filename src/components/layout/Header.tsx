@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Search, Sun, Moon, Zap } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -9,21 +9,21 @@ const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
-  const categories = [
+  const categories = useMemo(() => [
     { name: 'Skincare', slug: 'skincare' },
     { name: 'Audio', slug: 'audio' },
     { name: 'Accessories', slug: 'accessories' },
     { name: 'Fragrance', slug: 'fragrance' },
     { name: 'Grooming', slug: 'grooming' }
-  ];
+  ], []);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/?search=${encodeURIComponent(searchQuery)}`);
       setSearchQuery('');
     }
-  };
+  }, [searchQuery, navigate]);
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">

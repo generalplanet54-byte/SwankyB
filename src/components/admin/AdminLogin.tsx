@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMetaTags } from '../../hooks/useMetaTags';
 
 const AdminLogin: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -7,6 +8,12 @@ const AdminLogin: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  // Prevent indexing of admin pages
+  useMetaTags({
+    title: 'Admin Login - SwankyBoyz',
+    robots: 'noindex, nofollow',
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
