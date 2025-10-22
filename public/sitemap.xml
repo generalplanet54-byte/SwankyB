@@ -2,45 +2,39 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://swankyboyz.com/</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://swankyboyz.com/articles</loc>
-    <lastmod>2025-10-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <loc>https://swankyboyz.com/article/best-all-in-one-mens-grooming-trimmer-kits-2024</loc>
+    <lastmod>2025-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://swankyboyz.com/category/skincare</loc>
-    <lastmod>2025-10-16</lastmod>
+    <loc>https://swankyboyz.com/article/braun-series-9-pro-vs-series-8-electric-shaver-review</loc>
+    <lastmod>2025-10-15</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://swankyboyz.com/category/audio</loc>
-    <lastmod>2025-10-16</lastmod>
+    <loc>https://swankyboyz.com/article/complete-guide-premium-mens-grooming</loc>
+    <lastmod>2025-01-11</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://swankyboyz.com/category/accessories</loc>
-    <lastmod>2025-10-16</lastmod>
+    <loc>https://swankyboyz.com/article/complete-modern-gentlemans-grooming-guide-essential-tools</loc>
+    <lastmod>2024-10-16</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://swankyboyz.com/category/fragrance</loc>
-    <lastmod>2025-10-16</lastmod>
+    <loc>https://swankyboyz.com/article/luxury-fragrances-modern-gentleman-guide</loc>
+    <lastmod>2025-01-12</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/category/grooming</loc>
-    <lastmod>2025-10-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://swankyboyz.com/article/premium-skincare-luxury-beauty-products-review</loc>
@@ -55,44 +49,92 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://swankyboyz.com/article/ultimate-mens-wallet-guide-premium-leather</loc>
-    <lastmod>2025-01-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/article/luxury-fragrances-modern-gentleman-guide</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/article/complete-guide-premium-mens-grooming</loc>
-    <lastmod>2025-01-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/article/braun-series-9-pro-vs-series-8-electric-shaver-review</loc>
-    <lastmod>2025-10-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/article/best-all-in-one-mens-grooming-trimmer-kits-2024</loc>
-    <lastmod>2025-10-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://swankyboyz.com/article/travel-grooming-essentials-portable-shavers-guide</loc>
     <lastmod>2025-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://swankyboyz.com/article/complete-modern-gentlemans-grooming-guide-essential-tools</loc>
-    <lastmod>2024-10-16</lastmod>
+    <loc>https://swankyboyz.com/article/ultimate-mens-wallet-guide-premium-leather</loc>
+    <lastmod>2025-01-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/articles</loc>
+    <lastmod>2025-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/category/accessories</loc>
+    <lastmod>2025-01-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/category/audio</loc>
+    <lastmod>2025-01-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/category/fragrance</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/category/grooming</loc>
+    <lastmod>2025-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/category/men-s-skincare</loc>
+    <lastmod>2024-01-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/category/office-furniture</loc>
+    <lastmod>2024-01-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/category/skincare</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/privacy-policy</loc>
+    <lastmod>2025-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/products/clinique-max-hydrator</loc>
+    <lastmod>2024-01-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/products/herman-miller-aeron</loc>
+    <lastmod>2024-01-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/products/jack-black-eye-rescue</loc>
+    <lastmod>2024-01-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/products/kiehls-age-defender</loc>
+    <lastmod>2024-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

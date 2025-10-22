@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase, SUPABASE_CONFIGURED, Article as DBArticle } from '../lib/supabase';
 import { launchArticles } from '../data/launchArticles';
+import { launchProducts } from '../data/launchProducts';
+import { articleAffiliateMap } from '../data/articleAffiliateMap';
 
 export interface Article {
   id: string;
@@ -57,6 +59,69 @@ export const useContent = () => {
 export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  const updateCategories = (articleList: Article[]) => {
+    const nextCategories = Array.from(new Set(articleList.map((article) => article.category).filter(Boolean))).sort();
+    setCategories(nextCategories);
+  };
+
+  const hydrateArticlesWithProducts = (articleList: Article[]) => {
+    // Attach up to 3 affiliate products to each article by matching category or product name keywords
+    return articleList.map((article) => {
+      // Prefer explicit mappings
+      const mapped = articleAffiliateMap[article.slug] || [];
+
+      const matchesFromMap = mapped
+        .map((id) => launchProducts.find((p) => p.id === id))
+        .filter(Boolean)
+        .slice(0, 3)
+        .map((p) => ({
+          id: p!.id,
+          name: p!.name,
+          description: p!.description,
+          price: p!.price,
+          originalPrice: p!.originalPrice,
+          image: p!.image,
+          affiliateUrl: p!.affiliateUrl,
+          rating: p!.rating || 0,
+          provider: p!.provider as any,
+          category: p!.category
+        }));
+
+      const fallbackMatches = launchProducts.filter((p) => {
+        try {
+          const prodCat = (p.category || '').toLowerCase();
+          const artCat = (article.category || '').toLowerCase();
+          if (prodCat && artCat && prodCat === artCat) return true;
+          const title = (article.title || '').toLowerCase();
+          const name = (p.name || '').toLowerCase();
+          if (name.split(/\s+/).some((word) => word && title.includes(word))) return true;
+        } catch (err) {
+          return false;
+        }
+        return false;
+      }).slice(0, 3).map((p) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        originalPrice: p.originalPrice,
+        image: p.image,
+        affiliateUrl: p.affiliateUrl,
+        rating: p.rating || 0,
+        provider: p.provider as any,
+        category: p.category
+      }));
+
+      const matches = matchesFromMap.length ? matchesFromMap : fallbackMatches;
+
+      return {
+        ...article,
+        affiliateProducts: matches
+      };
+    });
+  };
 
   useEffect(() => {
     fetchArticles();
@@ -114,6 +179,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           });
 
           setArticles(formattedArticles);
+          updateCategories(formattedArticles);
           return;
         }
       } catch (err) {
@@ -123,7 +189,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       // If Supabase wasn't configured at build time (common in Bolt/StackBlitz),
       // fall back to the bundled `launchArticles` so the site still shows content.
       if (!SUPABASE_CONFIGURED) {
-        setArticles(launchArticles);
+        const hydrated = hydrateArticlesWithProducts(launchArticles as Article[]);
+        setArticles(hydrated);
+        updateCategories(hydrated);
         return;
       }
 
@@ -186,25 +254,18 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       });
 
       setArticles(formattedArticles);
+      updateCategories(formattedArticles);
     } catch (error) {
       console.error('Error fetching articles:', error);
       // If Supabase query fails for any reason, fall back to bundled launchArticles
       // so the UI remains populated. This mirrors behavior on StackBlitz/Bolt.
-      setArticles(launchArticles);
+      const hydrated = hydrateArticlesWithProducts(launchArticles as Article[]);
+      setArticles(hydrated);
+      updateCategories(hydrated);
     } finally {
       setLoading(false);
     }
   };
-  
-  const categories = [
-    'Footwear',
-    'Smartphones',
-    'Laptops',
-    'Audio Equipment',
-    'Wearables',
-    'Technology',
-    'Health & Wellness'
-  ];
 
   const addArticle = (articleData: Omit<Article, 'id' | 'publishedAt' | 'updatedAt'>) => {
     const newArticle: Article = {

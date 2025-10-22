@@ -1,8 +1,13 @@
 name = "swankyb-pages"
+account_id = "43f14f26801fb2389382fa084e3442e6"
+zone_id = "5b509f42c17a19c3970cc79432a88ac5"
 
 # Cloudflare Pages config - keep build command and set output dir
 compatibility_date = "2025-10-13"
 pages_build_output_dir = "dist"
+
+[pages]
+project_name = "swankyb-pages"
 
 [build]
 command = "npm run build"

@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate sitemap
+        run: node scripts/generate-sitemap.js
+
+      - name: Build project
+        run: npm run build
+
+      # Uncomment the step below and configure secrets to deploy via Cloudflare Pages
+      # - name: Publish to Cloudflare Pages
+      #   if: github.ref == 'refs/heads/main'
+      #   run: npx wrangler pages publish dist --project-name swankyb-pages
+      #   env:
+      #     CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      #     CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

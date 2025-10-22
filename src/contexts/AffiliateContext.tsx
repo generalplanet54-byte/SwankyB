@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase, Product as DBProduct } from '../lib/supabase';
+import { launchProducts } from '../data/launchProducts';
 
 export interface AffiliateProduct {
   id: string;
@@ -43,6 +44,10 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     fetchProducts();
   }, []);
 
+  const useLaunchProducts = () => {
+    setProducts(launchProducts);
+  };
+
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -65,7 +70,11 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             category: product.category,
             commission: 10.0
           }));
-          setProducts(formattedProducts);
+          if (formattedProducts.length) {
+            setProducts(formattedProducts);
+            return;
+          }
+          useLaunchProducts();
           return;
         }
       } catch (err) {
@@ -93,9 +102,14 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         commission: 10.0
       }));
 
-      setProducts(formattedProducts);
+      if (formattedProducts.length) {
+        setProducts(formattedProducts);
+      } else {
+        useLaunchProducts();
+      }
     } catch (error) {
       console.error('Error fetching products:', error);
+      useLaunchProducts();
     } finally {
       setLoading(false);
     }
@@ -126,9 +140,22 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     
     // Add UTM parameters for tracking
     const product = products.find(p => p.id === productId);
-    if (product) {
-      const trackingUrl = `${product.affiliateUrl}?utm_source=swankyboyz&utm_medium=affiliate&utm_campaign=product_${productId}&utm_content=${Date.now()}`;
-      window.open(trackingUrl, '_blank', 'noopener,noreferrer');
+    if (!product) {
+      return;
+    }
+
+    try {
+      const url = new URL(product.affiliateUrl);
+      const timestamp = Date.now().toString();
+      url.searchParams.append('utm_source', 'swankyboyz');
+      url.searchParams.append('utm_medium', 'affiliate');
+      url.searchParams.append('utm_campaign', `product_${productId}`);
+      url.searchParams.append('utm_content', timestamp);
+      window.open(url.toString(), '_blank', 'noopener,noreferrer');
+    } catch (error) {
+      const separator = product.affiliateUrl.includes('?') ? '&' : '?';
+      const fallbackUrl = `${product.affiliateUrl}${separator}utm_source=swankyboyz&utm_medium=affiliate&utm_campaign=product_${productId}&utm_content=${Date.now()}`;
+      window.open(fallbackUrl, '_blank', 'noopener,noreferrer');
     }
   };
 

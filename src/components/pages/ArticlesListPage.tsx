@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, User, Tag } from 'lucide-react';
 import { useContent } from '../../contexts/ContentContext';
+import Breadcrumbs from '../common/Breadcrumbs';
+import StructuredData from '../common/StructuredData';
+
+const FALLBACK_SITE_URL = import.meta.env.VITE_SITE_URL || 'https://swankyboyz.com';
 
 const ArticlesListPage: React.FC = () => {
   const { articles, loading } = useContent();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  const siteUrl = useMemo(() => {
+    if (typeof window !== 'undefined' && window.location.origin) {
+      return window.location.origin;
+    }
+    return FALLBACK_SITE_URL;
+  }, [FALLBACK_SITE_URL]);
+
+  const toAbsoluteUrl = useMemo(() => (
+    (path: string) => {
+      try {
+        return new URL(path, siteUrl).toString();
+      } catch (error) {
+        return path;
+      }
+    }
+  ), [siteUrl]);
 
   // Get unique categories
   const categories = ['all', ...Array.from(new Set(articles.map(article => article.category)))];
@@ -29,6 +50,8 @@ const ArticlesListPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Articles', href: '/articles' }]} />
+
       {/* Page Header */}
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">
@@ -157,6 +180,20 @@ const ArticlesListPage: React.FC = () => {
           {selectedCategory !== 'all' && ` in "${selectedCategory}"`}
         </p>
       </div>
+
+      <StructuredData
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: 'SwankyBoyz Articles',
+          itemListElement: articles.map((article, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            url: toAbsoluteUrl(`/article/${article.slug}`),
+            name: article.title
+          }))
+        }}
+      />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { slugify } from '../../lib/slugify';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -16,6 +17,15 @@ const product = Astro.props;
 const { Content } = await product.render();
 
 const affiliateUrl = `https://amazon.com/dp/${product.data.asin}?tag=swankyboyz-20`;
+const siteUrl = Astro.site?.origin || 'https://swankyboyz.com';
+const productUrl = new URL(`/products/${product.slug}`, siteUrl).toString();
+const categorySlug = product.data.category ? slugify(product.data.category) : '';
+const breadcrumbs = [
+  { label: 'Home', url: '/' },
+  { label: 'Products', url: '/#featured-products' },
+  ...(product.data.category ? [{ label: product.data.category, url: `/category/${categorySlug}` }] : []),
+  { label: product.data.title, url: `/products/${product.slug}` }
+];
 ---
 
 <Layout 
@@ -35,6 +45,23 @@ const affiliateUrl = `https://amazon.com/dp/${product.data.asin}?tag=swankyboyz-
   </div>
 
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav aria-label="Breadcrumb" class="mb-8">
+      <ol class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+        {breadcrumbs.map((item, index) => (
+          <li class="flex items-center gap-2" set:key={`${item.label}-${index}`}>
+            {index > 0 && <span class="text-gray-400">/</span>}
+            {index < breadcrumbs.length - 1 ? (
+              <a href={item.url} class="font-medium text-gray-600 hover:text-blue-600 transition-colors">
+                {item.label}
+              </a>
+            ) : (
+              <span class="font-semibold text-gray-700">{item.label}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
     <!-- Product Header -->
     <header class="mb-8">
       <div class="flex items-center space-x-2 mb-4">
@@ -206,6 +233,7 @@ const affiliateUrl = `https://amazon.com/dp/${product.data.asin}?tag=swankyboyz-
     "name": product.data.title,
     "description": product.data.seoDescription,
     "image": product.data.image,
+    "sku": product.data.asin,
     "brand": {
       "@type": "Brand",
       "name": product.data.brand
@@ -221,7 +249,20 @@ const affiliateUrl = `https://amazon.com/dp/${product.data.asin}?tag=swankyboyz-
       "priceCurrency": "USD",
       "availability": "https://schema.org/InStock",
       "url": affiliateUrl
-    }
+    },
+    "category": product.data.category,
+    "url": productUrl
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbs.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.label,
+      "item": new URL(item.url, siteUrl).toString()
+    }))
   })} />
 
   <!-- Affiliate Disclosure Footer -->
