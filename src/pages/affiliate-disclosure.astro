@@ -1,17 +1,94 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
 
 ---
 
-<Layout title="Affiliate Disclosure - SwankyBoyz" description="How SwankyBoyz uses affiliate links and partnerships.">
-  <section class="max-w-4xl mx-auto px-4 py-16">
-    <h1 class="text-4xl font-bold mb-6">Affiliate Disclosure</h1>
-    <p class="text-gray-700 mb-4">SwankyBoyz participates in various affiliate programs. This means we may earn a commission if you click through and make a purchase — at no extra cost to you. We only recommend products we believe in.</p>
+<Layout 
+  title="Affiliate Disclosure | SwankyBoyz" 
+  description="Learn how SwankyBoyz uses affiliate links and partnerships to fund independent product testing and editorial content."
+  noindex={false}
+>
+  <main class="bg-charcoal py-24">
+    <article class="container max-w-4xl space-y-8">
+      <header class="space-y-4">
+        <p class="text-xs uppercase tracking-[0.4em] text-champagne/80">Legal</p>
+        <h1 class="font-display text-4xl leading-tight text-off-white sm:text-5xl">Affiliate Disclosure</h1>
+        <p class="text-lg text-off-white/70">
+          Transparency matters. Here's exactly how we earn revenue and maintain editorial independence.
+        </p>
+      </header>
 
-    <h2 class="text-2xl font-semibold mt-6 mb-2">Why we use affiliate links</h2>
-    <p class="text-gray-700">Affiliate revenue helps fund our research, testing, and editorial content so we can continue providing high-quality reviews and guides.</p>
+      <div class="prose prose-invert max-w-none space-y-6 text-off-white/80">
+        <section>
+          <h2 class="font-display text-2xl text-off-white">Our Commitment to You</h2>
+          <p>
+            SwankyBoyz participates in various affiliate marketing programs, including the Amazon Services LLC Associates Program. This means we may earn a commission when you click through our links and make a purchase — at absolutely no extra cost to you.
+          </p>
+          <p>
+            We only recommend products we've personally tested, genuinely believe in, and would confidently recommend to friends. Your trust is paramount, and we never compromise our editorial integrity for commissions.
+          </p>
+        </section>
 
-    <h2 class="text-2xl font-semibold mt-6 mb-2">Questions?</h2>
-    <p class="text-gray-700">Contact us at <a href="mailto:affiliates@swankyboyz.com" class="text-blue-600 underline">affiliates@swankyboyz.com</a>.</p>
-  </section>
+        <section>
+          <h2 class="font-display text-2xl text-off-white">How Affiliate Links Work</h2>
+          <p>
+            When you click on an affiliate link and make a purchase, the merchant pays us a small commission. This happens automatically through their tracking system and doesn't affect your purchase price in any way.
+          </p>
+          <p>
+            These commissions help fund our independent product testing, expert research, and in-depth editorial content, allowing us to continue providing high-quality reviews and guides at no cost to you.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-2xl text-off-white">Programs We Participate In</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li><strong>Amazon Associates Program:</strong> We earn from qualifying purchases through Amazon links</li>
+            <li><strong>Direct Brand Partnerships:</strong> Select relationships with premium grooming and lifestyle brands</li>
+            <li><strong>Affiliate Networks:</strong> Partnerships through established affiliate marketing networks</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-2xl text-off-white">Editorial Independence</h2>
+          <p>
+            Our editorial team operates independently from our affiliate partnerships. Product recommendations are based solely on:
+          </p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Hands-on testing and real-world experience</li>
+            <li>Expert analysis of ingredients, materials, and construction</li>
+            <li>User feedback and community reviews</li>
+            <li>Value for money and long-term performance</li>
+          </ul>
+          <p>
+            Commission rates never influence our recommendations. We frequently recommend lower-commission products if they offer superior value or performance.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-2xl text-off-white">Pricing Transparency</h2>
+          <p>
+            Prices listed on our site are for reference only and may not reflect current pricing. We update prices regularly, but merchants can change them at any time. Always verify the final price on the merchant's website before purchasing.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-2xl text-off-white">Questions or Concerns?</h2>
+          <p>
+            We're committed to complete transparency. If you have questions about our affiliate relationships or how we evaluate products, we're here to help.
+          </p>
+          <p>
+            Contact us at <a href="mailto:affiliates@swankyboyz.com" class="text-champagne hover:text-champagne/80 transition underline">affiliates@swankyboyz.com</a>
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-off-white/10 bg-white/5 p-6">
+          <p class="text-sm text-off-white/60">
+            <strong class="text-off-white">Last Updated:</strong> {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+          </p>
+        </section>
+      </div>
+    </article>
+  </main>
+  <Footer />
 </Layout>
