@@ -16,7 +16,7 @@ interface HeroProps {
 const {
   eyebrow = 'The Signature Lifestyle',
   title = 'Command Every Room',
-  subtitle = 'SwankyBoyz curates uncompromising grooming, fashion, and experiences for modern tastemakers.',
+  subtitle = 'SwankyBoyz curates uncompromising grooming, fashion, and experiences for modern tastemakers who refuse to settle.',
   ctaPrimary,
   ctaSecondary,
 } = Astro.props as HeroProps;
@@ -27,7 +27,7 @@ const {
     <img
       class="h-full w-full object-cover opacity-50 mix-blend-overlay"
       src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80"
-      alt="Luxury lifestyle portrait"
+      alt="Confident gentleman in luxury setting representing SwankyBoyz lifestyle"
       loading="lazy"
     />
   </div>
@@ -35,13 +35,14 @@ const {
   <div class="container relative mx-auto flex min-h-[75vh] flex-col justify-center py-24">
     <div class="max-w-3xl space-y-6">
       <p class="uppercase tracking-[0.4em] text-sm text-champagne/80">{eyebrow}</p>
-      <h1 class="text-5xl leading-tight sm:text-6xl">{title}</h1>
+      <h1 class="text-5xl leading-tight sm:text-6xl font-display text-off-white">{title}</h1>
       <p class="max-w-2xl text-lg text-off-white/80 sm:text-xl">{subtitle}</p>
       <div class="mt-8 flex flex-wrap gap-4">
         {ctaPrimary && (
           <a
             class="inline-flex items-center justify-center rounded-full border border-transparent bg-champagne px-8 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-charcoal transition hover:bg-champagne/90"
             href={ctaPrimary.href}
+            aria-label={`${ctaPrimary.label} - Navigate to ${ctaPrimary.href}`}
           >
             {ctaPrimary.label}
           </a>
@@ -50,6 +51,7 @@ const {
           <a
             class="inline-flex items-center justify-center rounded-full border border-off-white/50 px-8 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-off-white transition hover:border-off-white hover:text-champagne"
             href={ctaSecondary.href}
+            aria-label={`${ctaSecondary.label} - Navigate to ${ctaSecondary.href}`}
           >
             {ctaSecondary.label}
           </a>
