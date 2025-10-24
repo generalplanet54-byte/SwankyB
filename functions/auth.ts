@@ -26,7 +26,8 @@ const users: User[] = [
     username: 'netmin',
     email: 'admin@swankyboyz.com',
     // SHA-256 hash of "P@ssW#rd" for demo
-    passwordHash: 'uYF5wD5fEEMdPfZ0SP5n1ArZpK6CxYqHwBYF9KfxwzE=', 
+    // NOTE: corrected SHA-256 (base64) for password "P@ssW#rd"
+    passwordHash: 'CHoFpVm3FNu8THh/uHxYNqpGRl0I4larqXg6A7e9Mec=',
     role: 'admin',
     createdAt: new Date().toISOString(),
     failedAttempts: 0
