@@ -1,10 +1,15 @@
-name = "swankyb-pages"
+# NOTE: Do NOT commit secrets (account_id, API tokens) to git.
+# Fill `account_id` locally or in CI secrets before deploying.
+account_id = ""
+project_name = "swankyB"
 
-# Cloudflare Pages config - keep build command and set output dir
-compatibility_date = "2025-10-13"
-pages_build_output_dir = "dist"
+[build]
+	command = "npm run build"
+	directory = "./dist"
 
-# Environment variables for Supabase (Bolt Database)
-[vars]
-VITE_BOLT_DATABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1d2N6d3BmbnN3d2N0dW12cXNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1Mzg4ODMsImV4cCI6MjA3NTExNDg4M30.EGziTHFcFPQprqmSrvvfxzEEHY2HVuknezkpGidd3UA"
-VITE_BOLT_DATABASE_URL = "https://wuwczwpfnswwctumvqsq.supabase.co"
+[functions]
+	directory = "./functions"
+
+# If you need to set environment variables for Pages/Functions,
+# add them in the Cloudflare Dashboard (Pages -> Settings -> Environment variables)
+# or inject them at CI time. Do not store secrets in this repo.
