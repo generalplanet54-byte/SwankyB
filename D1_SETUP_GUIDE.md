@@ -82,7 +82,7 @@ wrangler d1 execute swankyb_content --command="SELECT * FROM categories;"
 wrangler d1 execute swankyb_content --command="SELECT title, slug, status FROM articles;"
 
 # Check products were created
-wrangler d1 execute swangler_content --command="SELECT name, brand, price FROM products LIMIT 5;"
+wrangler d1 execute swankyb_content --command="SELECT name, brand, price FROM products LIMIT 5;"
 ```
 
 ## Step 6: Test the API Endpoint
