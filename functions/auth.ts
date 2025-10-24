@@ -35,13 +35,21 @@ const users: User[] = [
 ];
 
 /**
- * Utility: base64 encode/decode
+ * Utility: base64 encode/decode (URL-safe for JWT)
  */
 function toBase64(input: ArrayBuffer): string {
-  return btoa(String.fromCharCode(...new Uint8Array(input)));
+  const base64 = btoa(String.fromCharCode(...new Uint8Array(input)));
+  // Convert to URL-safe base64
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
 function fromBase64(str: string): ArrayBuffer {
-  const binary = atob(str);
+  // Convert from URL-safe base64 to standard base64
+  let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+  // Add padding if needed
+  while (base64.length % 4) {
+    base64 += '=';
+  }
+  const binary = atob(base64);
   const len = binary.length;
   const buffer = new Uint8Array(len);
   for (let i = 0; i < len; i++) {
@@ -85,9 +93,10 @@ export async function createJWT(payload: Record<string, any>): Promise<string> {
 
   const body = { ...payload, iat, exp };
 
-  const unsigned = 
-    btoa(JSON.stringify(header)) + "." + 
-    btoa(JSON.stringify(body));
+  // Use URL-safe base64 encoding for JWT
+  const headerB64 = btoa(JSON.stringify(header)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+  const bodyB64 = btoa(JSON.stringify(body)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+  const unsigned = `${headerB64}.${bodyB64}`;
 
   const key = await getKey(JWT_SECRET, "sign");
   const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(unsigned));
@@ -113,7 +122,12 @@ export async function verifyJWT(token: string): Promise<any> {
 
   if (!valid) throw new Error("Invalid token");
 
-  const body = JSON.parse(atob(bodyB64));
+  // Decode URL-safe base64
+  let bodyBase64 = bodyB64.replace(/-/g, '+').replace(/_/g, '/');
+  while (bodyBase64.length % 4) {
+    bodyBase64 += '=';
+  }
+  const body = JSON.parse(atob(bodyBase64));
   if (body.exp && Date.now() / 1000 > body.exp) {
     throw new Error("Token expired");
   }

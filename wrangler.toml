@@ -1,14 +1,14 @@
 # NOTE: Do NOT commit secrets (account_id, API tokens) to git.
 # Fill `account_id` locally or in CI secrets before deploying.
-account_id = ""
-project_name = "swankyB"
+name = "swankyB"
+compatibility_date = "2024-01-01"
 
 [build]
-	command = "npm run build"
-	directory = "./dist"
+command = "npm run build"
 
-[functions]
-	directory = "./functions"
+[build.upload]
+format = "service-worker"
+dir = "./dist"
 
 # Cloudflare D1 Database binding
 [[d1_databases]]
