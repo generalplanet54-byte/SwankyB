@@ -156,7 +156,15 @@ const ArticlePage: React.FC = () => {
             </div>
             <div className="flex items-center space-x-2">
               <Calendar className="h-5 w-5 text-gray-400" />
-              <span className="text-sm">{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                {/* Render published date only when valid */}
+                {(() => {
+                  const pd = new Date(article.publishedAt);
+                  return !isNaN(pd.getTime()) ? (
+                    <span className="text-sm">{pd.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  ) : (
+                    <span className="text-sm text-gray-500">Unknown publish date</span>
+                  );
+                })()}
             </div>
             <div className="flex items-center space-x-2">
               <Clock className="h-5 w-5 text-gray-400" />
@@ -239,7 +247,10 @@ const ArticlePage: React.FC = () => {
           </div>
 
           <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-            Last updated: {new Date(article.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            Last updated: {(() => {
+              const ud = new Date(article.updatedAt);
+              return !isNaN(ud.getTime()) ? ud.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown';
+            })()}
           </p>
         </div>
       </footer>

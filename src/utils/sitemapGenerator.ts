@@ -35,13 +35,23 @@ export const generateSitemapUrls = (domain: string = 'https://swankyboyz.com'): 
     priority: '0.6'
   }));
 
-  // Article URLs
-  const articleUrls: SitemapUrl[] = launchArticles.map(article => ({
-    url: `${domain}/article/${article.slug}`,
-    lastmod: article.updatedAt ? new Date(article.updatedAt).toISOString().split('T')[0] : currentDate,
-    changefreq: 'weekly',
-    priority: '0.7'
-  }));
+  // Article URLs (validate dates before using toISOString)
+  const articleUrls: SitemapUrl[] = launchArticles.map(article => {
+    let lastmod = currentDate;
+    if (article.updatedAt) {
+      const parsed = new Date(article.updatedAt);
+      if (!isNaN(parsed.getTime())) {
+        lastmod = parsed.toISOString().split('T')[0];
+      }
+    }
+
+    return {
+      url: `${domain}/article/${article.slug}`,
+      lastmod,
+      changefreq: 'weekly',
+      priority: '0.7'
+    };
+  });
 
   return [...staticUrls, ...categoryUrls, ...articleUrls];
 };
