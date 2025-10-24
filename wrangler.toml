@@ -10,6 +10,12 @@ project_name = "swankyB"
 [functions]
 	directory = "./functions"
 
+# Cloudflare D1 Database binding
+[[d1_databases]]
+binding = "DB" # Available in Functions as context.env.DB
+database_name = "swankyb_content"
+database_id = "" # Will be filled after creating D1 database
+
 # If you need to set environment variables for Pages/Functions,
 # add them in the Cloudflare Dashboard (Pages -> Settings -> Environment variables)
 # or inject them at CI time. Do not store secrets in this repo.
