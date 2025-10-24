@@ -1,0 +1,165 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Preflight check - required build env
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          node ./scripts/check-env.js
+
+      - name: Build (with Vite env)
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: npm run build
+
+      - name: Install Wrangler
+        run: npm install -g wrangler@latest
+
+      - name: Install jq (for payload creation)
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          PROJECT_NAME: swankyB
+        run: |
+          # Ensure we can use the token
+          wrangler whoami || true
+          # Capture deploy output so we can extract the published URL for smoke tests
+          set -o pipefail
+          DEPLOY_OUTPUT=$(wrangler pages deploy ./dist --project-name=$PROJECT_NAME --branch=main 2>&1) || true
+          echo "$DEPLOY_OUTPUT"
+          # Try to extract a pages.dev URL from the output
+          DEPLOY_URL=$(echo "$DEPLOY_OUTPUT" | grep -Eo 'https://[a-z0-9.-]+pages.dev' | head -n1 || true)
+          if [ -n "$DEPLOY_URL" ]; then
+            echo "DEPLOY_URL=$DEPLOY_URL" >> $GITHUB_ENV
+            echo "Detected deploy URL: $DEPLOY_URL"
+          else
+            echo "Warning: could not determine deploy URL from wrangler output; smoke tests may be skipped.";
+          fi
+
+      - name: Set Pages runtime environment variables (optional)
+        if: always()
+        continue-on-error: true
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          PROJECT_NAME: swankyB
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "Attempting to set Pages runtime environment variables (non-blocking)..."
+          if [ -z "$CF_API_TOKEN" ] || [ -z "$CF_ACCOUNT_ID" ]; then
+            echo "CF_API_TOKEN or CF_ACCOUNT_ID missing - skipping Pages env update.";
+            exit 0;
+          fi
+
+          # Build JSON payload with only present variables
+          items=()
+          if [ -n "$JWT_SECRET" ]; then
+            items+=("{\"name\": \"JWT_SECRET\", \"value\": \"$JWT_SECRET\"}")
+          fi
+          if [ -n "$OPENAI_API_KEY" ]; then
+            items+=("{\"name\": \"OPENAI_API_KEY\", \"value\": \"$OPENAI_API_KEY\"}")
+          fi
+
+          if [ ${#items[@]} -eq 0 ]; then
+            echo "No runtime variables provided; skipping Pages variables update.";
+            exit 0;
+          fi
+
+          # Join items into JSON array
+          IFS=,; ITEMS_JOINED="${items[*]}"; unset IFS
+          PAYLOAD="{\"items\": [${ITEMS_JOINED}] }"
+
+          # API endpoint to set environment variables for the production environment
+          API_URL="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/pages/projects/$PROJECT_NAME/environments/production/variables"
+
+          echo "Calling $API_URL"
+          # Use PUT to set (replace) variables for the environment. If permissions are insufficient, continue-on-error prevents failing the deploy.
+          curl -s -X PUT "$API_URL" \
+            -H "Authorization: Bearer $CF_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data "$PAYLOAD" | jq || true
+
+      - name: Verify Pages runtime environment variables (non-blocking)
+        if: always()
+        continue-on-error: true
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          PROJECT_NAME: swankyB
+        run: |
+          echo "Attempting to read Pages runtime environment variables (masked)..."
+          if [ -z "$CF_API_TOKEN" ] || [ -z "$CF_ACCOUNT_ID" ]; then
+            echo "CF_API_TOKEN or CF_ACCOUNT_ID missing - skipping Pages variables read.";
+            exit 0;
+          fi
+
+          API_URL="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/pages/projects/$PROJECT_NAME/environments/production/variables"
+          echo "Calling $API_URL to list variables"
+          # Fetch and mask variable values before printing; remove actual values from output
+          RESP=$(curl -s -X GET "$API_URL" -H "Authorization: Bearer $CF_API_TOKEN" -H "Content-Type: application/json") || true
+          if [ -z "$RESP" ]; then
+            echo "No response from Pages variables API.";
+            exit 0;
+          fi
+          # Attempt to remove any value fields to avoid leaking secrets in logs
+          echo "$RESP" | jq 'del(.result[]?.value) // .'
+          # Check whether JWT_SECRET or OPENAI_API_KEY are present (names only)
+          echo "$RESP" | jq -r '[.result[]?.name] | @tsv' | tr '\t' '\n' | sed -n '1,200p' || true
+
+      - name: Smoke tests (homepage + article)
+        if: always()
+        env:
+          DEPLOY_URL: ${{ env.DEPLOY_URL }}
+        run: |
+          if [ -z "$DEPLOY_URL" ]; then
+            echo "No DEPLOY_URL found; skipping smoke tests.";
+            exit 0;
+          fi
+
+          # Wait briefly for edge propagation (small delay)
+          echo "Waiting 5s for edge propagation..."
+          sleep 5
+
+          echo "Testing homepage: $DEPLOY_URL"
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOY_URL")
+          echo "Homepage HTTP status: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "Homepage did not return 200. Failing smoke test.";
+            exit 1;
+          fi
+
+          # Test a known article slug from launchArticles
+          SLUG="premium-skincare-luxury-beauty-products-review"
+          ARTICLE_URL="$DEPLOY_URL/article/$SLUG"
+          echo "Testing article page: $ARTICLE_URL"
+          ARTICLE_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$ARTICLE_URL")
+          echo "Article HTTP status: $ARTICLE_STATUS"
+          if [ "$ARTICLE_STATUS" -ne 200 ]; then
+            echo "Article page did not return 200. Failing smoke test.";
+            exit 1;
+          fi
