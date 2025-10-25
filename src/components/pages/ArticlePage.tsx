@@ -61,11 +61,24 @@ const ArticlePage: React.FC = () => {
     { label: article.title, href: `/article/${article.slug}` }
   ]), [article.category, article.slug, article.title, categorySlug]);
 
-  const publishedAtISO = useMemo(() => new Date(article.publishedAt).toISOString(), [article.publishedAt]);
-  const updatedAtISO = useMemo(
-    () => (article.updatedAt ? new Date(article.updatedAt).toISOString() : publishedAtISO),
-    [article.updatedAt, publishedAtISO]
-  );
+  const publishedAtISO = useMemo(() => {
+    try {
+      const date = new Date(article.publishedAt.replace(' ', 'T') + 'Z');
+      return date.toISOString();
+    } catch {
+      return new Date().toISOString();
+    }
+  }, [article.publishedAt]);
+  
+  const updatedAtISO = useMemo(() => {
+    if (!article.updatedAt) return publishedAtISO;
+    try {
+      const date = new Date(article.updatedAt.replace(' ', 'T') + 'Z');
+      return date.toISOString();
+    } catch {
+      return publishedAtISO;
+    }
+  }, [article.updatedAt, publishedAtISO]);
 
   const articleStructuredData = useMemo(() => ({
     '@context': 'https://schema.org',
