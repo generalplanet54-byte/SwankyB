@@ -57,7 +57,7 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           const json = await res.json();
           const productsData = json.products || [];
           const formattedProducts: AffiliateProduct[] = (productsData || []).map((product: any) => ({
-            id: product.id,
+            id: String(product.id),
             name: product.name,
             description: product.description,
             price: product.price ? (typeof product.price === 'string' && product.price.startsWith('$') ? product.price : `$${product.price}`) : '',
@@ -66,7 +66,7 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             affiliateUrl: product.amazon_url,
             rating: product.rating || 0,
             provider: 'amazon' as const,
-            category: product.category,
+            category: product.category || 'general',
             commission: 10.0
           }));
           if (formattedProducts.length) {
