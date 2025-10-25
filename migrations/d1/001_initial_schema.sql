@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS articles (
     content TEXT NOT NULL,
     featured_image TEXT,
     author TEXT DEFAULT 'SwankyBoyz Team',
+    word_count INTEGER,
     category_id INTEGER,
     
     -- SEO fields

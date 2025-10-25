@@ -1,4 +1,4 @@
-import createSupabaseFromEnv from '../../src/lib/supabase-cloudflare';
+
 
 interface AffiliateClickPayload {
   productId: string;
@@ -69,7 +69,13 @@ export async function onRequest(context: any) {
     });
   }
 
-  const supabase = createSupabaseFromEnv(env);
+  const db = env.DB;
+  if (!db) {
+    return new Response(JSON.stringify({ error: 'Database not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 
   const referer = sanitizeText(request.headers.get('referer'));
   const userAgent = sanitizeText(request.headers.get('user-agent'));
@@ -80,23 +86,31 @@ export async function onRequest(context: any) {
   const ip = request.headers.get('CF-Connecting-IP');
   const ipHash = ip ? await hashIp(ip) : null;
 
-  const { error } = await supabase.from('affiliate_clicks').insert({
-    product_id: productId,
-    product_name: productName,
-    product_url: productUrl,
-    affiliate_url: affiliateUrl,
-    click_source: source,
-    referer,
-    user_agent: userAgent,
-    ip_hash: ipHash,
-  });
-
-  if (error) {
+  try {
+    const stmt = db.prepare(`
+      INSERT INTO affiliate_clicks (
+        product_id, product_name, product_url, affiliate_url, 
+        click_source, referer, user_agent, ip_hash
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    await stmt.bind(
+      productId,
+      productName,
+      productUrl,
+      affiliateUrl,
+      source,
+      referer,
+      userAgent,
+      ipHash
+    ).run();
+  } catch (error: any) {
     return new Response(JSON.stringify({ error: String(error.message || error) }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
-  return new Response(null, { status: 204 });
+  return new Response(JSON.stringify({ success: true }), {
+    status: 204,
+  });
 }

@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase, SUPABASE_CONFIGURED, Article as DBArticle } from '../lib/supabase';
 import { launchArticles } from '../data/launchArticles';
 import { launchProducts } from '../data/launchProducts';
 import { articleAffiliateMap } from '../data/articleAffiliateMap';
@@ -133,31 +132,13 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       // Try server-side public endpoint first (Cloudflare Pages function)
       try {
-        const res = await fetch('/api/content');
+        const res = await fetch('/api/articles-d1');
         if (res.ok) {
           const json = await res.json();
           const articlesData = json.articles || [];
-          const articleProductsData = json.article_products || [];
 
-          const formattedArticles: Article[] = (articlesData || []).map((article: DBArticle) => {
-            const relatedProducts = (articleProductsData || [])
-              .filter((ap: any) => ap.article_id === article.id)
-              .map((ap: any) => {
-                const product = ap.products;
-                return {
-                  id: product.id,
-                  name: product.name,
-                  description: product.description,
-                  price: product.price ? `$${product.price}` : '',
-                  originalPrice: product.original_price ? `$${product.original_price}` : undefined,
-                  image: product.image_url,
-                  affiliateUrl: product.amazon_url,
-                  rating: product.rating || 0,
-                  provider: 'amazon' as const,
-                  category: product.category
-                };
-              });
-
+          const formattedArticles: Article[] = (articlesData || []).map((article: any) => {
+            
             return {
               id: article.id,
               title: article.title,
@@ -168,13 +149,24 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
               publishedAt: article.published_at,
               updatedAt: article.updated_at,
               featuredImage: article.featured_image,
-              category: article.category,
-              tags: article.tags || [],
+              category: article.category_name,
+              tags: article.tags.map((t: any) => t.name) || [],
               readTime: article.read_time,
               featured: false,
               seoTitle: article.meta_title || article.title,
               seoDescription: article.meta_description || article.excerpt,
-              affiliateProducts: relatedProducts
+              affiliateProducts: article.products.map((p: any) => ({
+                id: p.id,
+                name: p.name,
+                description: p.description,
+                price: p.price ? `$${p.price}` : '',
+                originalPrice: p.original_price ? `$${p.original_price}` : undefined,
+                image: p.primary_image,
+                affiliateUrl: p.amazon_url,
+                rating: p.rating || 0,
+                provider: 'amazon' as const,
+                category: ''
+              }))
             };
           });
 
@@ -188,73 +180,73 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       // If Supabase wasn't configured at build time (common in Bolt/StackBlitz),
       // fall back to the bundled `launchArticles` so the site still shows content.
-      if (!SUPABASE_CONFIGURED) {
-        const hydrated = hydrateArticlesWithProducts(launchArticles as Article[]);
-        setArticles(hydrated);
-        updateCategories(hydrated);
-        return;
-      }
+      // if (!SUPABASE_CONFIGURED) {
+      //   const hydrated = hydrateArticlesWithProducts(launchArticles as Article[]);
+      //   setArticles(hydrated);
+      //   updateCategories(hydrated);
+      //   return;
+      // }
 
-      const { data: articlesData, error: articlesError } = await supabase
-        .from('articles')
-        .select('*')
-        .eq('is_published', true)
-        .order('published_at', { ascending: false });
+      // const { data: articlesData, error: articlesError } = await supabase
+      //   .from('articles')
+      //   .select('*')
+      //   .eq('is_published', true)
+      //   .order('published_at', { ascending: false });
 
-      if (articlesError) throw articlesError;
+      // if (articlesError) throw articlesError;
 
-      const { data: articleProductsData, error: articleProductsError } = await supabase
-        .from('article_products')
-        .select(`
-          article_id,
-          display_order,
-          products (*)
-        `)
-        .order('display_order', { ascending: true });
+      // const { data: articleProductsData, error: articleProductsError } = await supabase
+      //   .from('article_products')
+      //   .select(`
+      //     article_id,
+      //     display_order,
+      //     products (*)
+      //   `)
+      //   .order('display_order', { ascending: true });
 
-      if (articleProductsError) throw articleProductsError;
+      // if (articleProductsError) throw articleProductsError;
 
-      const formattedArticles: Article[] = (articlesData || []).map((article: DBArticle) => {
-        const relatedProducts = (articleProductsData || [])
-          .filter((ap: any) => ap.article_id === article.id)
-          .map((ap: any) => {
-            const product = ap.products;
-            return {
-              id: product.id,
-              name: product.name,
-              description: product.description,
-              price: product.price ? `$${product.price}` : '',
-              originalPrice: product.original_price ? `$${product.original_price}` : undefined,
-              image: product.image_url,
-              affiliateUrl: product.amazon_url,
-              rating: product.rating || 0,
-              provider: 'amazon' as const,
-              category: product.category
-            };
-          });
+      // const formattedArticles: Article[] = (articlesData || []).map((article: DBArticle) => {
+      //   const relatedProducts = (articleProductsData || [])
+      //     .filter((ap: any) => ap.article_id === article.id)
+      //     .map((ap: any) => {
+      //       const product = ap.products;
+      //       return {
+      //         id: product.id,
+      //         name: product.name,
+      //         description: product.description,
+      //         price: product.price ? `$${product.price}` : '',
+      //         originalPrice: product.original_price ? `$${product.original_price}` : undefined,
+      //         image: product.image_url,
+      //         affiliateUrl: product.amazon_url,
+      //         rating: product.rating || 0,
+      //         provider: 'amazon' as const,
+      //         category: product.category
+      //       };
+      //     });
 
-        return {
-          id: article.id,
-          title: article.title,
-          slug: article.slug,
-          excerpt: article.excerpt,
-          content: article.content,
-          author: article.author,
-          publishedAt: article.published_at,
-          updatedAt: article.updated_at,
-          featuredImage: article.featured_image,
-          category: article.category,
-          tags: article.tags || [],
-          readTime: article.read_time,
-          featured: false,
-          seoTitle: article.meta_title || article.title,
-          seoDescription: article.meta_description || article.excerpt,
-          affiliateProducts: relatedProducts
-        };
-      });
+      //   return {
+      //     id: article.id,
+      //     title: article.title,
+      //     slug: article.slug,
+      //     excerpt: article.excerpt,
+      //     content: article.content,
+      //     author: article.author,
+      //     publishedAt: article.published_at,
+      //     updatedAt: article.updated_at,
+      //     featuredImage: article.featured_image,
+      //     category: article.category,
+      //     tags: article.tags || [],
+      //     readTime: article.read_time,
+      //     featured: false,
+      //     seoTitle: article.meta_title || article.title,
+      //     seoDescription: article.meta_description || article.excerpt,
+      //     affiliateProducts: relatedProducts
+      //   };
+      // });
 
-      setArticles(formattedArticles);
-      updateCategories(formattedArticles);
+      // setArticles(formattedArticles);
+      // updateCategories(formattedArticles);
     } catch (error) {
       console.error('Error fetching articles:', error);
       // If Supabase query fails for any reason, fall back to bundled launchArticles

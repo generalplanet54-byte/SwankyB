@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase, Product as DBProduct } from '../lib/supabase';
 import { launchProducts } from '../data/launchProducts';
 
 export interface AffiliateProduct {
@@ -53,17 +52,17 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       setLoading(true);
       // Prefer server-side public endpoint
       try {
-        const res = await fetch('/api/content');
+        const res = await fetch('/api/products-d1');
         if (res.ok) {
           const json = await res.json();
           const productsData = json.products || [];
-          const formattedProducts: AffiliateProduct[] = (productsData || []).map((product: DBProduct) => ({
+          const formattedProducts: AffiliateProduct[] = (productsData || []).map((product: any) => ({
             id: product.id,
             name: product.name,
             description: product.description,
             price: product.price ? `$${product.price}` : '',
             originalPrice: product.original_price ? `$${product.original_price}` : undefined,
-            image: product.image_url,
+            image: product.primary_image,
             affiliateUrl: product.amazon_url,
             rating: product.rating || 0,
             provider: 'amazon' as const,
@@ -81,32 +80,6 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         // fallback to client-side supabase
       }
 
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-
-      const formattedProducts: AffiliateProduct[] = (data || []).map((product: DBProduct) => ({
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        price: product.price ? `$${product.price}` : '',
-        originalPrice: product.original_price ? `$${product.original_price}` : undefined,
-        image: product.image_url,
-        affiliateUrl: product.amazon_url,
-        rating: product.rating || 0,
-        provider: 'amazon' as const,
-        category: product.category,
-        commission: 10.0
-      }));
-
-      if (formattedProducts.length) {
-        setProducts(formattedProducts);
-      } else {
-        useLaunchProducts();
-      }
     } catch (error) {
       console.error('Error fetching products:', error);
       useLaunchProducts();

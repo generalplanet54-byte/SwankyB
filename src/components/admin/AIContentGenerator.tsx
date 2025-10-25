@@ -4,7 +4,7 @@ import { useContent } from '../../contexts/ContentContext';
 import { useAffiliate } from '../../contexts/AffiliateContext';
 
 const AIContentGenerator: React.FC = () => {
-  const { generateArticle, addArticle, categories } = useContent();
+  const { addArticle, categories } = useContent();
   const { products } = useAffiliate();
   const [topic, setTopic] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);

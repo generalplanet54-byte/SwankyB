@@ -1,20 +1,17 @@
 # NOTE: Do NOT commit secrets (account_id, API tokens) to git.
 # Fill `account_id` locally or in CI secrets before deploying.
-name = "swankyB"
+name = "swanky-boyz"
+account_id = "43f14f26801fb2389382fa084e3442e6"
 compatibility_date = "2024-01-01"
 
 [build]
 command = "npm run build"
 
-[build.upload]
-format = "service-worker"
-dir = "./dist"
-
 # Cloudflare D1 Database binding
 [[d1_databases]]
 binding = "DB" # Available in Functions as context.env.DB
 database_name = "swankyb_content"
-database_id = "" # Will be filled after creating D1 database
+database_id = "bfc16265-30bd-4bcf-8a72-f2a5a5baf61a"
 
 # If you need to set environment variables for Pages/Functions,
 # add them in the Cloudflare Dashboard (Pages -> Settings -> Environment variables)
