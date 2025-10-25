@@ -12,10 +12,10 @@ INSERT OR IGNORE INTO categories (id, name, slug, description) VALUES
 --
 
 -- Products for "Best White T-Shirts"
-INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, is_active) VALUES
-(12, 'Everlane The Organic Cotton Crew', 'everlane-organic-cotton-crew', 'Everlane', 'A classic, clean-cut crew neck made from soft, durable 100% organic cotton. A perfect wardrobe staple.', 'https://m.media-amazon.com/images/I/71q9d7N2S+L._AC_UX679_.jpg', 30.00, NULL, 'https://amzn.to/4aMjKlM', 4.6, 8000, 1),
-(13, 'J.Crew Broken-in Short-sleeve T-shirt', 'jcrew-broken-in-t-shirt', 'J.Crew', 'Garment-dyed and washed for a perfectly broken-in feel from day one. A relaxed fit that gets softer with every wash.', 'https://www.jcrew.com/s7-img-facade/BE799_WT0002_m?wid=416', 39.50, NULL, 'https://amzn.to/4bNopQr', 4.7, 12000, 1),
-(14, 'Uniqlo U Crew Neck Short-Sleeve T-Shirt', 'uniqlo-u-crew-neck', 'Uniqlo', 'Designed by Christophe Lemaire, this is a heavyweight, durable tee with a modern, boxy fit. The gold standard for affordable quality.', 'https://image.uniqlo.com/UQ/ST3/us/imagesgoods/455359/item/usgoods_00_455359.jpg', 24.90, NULL, 'https://amzn.to/4cDeFgH', 4.8, 50000, 1);
+INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, category_id, is_active) VALUES
+(12, 'Everlane The Organic Cotton Crew', 'everlane-organic-cotton-crew', 'Everlane', 'A classic, clean-cut crew neck made from soft, durable 100% organic cotton. A perfect wardrobe staple.', 'https://m.media-amazon.com/images/I/71q9d7N2S+L._AC_UX679_.jpg', 30.00, NULL, 'https://amzn.to/4aMjKlM', 4.6, 8000, 2, 1),
+(13, 'J.Crew Broken-in Short-sleeve T-shirt', 'jcrew-broken-in-t-shirt', 'J.Crew', 'Garment-dyed and washed for a perfectly broken-in feel from day one. A relaxed fit that gets softer with every wash.', 'https://www.jcrew.com/s7-img-facade/BE799_WT0002_m?wid=416', 39.50, NULL, 'https://amzn.to/4bNopQr', 4.7, 12000, 2, 1),
+(14, 'Uniqlo U Crew Neck Short-Sleeve T-Shirt', 'uniqlo-u-crew-neck', 'Uniqlo', 'Designed by Christophe Lemaire, this is a heavyweight, durable tee with a modern, boxy fit. The gold standard for affordable quality.', 'https://image.uniqlo.com/UQ/ST3/us/imagesgoods/455359/item/usgoods_00_455359.jpg', 24.90, NULL, 'https://amzn.to/4cDeFgH', 4.8, 50000, 2, 1);
 
 -- Article: "Best White T-Shirts"
 INSERT INTO articles (id, category_id, title, slug, excerpt, content, featured_image, author, meta_title, meta_description, focus_keyword, read_time, view_count, word_count, status, published_at) VALUES
@@ -30,9 +30,9 @@ INSERT INTO article_tags (article_id, tag_id) VALUES (4, 12), (4, 13);
 --
 
 -- Products for "Best At-Home Workout Equipment"
-INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, is_active) VALUES
-(15, 'Bowflex SelectTech 552 Adjustable Dumbbells', 'bowflex-selecttech-552', 'Bowflex', 'Replaces 15 sets of weights. These adjustable dumbbells are the ultimate space-saving solution for a home gym.', 'https://m.media-amazon.com/images/I/71bA8P-j5ZL._AC_SL1500_.jpg', 429.00, 549.00, 'https://amzn.to/4cGhIjK', 4.8, 22000, 1),
-(16, 'TRX All-in-One Suspension Trainer', 'trx-suspension-trainer', 'TRX', 'The original bodyweight suspension trainer. Build muscle, burn fat, and improve cardio with this versatile, portable gym.', 'https://m.media-amazon.com/images/I/71sYJg+Jd-L._AC_SL1500_.jpg', 199.95, NULL, 'https://amzn.to/4aBcDeF', 4.9, 15000, 1);
+INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, category_id, is_active) VALUES
+(15, 'Bowflex SelectTech 552 Adjustable Dumbbells', 'bowflex-selecttech-552', 'Bowflex', 'Replaces 15 sets of weights. These adjustable dumbbells are the ultimate space-saving solution for a home gym.', 'https://m.media-amazon.com/images/I/71bA8P-j5ZL._AC_SL1500_.jpg', 429.00, 549.00, 'https://amzn.to/4cGhIjK', 4.8, 22000, 3, 1),
+(16, 'TRX All-in-One Suspension Trainer', 'trx-suspension-trainer', 'TRX', 'The original bodyweight suspension trainer. Build muscle, burn fat, and improve cardio with this versatile, portable gym.', 'https://m.media-amazon.com/images/I/71sYJg+Jd-L._AC_SL1500_.jpg', 199.95, NULL, 'https://amzn.to/4aBcDeF', 4.9, 15000, 3, 1);
 
 -- Article: "Best At-Home Workout Equipment"
 INSERT INTO articles (id, category_id, title, slug, excerpt, content, featured_image, author, meta_title, meta_description, focus_keyword, read_time, view_count, word_count, status, published_at) VALUES
@@ -47,9 +47,9 @@ INSERT INTO article_tags (article_id, tag_id) VALUES (5, 14), (5, 15);
 --
 
 -- Products for "Best Noise-Cancelling Headphones"
-INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, is_active) VALUES
-(17, 'Sony WH-1000XM5 Wireless Noise-Canceling Headphones', 'sony-wh-1000xm5', 'Sony', 'Industry-leading noise cancellation, exceptional sound quality, and a lightweight, comfortable design. The king of headphones.', 'https://m.media-amazon.com/images/I/61vJtKbAssL._AC_SL1500_.jpg', 399.99, NULL, 'https://amzn.to/4aLMnOp', 4.7, 18000, 1),
-(18, 'Bose QuietComfort Ultra Headphones', 'bose-quietcomfort-ultra', 'Bose', 'The new standard in comfort and noise cancellation. Bose Immersive Audio provides a next-level listening experience.', 'https://m.media-amazon.com/images/I/71+2V6xj+PL._AC_SL1500_.jpg', 429.00, NULL, 'https://amzn.to/4bNopQr', 4.6, 9000, 1);
+INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, category_id, is_active) VALUES
+(17, 'Sony WH-1000XM5 Wireless Noise-Canceling Headphones', 'sony-wh-1000xm5', 'Sony', 'Industry-leading noise cancellation, exceptional sound quality, and a lightweight, comfortable design. The king of headphones.', 'https://m.media-amazon.com/images/I/61vJtKbAssL._AC_SL1500_.jpg', 399.99, NULL, 'https://amzn.to/4aLMnOp', 4.7, 18000, 4, 1),
+(18, 'Bose QuietComfort Ultra Headphones', 'bose-quietcomfort-ultra', 'Bose', 'The new standard in comfort and noise cancellation. Bose Immersive Audio provides a next-level listening experience.', 'https://m.media-amazon.com/images/I/71+2V6xj+PL._AC_SL1500_.jpg', 429.00, NULL, 'https://amzn.to/4bNopQr', 4.6, 9000, 4, 1);
 
 -- Article: "Best Noise-Cancelling Headphones"
 INSERT INTO articles (id, category_id, title, slug, excerpt, content, featured_image, author, meta_title, meta_description, focus_keyword, read_time, view_count, word_count, status, published_at) VALUES

@@ -5,10 +5,10 @@ INSERT OR IGNORE INTO categories (id, name, slug, description)
 VALUES (1, 'Grooming', 'grooming', 'Essential grooming tips, guides, and product reviews for the modern man.');
 
 -- Add the new products for the article
-INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, is_active) VALUES
-(6, 'Philips Norelco Multigroom 7000', 'philips-norelco-multigroom-7000', 'Philips', 'The ultimate all-in-one trimmer with 23 pieces for all your grooming needs. Self-sharpening steel blades and a powerful lithium-ion battery.', 'https://m.media-amazon.com/images/I/715e2z8x0EL._AC_SL1500_.jpg', 59.99, 64.99, 'https://amzn.to/3XYZ123', 4.7, 75000, 1),
-(7, 'Wahl Clipper Stainless Steel', 'wahl-clipper-stainless-steel', 'Wahl', 'A premium stainless steel trimmer with heavy-duty performance for beards, nose, and body. Long-lasting battery and a wide range of guide combs.', 'https://m.media-amazon.com/images/I/71lA5g426jL._AC_SL1500_.jpg', 79.99, 89.99, 'https://amzn.to/3XYZ456', 4.5, 25000, 1),
-(8, 'Brio Beardscape Pro', 'brio-beardscape-pro', 'Brio', 'Engineered for the perfect trim, the Beardscape Pro features a ceramic blade, variable speed control, and an oversized battery for unmatched precision and power.', 'https://m.media-amazon.com/images/I/71B-LL9+B-L._AC_SL1500_.jpg', 119.95, 129.95, 'https://amzn.to/3XYZ789', 4.8, 12000, 1);
+INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, category_id, is_active) VALUES
+(6, 'Philips Norelco Multigroom 7000', 'philips-norelco-multigroom-7000', 'Philips', 'The ultimate all-in-one trimmer with 23 pieces for all your grooming needs. Self-sharpening steel blades and a powerful lithium-ion battery.', 'https://m.media-amazon.com/images/I/715e2z8x0EL._AC_SL1500_.jpg', 59.99, 64.99, 'https://amzn.to/3XYZ123', 4.7, 75000, 1, 1),
+(7, 'Wahl Clipper Stainless Steel', 'wahl-clipper-stainless-steel', 'Wahl', 'A premium stainless steel trimmer with heavy-duty performance for beards, nose, and body. Long-lasting battery and a wide range of guide combs.', 'https://m.media-amazon.com/images/I/71lA5g426jL._AC_SL1500_.jpg', 79.99, 89.99, 'https://amzn.to/3XYZ456', 4.5, 25000, 1, 1),
+(8, 'Brio Beardscape Pro', 'brio-beardscape-pro', 'Brio', 'Engineered for the perfect trim, the Beardscape Pro features a ceramic blade, variable speed control, and an oversized battery for unmatched precision and power.', 'https://m.media-amazon.com/images/I/71B-LL9+B-L._AC_SL1500_.jpg', 119.95, 129.95, 'https://amzn.to/3XYZ789', 4.8, 12000, 1, 1);
 
 -- Add the "Best Beard Trimmers 2025" article
 INSERT INTO articles (id, category_id, title, slug, excerpt, content, featured_image, author, meta_title, meta_description, focus_keyword, read_time, view_count, word_count, status, published_at)

@@ -109,7 +109,15 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const trackClick = (productId: string) => {
     const product = products.find((p) => p.id === productId);
-    if (!product) return;
+    if (!product) {
+      console.error('Product not found:', productId);
+      return;
+    }
+
+    if (!product.affiliateUrl) {
+      console.error('Product missing affiliate URL:', product);
+      return;
+    }
 
     const payload = {
       productId: product.id,

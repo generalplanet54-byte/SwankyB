@@ -5,10 +5,10 @@ INSERT OR IGNORE INTO categories (id, name, slug, description)
 VALUES (1, 'Grooming', 'grooming', 'Essential grooming tips, guides, and product reviews for the modern man.');
 
 -- Add the new products for the article
-INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, is_active) VALUES
-(9, 'Philips Norelco Bodygroom 7000', 'philips-norelco-bodygroom-7000', 'Philips', 'A dual-sided groomer that allows you to switch between shaving and trimming. Features a 4-directional pivoting head and 5 adjustable lengths.', 'https://m.media-amazon.com/images/I/71c6-g5ORhL._AC_SL1500_.jpg', 69.99, 79.99, 'https://amzn.to/4aBcDef', 4.6, 45000, 1),
-(10, 'Braun Body Groomer 5', 'braun-body-groomer-5', 'Braun', 'Designed for gentle full-body grooming with SkinShield technology. Comes with sensitive combs to protect skin in delicate areas.', 'https://m.media-amazon.com/images/I/71j5t+5kL-L._AC_SL1500_.jpg', 54.99, 64.99, 'https://amzn.to/4aGhIjk', 4.5, 15000, 1),
-(11, 'MANSCAPED The Lawn Mower 4.0', 'manscaped-lawn-mower-4-0', 'MANSCAPED', 'The famous below-the-waist trimmer featuring a ceramic blade, wireless charging, and a waterproof design for wet or dry use.', 'https://m.media-amazon.com/images/I/71vAFOa229L._AC_SL1500_.jpg', 89.99, 99.99, 'https://amzn.to/4aLMnOp', 4.4, 120000, 1);
+INSERT INTO products (id, name, slug, brand, description, primary_image, price, original_price, amazon_url, rating, review_count, category_id, is_active) VALUES
+(9, 'Philips Norelco Bodygroom 7000', 'philips-norelco-bodygroom-7000', 'Philips', 'A dual-sided groomer that allows you to switch between shaving and trimming. Features a 4-directional pivoting head and 5 adjustable lengths.', 'https://m.media-amazon.com/images/I/71c6-g5ORhL._AC_SL1500_.jpg', 69.99, 79.99, 'https://amzn.to/4aBcDef', 4.6, 45000, 1, 1),
+(10, 'Braun Body Groomer 5', 'braun-body-groomer-5', 'Braun', 'Designed for gentle full-body grooming with SkinShield technology. Comes with sensitive combs to protect skin in delicate areas.', 'https://m.media-amazon.com/images/I/71j5t+5kL-L._AC_SL1500_.jpg', 54.99, 64.99, 'https://amzn.to/4aGhIjk', 4.5, 15000, 1, 1),
+(11, 'MANSCAPED The Lawn Mower 4.0', 'manscaped-lawn-mower-4-0', 'MANSCAPED', 'The famous below-the-waist trimmer featuring a ceramic blade, wireless charging, and a waterproof design for wet or dry use.', 'https://m.media-amazon.com/images/I/71vAFOa229L._AC_SL1500_.jpg', 89.99, 99.99, 'https://amzn.to/4aLMnOp', 4.4, 120000, 1, 1);
 
 -- Add the "Best Body Groomers for Men 2025" article
 INSERT INTO articles (id, category_id, title, slug, excerpt, content, featured_image, author, meta_title, meta_description, focus_keyword, read_time, view_count, word_count, status, published_at)

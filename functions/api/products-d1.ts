@@ -19,23 +19,25 @@ export async function onRequestGet(context: any) {
 
     let query = `
       SELECT 
-        id,
-        name,
-        slug,
-        brand,
-        description,
-        primary_image,
-        price,
-        original_price,
-        amazon_url,
-        rating,
-        review_count,
-        is_active,
-        created_at,
-        updated_at
-      FROM products
-      WHERE is_active = 1
-      ORDER BY created_at DESC
+        p.id,
+        p.name,
+        p.slug,
+        p.brand,
+        p.description,
+        p.primary_image,
+        p.price,
+        p.original_price,
+        p.amazon_url,
+        p.rating,
+        p.review_count,
+        p.is_active,
+        p.created_at,
+        p.updated_at,
+        c.name as category
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      WHERE p.is_active = 1
+      ORDER BY p.created_at DESC
       LIMIT ? OFFSET ?
     `;
 
