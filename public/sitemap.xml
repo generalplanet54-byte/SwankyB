@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://swankyboyz.com/</loc>
-    <lastmod>2025-10-22</lastmod>
+    <lastmod>2025-10-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://swankyboyz.com/articles</loc>
-    <lastmod>2025-10-22</lastmod>
+    <lastmod>2025-10-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -91,6 +91,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://swankyboyz.com/category/laptops</loc>
+    <lastmod>2025-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://swankyboyz.com/category/men-s-skincare</loc>
     <lastmod>2024-01-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -109,14 +115,44 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://swankyboyz.com/category/smartphones</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/category/smartwatches</loc>
+    <lastmod>2025-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://swankyboyz.com/privacy-policy</loc>
-    <lastmod>2025-10-22</lastmod>
+    <lastmod>2025-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://swankyboyz.com/products/asus-rog-strix-g18</loc>
+    <lastmod>2025-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/products/braun-series-9-pro-plus</loc>
+    <lastmod>2025-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://swankyboyz.com/products/clinique-max-hydrator</loc>
     <lastmod>2024-01-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/products/garmin-fenix-8-amoled-sapphire</loc>
+    <lastmod>2025-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -135,6 +171,18 @@
   <url>
     <loc>https://swankyboyz.com/products/kiehls-age-defender</loc>
     <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/products/macbook-pro-16-m4-pro</loc>
+    <lastmod>2025-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/products/samsung-galaxy-s25-ultra</loc>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
