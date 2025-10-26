@@ -12,8 +12,8 @@ image: "https://images.pexels.com/photos/3685530/pexels-photo-3685530.jpeg?auto=
 published: true
 featured: true
 publishedAt: 2024-01-13T09:15:00Z
-seoTitle: "Jack Black Protein Booster Eye Rescue Review: Men's Eye Care 2024"
-seoDescription: "Complete Jack Black Protein Booster Eye Rescue review. Powerful eye cream for men targeting dark circles, puffiness, and fine lines. See results and benefits."
+seoTitle: "Jack Black Protein Booster Eye Rescue Review: Men's Eye Care 2025"
+seoDescription: "Complete Jack Black Protein Booster Eye Rescue review. Powerful eye cream for men targeting dark circles, puffiness, and fine lines. Field-tested results and expert analysis."
 tags: ["mens skincare", "eye cream", "anti-aging", "jack black"]
 pros:
   - "Specifically formulated for men's skin"

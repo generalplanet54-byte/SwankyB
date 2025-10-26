@@ -12,8 +12,8 @@ image: "https://images.pexels.com/photos/4050320/pexels-photo-4050320.jpeg?auto=
 published: true
 featured: true
 publishedAt: 2024-01-11T16:20:00Z
-seoTitle: "Herman Miller Aeron Chair Review: Best Ergonomic Office Chair 2024"
-seoDescription: "Complete Herman Miller Aeron chair review. Premium ergonomics, 12-year warranty, and health benefits. The ultimate office chair investment."
+seoTitle: "Herman Miller Aeron Chair Review: Best Ergonomic Office Chair 2025"
+seoDescription: "Complete Herman Miller Aeron chair review. Premium ergonomics, 12-year warranty, and proven health benefits. The ultimate executive office chair investment."
 tags: ["office chair", "ergonomic", "herman miller", "productivity"]
 pros:
   - "Exceptional ergonomic design"
