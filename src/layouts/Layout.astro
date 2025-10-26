@@ -28,8 +28,18 @@ const additionalJsonLd = props.structuredData
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-site-verification" content="_v2QImVUwirgORJMwmdagQncT4dsH5qjz5wXJuLaEWk" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VZHNBYXJ3S"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-VZHNBYXJ3S');
+    </script>
+    
   <meta name="generator" content={Astro.generator} />
   <title>{seo.title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
