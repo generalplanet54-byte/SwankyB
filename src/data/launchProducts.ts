@@ -33,7 +33,7 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     description: 'High-performance 4+1 shaving system engineered for dense beards with precision trimmer and SmartCare Center.',
     price: '$199.99',
     originalPrice: '$229.99',
-    image: 'https://images.unsplash.com/photo-1502767089025-6572583495b0?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1200&q=80',
     affiliateUrl: 'https://amzn.to/43cCrdG',
     rating: 4.6,
     provider: 'amazon',
