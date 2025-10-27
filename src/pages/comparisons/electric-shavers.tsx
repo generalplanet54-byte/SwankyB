@@ -1,5 +1,5 @@
+import { useEffect } from 'react';
 import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
-import { Layout } from '@/components/Layout';
 
 // Sample product data for electric shavers
 const premiumShavers: ComparisonProduct[] = [
@@ -118,12 +118,16 @@ const shaverFeatures: ComparisonFeature[] = [
 ];
 
 const ComparisonPage: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Premium Electric Shavers Comparison | SwankyBoyz';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Side-by-side comparison of the best premium electric shavers. Compare features, price, and ratings to find your perfect shaver.');
+    }
+  }, []);
+
   return (
-    <Layout 
-      title="Premium Electric Shavers Comparison | SwankyBoyz"
-      description="Side-by-side comparison of the best premium electric shavers. Compare features, price, and ratings to find your perfect shaver."
-    >
-      <main className="bg-charcoal min-h-screen py-16">
+    <main className="bg-charcoal min-h-screen py-16">
         <div className="container space-y-12">
           {/* Header */}
           <div className="space-y-4">
@@ -260,8 +264,7 @@ const ComparisonPage: React.FC = () => {
           </section>
         </div>
       </main>
-    </Layout>
-  );
+    );
 };
 
 export default ComparisonPage;
