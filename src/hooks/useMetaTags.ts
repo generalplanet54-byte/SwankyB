@@ -7,8 +7,9 @@ interface MetaTagsOptions {
 }
 
 export const useMetaTags = (options: MetaTagsOptions) => {
+  const { title, description, robots } = options;
+  
   useEffect(() => {
-    const { title, description, robots } = options;
 
     // Store original values
     const originalTitle = document.title;
@@ -61,5 +62,5 @@ export const useMetaTags = (options: MetaTagsOptions) => {
         }
       }
     };
-  }, [options.title, options.description, options.robots]);
+  }, [title, description, robots]);
 };
