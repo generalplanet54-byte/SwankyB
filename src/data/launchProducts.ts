@@ -460,7 +460,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.8,
     provider: 'amazon',
     category: 'Audio',
-    commission: 8
+    commission: 8,
+    bestseller: true,
+    stockCount: 14
   },
   {
     id: 'prod-maono-pd400x',
@@ -472,7 +474,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.6,
     provider: 'amazon',
     category: 'Audio',
-    commission: 8
+    commission: 8,
+    trending: true,
+    stockCount: 38
   },
 
   // SMARTWATCHES - Garmin Premium Collection
@@ -486,7 +490,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.9,
     provider: 'amazon',
     category: 'Wearables',
-    commission: 5
+    commission: 5,
+    bestseller: true,
+    stockCount: 10,
+    dealExpiry: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000)
   },
   {
     id: 'prod-garmin-approach-s50',
@@ -498,7 +505,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.7,
     provider: 'amazon',
     category: 'Wearables',
-    commission: 5
+    commission: 5,
+    stockCount: 21
   },
   {
     id: 'prod-garmin-approach-s50-bundle',
@@ -510,7 +518,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.8,
     provider: 'amazon',
     category: 'Wearables',
-    commission: 5
+    commission: 5,
+    bestseller: true,
+    stockCount: 9,
+    rareFind: true
   },
 
   // SKINCARE - Premium Men's Care
@@ -525,20 +536,24 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.5,
     provider: 'amazon',
     category: 'Skincare',
-    commission: 8
+    commission: 8,
+    bestseller: true,
+    stockCount: 89
   },
   {
     id: 'prod-tom-ford-oud-wood',
     name: 'Tom Ford Oud Wood Eau de Parfum',
     description: 'Iconic luxury fragrance blending rare oud wood with cardamom, sandalwood, and amber accords.',
     price: '$285.00',
-    // Replaced with more masculine, luxury-focused Tom Ford style image - dark, sophisticated bottle on rich wood surface
     image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     affiliateUrl: 'https://www.amazon.com/dp/B07D3DBPP1?tag=swankyboyz-20',
     rating: 4.7,
     provider: 'amazon',
     category: 'Fragrance',
-    commission: 10
+    commission: 10,
+    bestseller: true,
+    stockCount: 17,
+    trending: true
   },
   {
     id: 'prod-ridge-wallet',
@@ -551,7 +566,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.6,
     provider: 'amazon',
     category: 'Accessories',
-    commission: 10
+    commission: 10,
+    bestseller: true,
+    stockCount: 46
   },
   {
     id: 'prod-sony-wf-1000xm4',
@@ -564,7 +581,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.7,
     provider: 'amazon',
     category: 'Audio',
-    commission: 8
+    commission: 8,
+    bestseller: true,
+    stockCount: 35
   },
   {
     id: 'prod-apple-airpods-pro',
@@ -576,6 +595,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.8,
     provider: 'amazon',
     category: 'Audio',
-    commission: 8
+    commission: 8,
+    bestseller: true,
+    stockCount: 72,
+    trending: true
   }
 ];
