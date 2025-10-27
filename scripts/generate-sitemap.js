@@ -110,6 +110,27 @@ const staticRoutes = [
     url: '/articles',
     changefreq: 'daily',
     priority: '0.8'
+  },
+  // Legal and informational pages
+  {
+    url: '/privacy',
+    changefreq: 'monthly',
+    priority: '0.5'
+  },
+  {
+    url: '/terms',
+    changefreq: 'monthly',
+    priority: '0.5'
+  },
+  {
+    url: '/affiliate-disclosure',
+    changefreq: 'monthly',
+    priority: '0.5'
+  },
+  {
+    url: '/contact',
+    changefreq: 'monthly',
+    priority: '0.6'
   }
 ];
 
