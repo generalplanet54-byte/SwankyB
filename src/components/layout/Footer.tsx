@@ -137,10 +137,10 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Categories</h4>
             <ul className="space-y-2">
-              <li><Link to="/category/grooming" className="text-gray-400 hover:text-white transition-colors duration-200">Grooming</Link></li>
-              <li><Link to="/category/audio-equipment" className="text-gray-400 hover:text-white transition-colors duration-200">Audio Equipment</Link></li>
-              <li><Link to="/category/smartphones" className="text-gray-400 hover:text-white transition-colors duration-200">Smartphones</Link></li>
-              <li><Link to="/category/technology" className="text-gray-400 hover:text-white transition-colors duration-200">Technology</Link></li>
+              <li><Link to="/category/grooming" className="text-gray-400 hover:text-white transition-colors duration-200">Executive Grooming</Link></li>
+              <li><Link to="/category/audio" className="text-gray-400 hover:text-white transition-colors duration-200">Premium Audio</Link></li>
+              <li><Link to="/category/accessories" className="text-gray-400 hover:text-white transition-colors duration-200">Luxury Accessories</Link></li>
+              <li><Link to="/category/fragrance" className="text-gray-400 hover:text-white transition-colors duration-200">Signature Fragrances</Link></li>
               <li><Link to="/articles" className="text-gray-400 hover:text-white transition-colors duration-200">All Articles</Link></li>
             </ul>
           </div>
