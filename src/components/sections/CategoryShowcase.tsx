@@ -5,44 +5,44 @@ import { Smartphone, Heart, Briefcase, Dumbbell, Gem, ArrowRight } from 'lucide-
 const CategoryShowcase: React.FC = () => {
   const categories = [
     {
-      name: 'Skincare',
-      slug: 'skincare',
-      icon: Heart,
-      description: 'Premium skincare products from Kiehl\'s, Clinique, and luxury brands',
-      image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=500',
-      color: 'from-pink-500 to-rose-600'
-    },
-    {
-      name: 'Audio',
-      slug: 'audio',
-      icon: Smartphone,
-      description: 'Premium wireless earbuds from Sony, Apple, Bose, and more',
-      image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=500',
-      color: 'from-blue-500 to-purple-600'
-    },
-    {
-      name: 'Accessories',
-      slug: 'accessories',
-      icon: Briefcase,
-      description: 'Premium wallets from The Ridge, Bellroy, Ekster, and more',
-      image: 'https://images.pexels.com/photos/8148577/pexels-photo-8148577.jpeg?auto=compress&cs=tinysrgb&w=500',
-      color: 'from-green-500 to-teal-600'
-    },
-    {
-      name: 'Fragrance',
-      slug: 'fragrance',
-      icon: Gem,
-      description: 'Luxury fragrances from Tom Ford, Creed, and premium brands',
-      image: 'https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=500',
-      color: 'from-orange-500 to-red-600'
-    },
-    {
-      name: 'Grooming',
+      name: 'Executive Grooming',
       slug: 'grooming',
+      icon: Briefcase,
+      description: 'Sophisticated grooming essentials for the discerning gentleman',
+      image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+      color: 'from-slate-700 to-slate-900'
+    },
+    {
+      name: 'Premium Audio',
+      slug: 'audio-equipment',
+      icon: Smartphone,
+      description: 'Luxury audio equipment for the sophisticated professional',
+      image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+      color: 'from-blue-800 to-indigo-900'
+    },
+    {
+      name: 'Luxury Accessories',
+      slug: 'accessories',
+      icon: Gem,
+      description: 'Executive accessories that command respect and attention',
+      image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+      color: 'from-amber-700 to-orange-800'
+    },
+    {
+      name: 'Signature Fragrances',
+      slug: 'fragrance',
+      icon: Heart,
+      description: 'Distinguished scents that define executive presence',
+      image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+      color: 'from-emerald-700 to-green-800'
+    },
+    {
+      name: 'Elite Technology',
+      slug: 'technology',
       icon: Dumbbell,
-      description: 'Men\'s grooming essentials and premium care products',
-      image: 'https://images.pexels.com/photos/3685530/pexels-photo-3685530.jpeg?auto=compress&cs=tinysrgb&w=500',
-      color: 'from-yellow-500 to-amber-600'
+      description: 'Cutting-edge tech for the modern executive lifestyle',
+      image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+      color: 'from-purple-700 to-violet-800'
     }
   ];
 
@@ -50,10 +50,10 @@ const CategoryShowcase: React.FC = () => {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          Explore Our Categories
+          Executive Collections
         </h2>
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-          Discover curated products and expert reviews across our specialized categories.
+          Meticulously curated luxury collections for the sophisticated gentleman who demands excellence.
         </p>
       </div>
 

@@ -16,21 +16,21 @@ const Hero: React.FC = memo(() => {
           </div>
           
           <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            Discover the latest tech gadgets, lifestyle products, and luxury accessories. 
-            We curate the best deals and provide honest reviews to elevate your lifestyle.
+            Elevate your executive lifestyle with meticulously curated luxury products. 
+            For the discerning gentleman who demands excellence in every detail.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Link
-              to="/category/skincare"
+              to="/category/grooming"
               className="bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 inline-flex items-center space-x-2"
             >
               <TrendingUp className="h-5 w-5" />
-              <span>Explore Skincare</span>
+              <span>Executive Grooming</span>
             </Link>
             
             <Link
-              to="/category/audio"
+              to="/category/audio-equipment"
               className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 inline-flex items-center space-x-2"
             >
               <Star className="h-5 w-5" />
@@ -40,16 +40,16 @@ const Hero: React.FC = memo(() => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">500+</div>
-              <div className="text-blue-100">Products Reviewed</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">$10M+</div>
+              <div className="text-blue-100">Premium Products Curated</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">50K+</div>
-              <div className="text-blue-100">Monthly Readers</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">25K+</div>
+              <div className="text-blue-100">Executive Subscribers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">95%</div>
-              <div className="text-blue-100">Customer Satisfaction</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">98%</div>
+              <div className="text-blue-100">Luxury Standard</div>
             </div>
           </div>
         </div>
