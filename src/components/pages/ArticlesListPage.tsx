@@ -87,7 +87,7 @@ const ArticlesListPage: React.FC = () => {
               key={article.id}
               className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
             >
-              <Link to={`/article/${article.slug}`} className="block">
+              <Link to={`/articles/${article.slug}`} className="block">
                 <div className="relative overflow-hidden">
                   <img
                     src={article.featuredImage}
@@ -189,7 +189,7 @@ const ArticlesListPage: React.FC = () => {
           itemListElement: articles.map((article, index) => ({
             '@type': 'ListItem',
             position: index + 1,
-            url: toAbsoluteUrl(`/article/${article.slug}`),
+            url: toAbsoluteUrl(`/articles/${article.slug}`),
             name: article.title
           }))
         }}

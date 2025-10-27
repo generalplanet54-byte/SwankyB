@@ -40,7 +40,7 @@ const FeaturedArticles: React.FC = () => {
               <div className="p-6 lg:p-8">
                 <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-4">
                   <Link
-                    to={`/article/${featuredArticles[0].slug}`}
+                    to={`/articles/${featuredArticles[0].slug}`}
                     className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                   >
                     {featuredArticles[0].title}
@@ -66,7 +66,7 @@ const FeaturedArticles: React.FC = () => {
                 </div>
                 
                 <Link
-                  to={`/article/${featuredArticles[0].slug}`}
+                  to={`/articles/${featuredArticles[0].slug}`}
                   className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
                 >
                   <span>Read Full Article</span>
@@ -102,7 +102,7 @@ const FeaturedArticles: React.FC = () => {
                   
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
                     <Link
-                      to={`/article/${article.slug}`}
+                      to={`/articles/${article.slug}`}
                       className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                     >
                       {article.title}
@@ -120,7 +120,7 @@ const FeaturedArticles: React.FC = () => {
                       <span>{article.readTime}</span>
                     </div>
                     <Link
-                      to={`/article/${article.slug}`}
+                      to={`/articles/${article.slug}`}
                       className="text-blue-600 dark:text-blue-400 hover:underline"
                     >
                       Read more
@@ -157,7 +157,7 @@ const FeaturedArticles: React.FC = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                   <Link
-                    to={`/article/${article.slug}`}
+                    to={`/articles/${article.slug}`}
                     className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                   >
                     {article.title}

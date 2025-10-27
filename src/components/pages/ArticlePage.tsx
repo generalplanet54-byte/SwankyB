@@ -58,7 +58,7 @@ const ArticlePage: React.FC = () => {
     { label: 'Home', href: '/' },
     { label: 'Articles', href: '/articles' },
     { label: article.category, href: `/category/${categorySlug}` },
-    { label: article.title, href: `/article/${article.slug}` }
+    { label: article.title, href: `/articles/${article.slug}` }
   ]), [article.category, article.slug, article.title, categorySlug]);
 
   const publishedAtISO = useMemo(() => {
@@ -102,7 +102,7 @@ const ArticlePage: React.FC = () => {
     dateModified: updatedAtISO,
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': toAbsoluteUrl(`/article/${article.slug}`)
+      '@id': toAbsoluteUrl(`/articles/${article.slug}`)
     },
     articleSection: article.category,
     keywords: article.tags
@@ -115,7 +115,7 @@ const ArticlePage: React.FC = () => {
       '@type': 'ListItem',
       position: index + 1,
       name: crumb.label,
-      item: toAbsoluteUrl(crumb.href || `/article/${article.slug}`)
+      item: toAbsoluteUrl(crumb.href || `/articles/${article.slug}`)
     }))
   }), [article.slug, breadcrumbs, toAbsoluteUrl]);
 

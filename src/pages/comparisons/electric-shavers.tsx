@@ -47,7 +47,7 @@ const premiumShavers: ComparisonProduct[] = [
     image: 'https://images.unsplash.com/photo-1596462502278-af3c571fb3d4?auto=format&fit=crop&w=400&q=80',
     price: '$279.99',
     rating: 4.7,
-    affiliateUrl: 'https://amzn.to/example',
+    affiliateUrl: 'https://amzn.to/4oqhQ2L',
     features: {
       'motorPower': '13000 CPM',
       'batteryLife': '50 min',

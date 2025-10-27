@@ -99,7 +99,7 @@ const CategoryPage: React.FC = () => {
       '@type': 'ListItem',
       position: index + 1,
       name: article.title,
-      url: toAbsoluteUrl(`/article/${article.slug}`)
+      url: toAbsoluteUrl(`/articles/${article.slug}`)
     }))
   }), [categoryArticles, resolvedCategoryName, toAbsoluteUrl]);
 

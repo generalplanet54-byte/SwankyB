@@ -27,7 +27,7 @@ const ArticleCard: React.FC<ArticleCardProps> = memo(({ article }) => {
       <div className="p-6">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
           <Link
-            to={`/article/${article.slug}`}
+            to={`/articles/${article.slug}`}
             className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
           >
             {article.title}
@@ -53,7 +53,7 @@ const ArticleCard: React.FC<ArticleCardProps> = memo(({ article }) => {
         </div>
 
         <Link
-          to={`/article/${article.slug}`}
+          to={`/articles/${article.slug}`}
           className="inline-flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:underline font-semibold"
         >
           <span>Read More</span>

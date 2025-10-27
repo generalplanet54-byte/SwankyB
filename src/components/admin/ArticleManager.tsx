@@ -192,7 +192,7 @@ const ArticleManager: React.FC = () => {
                 <td className="p-4">
                   <div className="flex items-center space-x-2">
                     <Link
-                      to={`/article/${article.slug}`}
+                      to={`/articles/${article.slug}`}
                       className="p-1 text-gray-500 hover:text-blue-600 transition-colors duration-200"
                       title="View Article"
                     >
