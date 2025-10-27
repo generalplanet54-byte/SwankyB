@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
-import Layout from '@/layouts/Layout.astro';
 
 // Wireless earbuds comparison
 const wirelessEarbuds: ComparisonProduct[] = [
@@ -111,12 +110,17 @@ const earbudFeatures: ComparisonFeature[] = [
 ];
 
 const WirelessEarbudsComparison: React.FC = () => {
+  useEffect(() => {
+    // Set page title and meta tags
+    document.title = 'Best Wireless Earbuds 2025 | Premium AirPods Alternatives | SwankyBoyz';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Compare the best premium wireless earbuds. Apple AirPods Pro vs Sony vs Bose. Expert reviews of noise cancellation, battery, and sound quality.');
+    }
+  }, []);
+
   return (
-    <Layout 
-      title="Best Wireless Earbuds 2025 | Premium AirPods Alternatives | SwankyBoyz"
-      description="Compare the best premium wireless earbuds. Apple AirPods Pro vs Sony vs Bose. Expert reviews of noise cancellation, battery, and sound quality."
-    >
-      <main className="bg-charcoal min-h-screen py-16">
+    <main className="bg-charcoal min-h-screen py-16">
         <div className="container space-y-12">
           {/* Header */}
           <div className="space-y-4">
@@ -326,8 +330,7 @@ const WirelessEarbudsComparison: React.FC = () => {
           </section>
         </div>
       </main>
-    </Layout>
-  );
-};
+    );
+  };
 
 export default WirelessEarbudsComparison;

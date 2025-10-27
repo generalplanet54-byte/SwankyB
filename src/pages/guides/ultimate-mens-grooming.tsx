@@ -1,14 +1,18 @@
-import React from 'react';
-import Layout from '@/layouts/Layout.astro';
-import { StickyCTA, FloatingActionButton, NewsletterSignup, UrgencyBadge } from '@/components/ConversionOptimization';
+import React, { useEffect } from 'react';
+import { NewsletterSignup } from '@/components/ConversionOptimization';
 
 const UltimateMensGroomingGuide: React.FC = () => {
+  useEffect(() => {
+    // Set page title and meta tags
+    document.title = 'The Ultimate Guide to Men\'s Grooming 2025 | Complete Routine & Product Selection';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Comprehensive guide to professional men\'s grooming. Skincare routines, beard care, product selection, and expert tips. 5000+ words of actionable grooming advice.');
+    }
+  }, []);
+
   return (
-    <Layout 
-      title="The Ultimate Guide to Men's Grooming 2025 | Complete Routine & Product Selection"
-      description="Comprehensive guide to professional men's grooming. Skincare routines, beard care, product selection, and expert tips. 5000+ words of actionable grooming advice."
-    >
-      <main className="bg-charcoal min-h-screen py-16">
+    <main className="bg-charcoal min-h-screen py-16">
         <div className="container max-w-4xl space-y-16">
           {/* Hero Section */}
           <div className="space-y-6">
@@ -377,8 +381,7 @@ const UltimateMensGroomingGuide: React.FC = () => {
           </section>
         </div>
       </main>
-    </Layout>
-  );
-};
+    );
+  };
 
 export default UltimateMensGroomingGuide;

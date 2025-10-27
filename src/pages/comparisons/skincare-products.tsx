@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
-import Layout from '@/layouts/Layout.astro';
 
 // Skincare products comparison
 const skincareProducts: ComparisonProduct[] = [
@@ -119,12 +118,17 @@ const skincareFeatures: ComparisonFeature[] = [
 ];
 
 const SkincareComparison: React.FC = () => {
+  useEffect(() => {
+    // Set page title and meta tags
+    document.title = 'Best Men\'s Skincare Moisturizers Comparison | Lotion Reviews | SwankyBoyz';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Compare the best men\'s skincare moisturizers and after-shave balms. Expert reviews of premium lotions for sensitive skin, dryness, and razor irritation.');
+    }
+  }, []);
+
   return (
-    <Layout 
-      title="Best Men's Skincare Moisturizers Comparison | Lotion Reviews | SwankyBoyz"
-      description="Compare the best men's skincare moisturizers and after-shave balms. Expert reviews of premium lotions for sensitive skin, dryness, and razor irritation."
-    >
-      <main className="bg-charcoal min-h-screen py-16">
+    <main className="bg-charcoal min-h-screen py-16">
         <div className="container space-y-12">
           {/* Header */}
           <div className="space-y-4">
@@ -312,8 +316,7 @@ const SkincareComparison: React.FC = () => {
           </section>
         </div>
       </main>
-    </Layout>
-  );
-};
+    );
+  };
 
 export default SkincareComparison;

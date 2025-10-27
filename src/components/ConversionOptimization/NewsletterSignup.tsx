@@ -157,13 +157,11 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
  * Inline Newsletter Signup (Compact)
  */
 interface InlineNewsletterProps {
-  text?: string;
   placeholder?: string;
   ctaText?: string;
 }
 
 export const InlineNewsletter: React.FC<InlineNewsletterProps> = ({
-  text = "Get exclusive deals weekly",
   placeholder = "your@email.com",
   ctaText = "Subscribe"
 }) => {

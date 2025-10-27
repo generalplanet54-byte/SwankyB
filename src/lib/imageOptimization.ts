@@ -18,19 +18,6 @@ interface ImageOptimizationOptions {
   priority?: boolean;
 }
 
-interface ResponsiveImageSet {
-  webp: {
-    small: string;
-    medium: string;
-    large: string;
-  };
-  jpeg: {
-    small: string;
-    medium: string;
-    large: string;
-  };
-}
-
 /**
  * Generate Cloudflare Image Resizing URL
  * Format: https://cdn.example.com/file/format=auto,width=400,quality=80/image.jpg
@@ -86,9 +73,6 @@ export const OptimizedImage: React.FC<ImageOptimizationOptions> = ({
   const smallUrl = generateResponsiveImageUrl(src, 300);
   const mediumUrl = generateResponsiveImageUrl(src, 600);
   const largeUrl = generateResponsiveImageUrl(src, 1200);
-
-  // Aspect ratio for placeholder
-  const aspectRatio = height && width ? (height / width) * 100 : 66.67;
 
   return (
     React.createElement('picture', { className: `image-wrapper ${isLoaded ? 'loaded' : 'loading'}` },

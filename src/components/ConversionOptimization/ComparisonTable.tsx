@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronUp, ChevronDown, Check, X, AlertCircle } from 'lucide-react';
+import { ChevronDown, Check, X, AlertCircle } from 'lucide-react';
 
 export interface ComparisonProduct {
   id: string;
@@ -33,9 +33,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({
   features,
   title = "Product Comparison",
   description,
-  allowSorting = true
 }) => {
-  const [sortBy, setSortBy] = useState<string>('');
   const [expandedFeature, setExpandedFeature] = useState<string | null>(null);
 
   // Calculate score for each product
@@ -55,18 +53,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({
     return Math.round(score / 10);
   };
 
-  const sortedProducts = sortBy
-    ? [...products].sort((a, b) => {
-        const featureKey = sortBy;
-        const aValue = a.features[featureKey];
-        const bValue = b.features[featureKey];
-
-        if (typeof aValue === 'number' && typeof bValue === 'number') {
-          return bValue - aValue;
-        }
-        return String(bValue).localeCompare(String(aValue));
-      })
-    : products;
+  // Use products directly (sorting disabled for simpler UX)
+  const sortedProducts = products;
 
   return (
     <div id="product-comparison" className="w-full rounded-2xl bg-charcoal/50 p-6 border border-off-white/10">
