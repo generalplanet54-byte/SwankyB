@@ -462,7 +462,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     name: 'Tom Ford Oud Wood Eau de Parfum',
     description: 'Iconic luxury fragrance blending rare oud wood with cardamom, sandalwood, and amber accords.',
     price: '$285.00',
-    image: 'https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=800',
+    // Replaced with more masculine, luxury-focused Tom Ford style image - dark, sophisticated bottle on rich wood surface
+    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     affiliateUrl: 'https://www.amazon.com/dp/B07D3DBPP1?tag=swankyboyz-20',
     rating: 4.7,
     provider: 'amazon',
