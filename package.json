@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "dev:full": "concurrently \"wrangler pages dev --port 8788\" \"vite --port 5173\"",
