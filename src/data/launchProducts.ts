@@ -10,6 +10,11 @@ export interface LaunchAffiliateProduct {
   provider: 'amazon' | 'cjdropshipping' | 'aliexpress';
   category: string;
   commission: number;
+  bestseller?: boolean;
+  stockCount?: number;
+  dealExpiry?: Date;
+  trending?: boolean;
+  rareFind?: boolean;
 }
 
 export const launchProducts: LaunchAffiliateProduct[] = [
@@ -25,7 +30,11 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.8,
     provider: 'amazon',
     category: 'Grooming',
-    commission: 12
+    commission: 12,
+    bestseller: true,
+    stockCount: 12,
+    dealExpiry: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    trending: true
   },
   {
     id: 'prod-braun-series-8',
