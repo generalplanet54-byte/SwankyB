@@ -47,7 +47,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.6,
     provider: 'amazon',
     category: 'Grooming',
-    commission: 12
+    commission: 12,
+    bestseller: true,
+    stockCount: 28,
+    trending: true
   },
   {
     id: 'prod-braun-hair-clippers-9-in-1',
@@ -60,7 +63,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.5,
     provider: 'amazon',
     category: 'Grooming',
-    commission: 10
+    commission: 10,
+    stockCount: 45,
+    dealExpiry: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
   },
   {
     id: 'prod-braun-series-7-kit',
@@ -73,7 +78,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.7,
     provider: 'amazon',
     category: 'Grooming',
-    commission: 12
+    commission: 12,
+    bestseller: true,
+    stockCount: 8,
+    rareFind: true
   },
   {
     id: 'prod-wahl-stainless-steel-slate',
@@ -85,7 +93,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.4,
     provider: 'amazon',
     category: 'Grooming',
-    commission: 10
+    commission: 10,
+    stockCount: 32
   },
   {
     id: 'prod-manscaped-beard-hedger',
@@ -98,7 +107,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.5,
     provider: 'amazon',
     category: 'Grooming',
-    commission: 10
+    commission: 10,
+    bestseller: true,
+    stockCount: 19,
+    dealExpiry: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
   },
   {
     id: 'prod-manscaped-chairman-pro',
@@ -111,7 +123,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.4,
     provider: 'amazon',
     category: 'Grooming',
-    commission: 10
+    commission: 10,
+    stockCount: 24
   },
   {
     id: 'prod-metalfx-double-foil',
@@ -123,7 +136,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.2,
     provider: 'amazon',
     category: 'Travel',
-    commission: 8
+    commission: 8,
+    stockCount: 67
   },
 
   // FOOTWEAR - Sneakers & Orthopedic Shoes
@@ -137,7 +151,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.6,
     provider: 'amazon',
     category: 'Footwear',
-    commission: 8
+    commission: 8,
+    bestseller: true,
+    stockCount: 15,
+    trending: true
   },
   {
     id: 'prod-gravity-defyer-mighty-walk',
@@ -150,7 +167,11 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.5,
     provider: 'amazon',
     category: 'Footwear',
-    commission: 10
+    commission: 10,
+    bestseller: true,
+    stockCount: 9,
+    dealExpiry: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
+    rareFind: true
   },
   {
     id: 'prod-gdefy-mighty-walk-orthopedic',
@@ -162,7 +183,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.6,
     provider: 'amazon',
     category: 'Footwear',
-    commission: 10
+    commission: 10,
+    stockCount: 22
   },
   {
     id: 'prod-orthofeet-edgewater-sneakers',
@@ -174,7 +196,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.4,
     provider: 'amazon',
     category: 'Footwear',
-    commission: 10
+    commission: 10,
+    stockCount: 31
   },
 
   // SMARTPHONES - Premium & Foldable Devices
@@ -188,7 +211,11 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.7,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    bestseller: true,
+    stockCount: 5,
+    dealExpiry: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+    rareFind: true
   },
   {
     id: 'prod-motorola-razr-2024',
@@ -201,7 +228,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.5,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    bestseller: true,
+    stockCount: 18,
+    trending: true
   },
   {
     id: 'prod-nothing-phone-3',
@@ -213,7 +243,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.6,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    stockCount: 26
   },
   {
     id: 'prod-redmagic-10-air',
@@ -225,7 +256,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.4,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    stockCount: 11,
+    trending: true
   },
   {
     id: 'prod-oneplus-13',
@@ -237,7 +270,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.7,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    bestseller: true,
+    stockCount: 33
   },
   {
     id: 'prod-honor-magic-v2',
@@ -249,7 +284,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.6,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    stockCount: 7,
+    rareFind: true
   },
   {
     id: 'prod-apple-iphone-16-pro',
@@ -261,7 +298,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.8,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    bestseller: true,
+    stockCount: 42
   },
   {
     id: 'prod-samsung-galaxy-s25-ultra',
@@ -273,7 +312,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.9,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    bestseller: true,
+    stockCount: 19,
+    trending: true
   },
   {
     id: 'prod-samsung-galaxy-s24-ultra',
@@ -286,7 +328,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.8,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    stockCount: 24
   },
 
   // LAPTOPS - MacBooks & Gaming
@@ -300,7 +343,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.9,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    bestseller: true,
+    stockCount: 16,
+    trending: true
   },
   {
     id: 'prod-macbook-pro-m4-pro-16',
@@ -312,7 +358,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.9,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    bestseller: true,
+    stockCount: 6,
+    rareFind: true
   },
   {
     id: 'prod-macbook-pro-m4-14',
@@ -324,7 +373,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.9,
     provider: 'amazon',
     category: 'Tech',
-    commission: 3
+    commission: 3,
+    bestseller: true,
+    stockCount: 29
   },
   {
     id: 'prod-lg-gram-15-touchscreen',
@@ -336,7 +387,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.6,
     provider: 'amazon',
     category: 'Tech',
-    commission: 4
+    commission: 4,
+    stockCount: 13
   },
   {
     id: 'prod-asus-rog-strix-g16-2025',
@@ -348,7 +400,9 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.7,
     provider: 'amazon',
     category: 'Tech',
-    commission: 4
+    commission: 4,
+    stockCount: 8,
+    dealExpiry: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)
   },
   {
     id: 'prod-asus-rog-strix-g18',
@@ -360,7 +414,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.8,
     provider: 'amazon',
     category: 'Tech',
-    commission: 4
+    commission: 4,
+    bestseller: true,
+    stockCount: 4,
+    rareFind: true
   },
   {
     id: 'prod-msi-thin-gaming',
@@ -373,7 +430,10 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.4,
     provider: 'amazon',
     category: 'Tech',
-    commission: 4
+    commission: 4,
+    bestseller: true,
+    stockCount: 52,
+    trending: true
   },
   {
     id: 'prod-lg-gram-pro-16',
@@ -385,7 +445,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     rating: 4.7,
     provider: 'amazon',
     category: 'Tech',
-    commission: 4
+    commission: 4,
+    stockCount: 11
   },
 
   // AUDIO - Microphones & Podcasting
