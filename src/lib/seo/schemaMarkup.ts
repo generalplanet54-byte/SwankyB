@@ -257,31 +257,16 @@ export const aggregateOfferSchema = (offer: {
 export const useSchemaMarkup = (schema: SchemaMarkupProps): void => {
   if (typeof window === 'undefined') return;
 
-  React.useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(schema);
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, [schema]);
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
 };
-
-import React from 'react';
 
 /**
- * Schema Markup Component
- * @description Astro component for injecting schema markup
+ * Helper function to generate script tag string for schema markup
+ * Use in Astro components with set:html directive
  */
-export const SchemaMarkup: React.FC<{ schema: SchemaMarkupProps }> = ({ schema }) => {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
+export const getSchemaMarkupScript = (schema: SchemaMarkupProps): string => {
+  return JSON.stringify(schema);
 };
-
-export default SchemaMarkup;

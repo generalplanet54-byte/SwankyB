@@ -59,7 +59,7 @@ const wirelessEarbuds: ComparisonProduct[] = [
 ];
 
 // Comparison features
-const earbud Features: ComparisonFeature[] = [
+const earbudFeatures: ComparisonFeature[] = [
   {
     key: 'noiseCancellation',
     label: 'Noise Cancellation',
@@ -161,7 +161,7 @@ const WirelessEarbudsComparison: React.FC = () => {
           {/* Comparison Table */}
           <ComparisonTable
             products={wirelessEarbuds}
-            features={earbud Features}
+            features={earbudFeatures}
             title="Premium Wireless Earbuds Detailed Comparison"
             description="All earbuds tested for 40+ hours. Click features to learn more about each specification."
             allowSorting={true}

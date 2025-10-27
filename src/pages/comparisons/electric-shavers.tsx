@@ -1,7 +1,6 @@
-import React from 'react';
-import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
+---
 import Layout from '@/layouts/Layout.astro';
-import { faqSchema } from '@/lib/seo/schemaMarkup';
+import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
 
 // Sample product data for electric shavers
 const premiumShavers: ComparisonProduct[] = [
