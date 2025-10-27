@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
+import { generateFAQPageSchema } from '@/lib/seo/productSchema';
 
 // Skincare products comparison
 const skincareProducts: ComparisonProduct[] = [
@@ -125,6 +126,32 @@ const SkincareComparison: React.FC = () => {
     if (metaDescription) {
       metaDescription.setAttribute('content', 'Compare the best men\'s skincare moisturizers and after-shave balms. Expert reviews of premium lotions for sensitive skin, dryness, and razor irritation.');
     }
+
+    // Inject FAQ Schema for rich snippets
+    const faqSchema = generateFAQPageSchema([
+      {
+        question: 'How often should I apply skincare products?',
+        answer: 'Most moisturizers should be applied daily after shaving or showering. After-shave balms are best applied immediately post-shave. For best results, apply to damp skin to help lock in moisture.'
+      },
+      {
+        question: 'What\'s the difference between moisturizer and after-shave balm?',
+        answer: 'After-shave balms are specifically formulated to soothe razor irritation and have cooling properties. Daily moisturizers are for overall skin hydration and protection. Many men use both for optimal skin health.'
+      },
+      {
+        question: 'How do I choose the right skincare for my skin type?',
+        answer: 'For dry skin, opt for thicker creams. For oily or sensitive skin, choose lightweight, hypoallergenic formulas. Our comparison includes recommendations by skin type to help you find the perfect match.'
+      }
+    ]);
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(faqSchema);
+    script.setAttribute('data-schema-type', 'faq-page');
+    document.head.appendChild(script);
+
+    return () => {
+      document.querySelectorAll('[data-schema-type="faq-page"]').forEach(el => el.remove());
+    };
   }, []);
 
   return (

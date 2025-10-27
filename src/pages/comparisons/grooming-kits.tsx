@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
+import { generateFAQPageSchema } from '@/lib/seo/productSchema';
 
 // Grooming kit comparison data
 const groomingKits: ComparisonProduct[] = [
@@ -125,6 +126,32 @@ const GroomingKitsComparison: React.FC = () => {
     if (metaDescription) {
       metaDescription.setAttribute('content', 'Compare the best grooming kits for men. Find complete shaving and beard grooming sets with expert reviews and ratings.');
     }
+
+    // Inject FAQ Schema for rich snippets
+    const faqSchema = generateFAQPageSchema([
+      {
+        question: 'What should I look for in a grooming kit?',
+        answer: 'Look for kits with quality shaving tools, multiple attachment options for different beard styles, cordless convenience, and a good warranty. Our comparison focuses on kits that deliver excellent value for daily users.'
+      },
+      {
+        question: 'Are all-in-one kits better than individual tools?',
+        answer: 'All-in-one kits offer convenience and often better value than buying tools separately. However, serious groomers sometimes prefer individual premium tools. Our comparison includes both for your consideration.'
+      },
+      {
+        question: 'How often do I need to replace the parts?',
+        answer: 'Most quality kit components last 12-24 months with daily use. Blades and trimmer heads are typically the first items to need replacement. We provide cost estimates for ongoing maintenance in our detailed comparison.'
+      }
+    ]);
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(faqSchema);
+    script.setAttribute('data-schema-type', 'faq-page');
+    document.head.appendChild(script);
+
+    return () => {
+      document.querySelectorAll('[data-schema-type="faq-page"]').forEach(el => el.remove());
+    };
   }, []);
 
   return (

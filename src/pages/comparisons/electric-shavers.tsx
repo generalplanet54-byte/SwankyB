@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
+import { generateFAQPageSchema } from '@/lib/seo/productSchema';
 
 // Sample product data for electric shavers
 const premiumShavers: ComparisonProduct[] = [
@@ -124,6 +125,32 @@ const ComparisonPage: React.FC = () => {
     if (metaDescription) {
       metaDescription.setAttribute('content', 'Side-by-side comparison of the best premium electric shavers. Compare features, price, and ratings to find your perfect shaver.');
     }
+
+    // Inject FAQ Schema for rich snippets
+    const faqSchema = generateFAQPageSchema([
+      {
+        question: 'Should I choose foil or rotary?',
+        answer: 'Foil shavers (Braun) give a closer shave but require more precision. Rotary shavers (Philips) are more forgiving with technique. Try both if possible - personal preference matters more than specs.'
+      },
+      {
+        question: 'How often should I replace the blades?',
+        answer: 'Quality shavers\' blades last 18-24 months with daily use. Budget for $40-80 replacement heads annually. This is included in our cost-per-shave calculations above.'
+      },
+      {
+        question: 'Is the cleaning station necessary?',
+        answer: 'No, but it significantly extends blade life and adds convenience. Manual cleaning works fine, but automatic is worth it for $50-100.'
+      }
+    ]);
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(faqSchema);
+    script.setAttribute('data-schema-type', 'faq-page');
+    document.head.appendChild(script);
+
+    return () => {
+      document.querySelectorAll('[data-schema-type="faq-page"]').forEach(el => el.remove());
+    };
   }, []);
 
   return (

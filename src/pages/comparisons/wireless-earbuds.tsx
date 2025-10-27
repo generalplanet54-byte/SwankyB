@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
+import { generateFAQPageSchema } from '@/lib/seo/productSchema';
 
 // Wireless earbuds comparison
 const wirelessEarbuds: ComparisonProduct[] = [
@@ -117,6 +118,32 @@ const WirelessEarbudsComparison: React.FC = () => {
     if (metaDescription) {
       metaDescription.setAttribute('content', 'Compare the best premium wireless earbuds. Apple AirPods Pro vs Sony vs Bose. Expert reviews of noise cancellation, battery, and sound quality.');
     }
+
+    // Inject FAQ Schema for rich snippets
+    const faqSchema = generateFAQPageSchema([
+      {
+        question: 'Are premium earbuds worth the price?',
+        answer: 'Premium earbuds offer superior noise cancellation, longer battery life, and better sound quality. If you use earbuds daily for work or travel, the investment pays off in comfort and functionality.'
+      },
+      {
+        question: 'How long do wireless earbuds batteries last?',
+        answer: 'Most premium earbuds last 4-8 hours per charge, with their charging cases providing 20-30+ total hours. We focus on models with excellent battery efficiency for all-day use.'
+      },
+      {
+        question: 'Which is better: Apple AirPods or Android alternatives?',
+        answer: 'AirPods excel with Apple devices but work fine on Android. For Android, Sony WF-1000XM4 and other premium alternatives often offer better sound and more customization. Choose based on your primary device.'
+      }
+    ]);
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(faqSchema);
+    script.setAttribute('data-schema-type', 'faq-page');
+    document.head.appendChild(script);
+
+    return () => {
+      document.querySelectorAll('[data-schema-type="faq-page"]').forEach(el => el.remove());
+    };
   }, []);
 
   return (
