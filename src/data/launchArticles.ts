@@ -85,14 +85,51 @@ export const launchArticles: Article[] = [
     author: 'Alex Chen',
     publishedAt: '2025-01-15T10:00:00Z',
     updatedAt: '2025-01-15T10:00:00Z',
-    featuredImage: 'https://images.pexels.com/photos/3685530/pexels-photo-3685530.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    featuredImage: 'https://images.unsplash.com/photo-1556228852-80dc098eee8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     category: 'Skincare',
     tags: ['skincare', 'luxury', 'anti-aging', 'beauty'],
     readTime: '7 min read',
     featured: true,
     seoTitle: 'Best Premium Skincare Products 2024 - Luxury Beauty Reviews | SwankyBoyz',
     seoDescription: 'Discover the most effective luxury skincare products with our expert reviews. From anti-aging serums to moisturizers, find your perfect routine.',
-    affiliateProducts: []
+    affiliateProducts: [
+      {
+        id: 'kiehls-age-defender',
+        name: 'Kiehl\'s Age Defender Power Serum',
+        description: 'Advanced anti-aging serum with stabilized vitamin C and peptides for visible results.',
+        price: '$89.00',
+        originalPrice: '$109.00',
+        image: 'https://images.unsplash.com/photo-1556228852-80dc098eee8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/kiehls-serum',
+        rating: 4.6,
+        provider: 'amazon' as const,
+        category: 'Skincare'
+      },
+      {
+        id: 'clinique-moisturizer',
+        name: 'Clinique Dramatically Different Moisturizing Lotion+',
+        description: 'Dermatologist-developed moisturizer that works for all skin types with superior hydration.',
+        price: '$32.00',
+        originalPrice: '$38.00',
+        image: 'https://images.unsplash.com/photo-1556228852-80dc098eee8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/clinique-lotion',
+        rating: 4.4,
+        provider: 'amazon' as const,
+        category: 'Skincare'
+      },
+      {
+        id: 'jack-black-eye-rescue',
+        name: 'Jack Black Protein Booster Eye Rescue',
+        description: 'Men\'s eye cream specifically formulated to reduce puffiness and dark circles with caffeine.',
+        price: '$45.00',
+        originalPrice: '$52.00',
+        image: 'https://images.unsplash.com/photo-1556228852-80dc098eee8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/jack-black-eye',
+        rating: 4.3,
+        provider: 'amazon' as const,
+        category: 'Skincare'
+      }
+    ]
   },
   {
     id: '2',
@@ -207,14 +244,51 @@ export const launchArticles: Article[] = [
     author: 'Sarah Johnson',
     publishedAt: '2025-01-14T14:30:00Z',
     updatedAt: '2025-01-14T14:30:00Z',
-    featuredImage: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    featuredImage: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     category: 'Audio',
     tags: ['wireless earbuds', 'audio', 'premium', 'technology'],
     readTime: '9 min read',
     featured: true,
     seoTitle: 'Best Premium Wireless Earbuds 2024 - Expert Audio Reviews | SwankyBoyz',
     seoDescription: 'Discover the best premium wireless earbuds of 2024. Expert reviews of Sony, Apple, Bose, Sennheiser, and Jabra models for every lifestyle.',
-    affiliateProducts: []
+    affiliateProducts: [
+      {
+        id: 'sony-wf-1000xm4',
+        name: 'Sony WF-1000XM4 Wireless Earbuds',
+        description: 'Flagship earbuds with industry-leading noise cancellation and exceptional sound quality.',
+        price: '$279.99',
+        originalPrice: '$329.99',
+        image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/sony-wf1000xm4',
+        rating: 4.8,
+        provider: 'amazon' as const,
+        category: 'Audio'
+      },
+      {
+        id: 'airpods-pro-2',
+        name: 'Apple AirPods Pro (2nd Generation)',
+        description: 'Latest AirPods Pro with H2 chip, 2x more active noise cancellation, and spatial audio.',
+        price: '$249.99',
+        originalPrice: '$299.99',
+        image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/airpods-pro2',
+        rating: 4.7,
+        provider: 'amazon' as const,
+        category: 'Audio'
+      },
+      {
+        id: 'bose-quietcomfort',
+        name: 'Bose QuietComfort Earbuds',
+        description: 'Legendary Bose noise cancellation technology in compact earbud form.',
+        price: '$199.99',
+        originalPrice: '$279.99',
+        image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/bose-qc-earbuds',
+        rating: 4.5,
+        provider: 'amazon' as const,
+        category: 'Audio'
+      }
+    ]
   },
   {
     id: '3',
@@ -363,7 +437,7 @@ export const launchArticles: Article[] = [
     author: 'Mike Rodriguez',
     publishedAt: '2025-01-13T09:15:00Z',
     updatedAt: '2025-01-13T09:15:00Z',
-    featuredImage: 'https://images.pexels.com/photos/8148577/pexels-photo-8148577.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    featuredImage: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     category: 'Accessories',
     tags: ['wallets', 'leather goods', 'mens accessories', 'style'],
     readTime: '8 min read',
@@ -517,7 +591,7 @@ export const launchArticles: Article[] = [
     author: 'Emma Thompson',
     publishedAt: '2025-01-12T11:45:00Z',
     updatedAt: '2025-01-12T11:45:00Z',
-    featuredImage: 'https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    featuredImage: 'https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     category: 'Fragrance',
     tags: ['fragrance', 'cologne', 'luxury', 'mens style'],
     readTime: '10 min read',
@@ -725,7 +799,7 @@ export const launchArticles: Article[] = [
     author: 'David Park',
     publishedAt: '2025-01-11T16:20:00Z',
     updatedAt: '2025-01-11T16:20:00Z',
-    featuredImage: 'https://images.pexels.com/photos/3685530/pexels-photo-3685530.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    featuredImage: 'https://images.unsplash.com/photo-1493673272479-a20888bcee10?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     category: 'Grooming',
     tags: ['mens grooming', 'skincare', 'premium', 'self care'],
     readTime: '11 min read',
@@ -853,7 +927,32 @@ export const launchArticles: Article[] = [
     featured: true,
     seoTitle: 'Braun Series 9 PRO+ vs Series 8 Review: Which Electric Shaver is Best?',
     seoDescription: 'Complete comparison of Braun\'s flagship electric shavers. Expert review of Series 9 PRO+ vs Series 8 8567cc performance, features, and value.',
-    affiliateProducts: []
+    affiliateProducts: [
+      {
+        id: 'braun-series-9-pro',
+        name: 'Braun Series 9 PRO+ Electric Shaver',
+        description: 'Revolutionary 5 Pro Shave Elements with intelligent ProComfort Head technology for the ultimate luxury shaving experience.',
+        price: '$299.99',
+        originalPrice: '$349.99',
+        image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/4ooMFju',
+        rating: 4.8,
+        provider: 'amazon' as const,
+        category: 'Electric Shavers'
+      },
+      {
+        id: 'braun-series-8',
+        name: 'Braun Series 8 8567cc Electric Razor',
+        description: 'Specialized for dense beards with 4+1 shaving elements and precision long hair trimmer. Perfect for thick, coarse facial hair.',
+        price: '$199.99',
+        originalPrice: '$249.99',
+        image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/43cCrdG',
+        rating: 4.6,
+        provider: 'amazon' as const,
+        category: 'Electric Shavers'
+      }
+    ]
   },
   {
     id: '7',
@@ -989,7 +1088,44 @@ export const launchArticles: Article[] = [
     featured: true,
     seoTitle: 'Best All-in-One Men\'s Grooming Kits 2024 - Complete Buyer\'s Guide',
     seoDescription: 'Discover the best all-in-one men\'s grooming kits. Expert reviews of top trimmer sets from Braun, WAHL, and MANSCAPED. Complete buying guide included.',
-    affiliateProducts: []
+    affiliateProducts: [
+      {
+        id: 'braun-series-7-7420',
+        name: 'Braun All-in-One Series 7 7420',
+        description: '11-in-1 professional grooming system with AutoSense technology and lifetime sharp blades.',
+        price: '$179.99',
+        originalPrice: '$229.99',
+        image: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/46SQyY4',
+        rating: 4.7,
+        provider: 'amazon' as const,
+        category: 'Grooming Kits'
+      },
+      {
+        id: 'braun-9-in-1-kit',
+        name: 'Braun 9-in-1 Grooming Kit',
+        description: 'Comprehensive grooming solution with premium Gillette ProGlide razor included.',
+        price: '$129.99',
+        originalPrice: '$159.99',
+        image: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/47nIqPk',
+        rating: 4.5,
+        provider: 'amazon' as const,
+        category: 'Grooming Kits'
+      },
+      {
+        id: 'wahl-stainless-steel',
+        name: 'WAHL Stainless Steel Lithium Ion 2.0+',
+        description: 'Premium American-made trimmer with 4-hour battery life and self-sharpening blades.',
+        price: '$89.99',
+        originalPrice: '$119.99',
+        image: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+        affiliateUrl: 'https://amzn.to/4n5fGPU',
+        rating: 4.4,
+        provider: 'amazon' as const,
+        category: 'Grooming Kits'
+      }
+    ]
   },
   {
     id: '8',

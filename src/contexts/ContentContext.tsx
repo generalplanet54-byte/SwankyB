@@ -246,7 +246,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       author: 'SwankyBoyz Team',
       publishedAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      featuredImage: `https://images.pexels.com/photos/${Math.floor(Math.random() * 1000000) + 1000000}/pexels-photo-${Math.floor(Math.random() * 1000000) + 1000000}.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`,
+      featuredImage: generateRelevantImage(topic, category),
       category,
       tags: [topic.toLowerCase(), category.toLowerCase(), 'review', 'guide'],
       readTime,
@@ -257,6 +257,38 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     };
 
     return newArticle;
+  }, []);
+
+  const generateRelevantImage = useCallback((topic: string, category: string): string => {
+    const imageMap: Record<string, string[]> = {
+      'Footwear': [
+        'https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+      ],
+      'Smartphones': [
+        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+      ],
+      'Audio Equipment': [
+        'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+      ],
+      'Technology': [
+        'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+      ],
+      'Grooming': [
+        'https://images.unsplash.com/photo-1493673272479-a20888bcee10?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+      ],
+      'default': [
+        'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+      ]
+    };
+
+    const categoryImages = imageMap[category] || imageMap['default'];
+    return categoryImages[Math.floor(Math.random() * categoryImages.length)];
   }, []);
 
   const generateArticleContent = useCallback((topic: string, category: string): string => {
