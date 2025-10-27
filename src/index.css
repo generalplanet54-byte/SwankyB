@@ -1,6 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    font-family: theme('fontFamily.sans');
+    background-color: theme('colors.charcoal');
+  }
+
+  body {
+    @apply bg-charcoal text-off-white antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: theme('fontFamily.display');
+    @apply text-off-white tracking-tightest;
+  }
+}
 
 /* Custom utilities for accessibility and optimization */
 @layer utilities {

@@ -1,0 +1,67 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { launchArticles } from '../../data/launchArticles';
+
+const articleListStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'SwankyBoyz Journal',
+  description: 'A curated archive of grooming, style, and lifestyle intelligence for modern gentlemen.',
+  itemListElement: launchArticles.map((article, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: article.title,
+    url: `https://swankyboyz.com/articles/${article.slug}`,
+  })),
+};
+---
+<Layout
+  title="Journal | SwankyBoyz"
+  description="Premium grooming, wardrobe, and lifestyle strategy direct from the SwankyBoyz editorial desk."
+  canonical="/articles"
+  structuredData={articleListStructuredData}
+>
+  <main class="bg-charcoal py-24">
+    <div class="container space-y-16">
+      <header class="max-w-3xl space-y-4">
+        <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">SwankyBoyz Journal</p>
+        <h1 class="font-display text-4xl leading-tight text-off-white sm:text-5xl">
+          Intelligence engineered to sharpen your presence and expand your playbook.
+        </h1>
+        <p class="text-base text-off-white/70">
+          From boardroom grooming rituals to executive travel essentials, every feature is field-tested by our editorial team before earning a byline. No guesswork—just vetted strategies that command respect.
+        </p>
+      </header>
+
+      <div class="grid gap-10 lg:grid-cols-2">
+        {launchArticles.map((article) => (
+          <article class="flex h-full flex-col overflow-hidden rounded-3xl border border-off-white/10 bg-[#161616]">
+            <img
+              src={article.featuredImage}
+              alt={article.title}
+              loading="lazy"
+              class="h-64 w-full object-cover"
+            />
+            <div class="flex flex-1 flex-col gap-6 p-8">
+              <div class="space-y-3">
+                <p class="text-xs uppercase tracking-[0.3em] text-champagne/80">{article.category}</p>
+                <h2 class="font-display text-2xl text-off-white">{article.title}</h2>
+                <p class="text-sm text-off-white/70">{article.excerpt}</p>
+              </div>
+              <div class="mt-auto flex items-center justify-between text-xs uppercase tracking-[0.25em] text-off-white/50">
+                <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                <span>{article.readTime}</span>
+              </div>
+              <a
+                class="inline-flex items-center justify-center rounded-full border border-off-white/30 px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-off-white transition hover:border-champagne/80 hover:text-champagne"
+                href={`/articles/${article.slug}`}
+              >
+                Read feature
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -149,9 +149,10 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Legal</h4>
             <ul className="space-y-2">
-              <li><Link to="/privacy" className="text-gray-400 hover:text-white transition-colors duration-200">Privacy Policy</Link></li>
+              <li><Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors duration-200">Privacy Policy</Link></li>
               <li><Link to="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">Terms of Service</Link></li>
               <li><Link to="/affiliate-disclosure" className="text-gray-400 hover:text-white transition-colors duration-200">Affiliate Disclosure</Link></li>
+              <li><Link to="/cookie-policy" className="text-gray-400 hover:text-white transition-colors duration-200">Cookie Policy</Link></li>
               <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors duration-200">Contact Us</Link></li>
               {isAdmin && (
                 <li><Link to="/admin" className="text-gray-400 hover:text-white transition-colors duration-200">Admin</Link></li>

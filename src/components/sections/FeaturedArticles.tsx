@@ -6,6 +6,7 @@ import { useContent } from '../../contexts/ContentContext';
 const FeaturedArticles: React.FC = () => {
   const { articles } = useContent();
   const featuredArticles = articles.filter(article => article.featured).slice(0, 5);
+  // reserved for future CTA tracking integration
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

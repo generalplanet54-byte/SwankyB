@@ -1,0 +1,177 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { spotlightProducts } from '../../data/spotlightProducts';
+import { buildProductCollectionJsonLd } from '../../lib/seo/meta';
+
+const productCollectionStructuredData = buildProductCollectionJsonLd(spotlightProducts);
+---
+<Layout
+  title="Product Reviews | SwankyBoyz"
+  description="Hands on reviews of grooming essentials tested by the SwankyBoyz editorial team."
+  canonical="/reviews"
+  structuredData={productCollectionStructuredData}
+>
+  <main class="bg-charcoal text-off-white">
+    <section class="border-b border-off-white/10 bg-gradient-to-br from-charcoal via-black/60 to-charcoal">
+      <div class="container grid gap-12 py-24 md:grid-cols-[1.2fr_1fr] md:items-center">
+        <div class="space-y-6">
+          <p class="text-xs uppercase tracking-[0.45em] text-champagne/80">Editors' Bulletin</p>
+          <h1 class="font-display text-4xl leading-snug sm:text-5xl">
+            Luxury grooming essentials that keep executives camera-ready on impossible schedules.
+          </h1>
+          <p class="max-w-2xl text-base text-off-white/70">
+            Each recommendation is stress-tested across boardrooms, red-eyes, and black-tie itineraries. Expect skin-friendly engineering, discreet design, and Amazon-backed availability so you never gamble on presence.
+          </p>
+          <a
+            class="inline-flex items-center justify-center rounded-full bg-champagne px-8 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-charcoal transition hover:bg-champagne/80"
+            href="#spotlight"
+          >
+            View Spotlight Reviews
+          </a>
+        </div>
+
+        <div class="rounded-3xl border border-off-white/15 bg-black/40 p-8 text-sm text-off-white/70">
+          <h2 class="text-xs uppercase tracking-[0.35em] text-champagne/80">Amazon Associates Disclosure</h2>
+          <p class="mt-4 leading-relaxed">
+            SwankyBoyz participates in the Amazon Services LLC Associates Program. When you purchase through links on this site, we may earn a commission at no additional cost. Pricing and availability change without notice; verify details on Amazon before checkout.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="spotlight" class="container space-y-12 py-24">
+      <header class="space-y-4 text-center md:text-left">
+        <p class="text-xs uppercase tracking-[0.45em] text-champagne/80">Spotlight Reviews</p>
+        <h2 class="font-display text-3xl sm:text-4xl">
+          Three power tools the SwankyBoyz team trusts on press tours and investor roadshows.
+        </h2>
+        <p class="mx-auto max-w-3xl text-base text-off-white/70 md:mx-0">
+          Swap generic claims for real-world performance metrics. These reviews include detailed testing notes, candid trade-offs, and buying context so you stay polished without sacrificing your schedule.
+        </p>
+      </header>
+
+      <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        {spotlightProducts.map((product) => (
+          <article class="group flex h-full flex-col overflow-hidden rounded-3xl border border-off-white/10 bg-black/40 transition hover:border-champagne/70">
+            <figure class="relative">
+              <img
+                src={product.image}
+                alt={product.name}
+                loading="lazy"
+                class="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <figcaption class="sr-only">{product.name}</figcaption>
+            </figure>
+
+            <div class="flex flex-1 flex-col gap-6 p-8">
+              <header class="space-y-3">
+                <p class="text-xs uppercase tracking-[0.35em] text-champagne/80">{product.tagline}</p>
+                <h3 class="font-display text-2xl text-off-white">{product.name}</h3>
+                <p class="text-sm leading-relaxed text-off-white/70">{product.summary}</p>
+              </header>
+
+              <div class="space-y-4 text-sm text-off-white/80">
+                <div class="flex flex-wrap items-center gap-2" aria-label={`Rated ${product.ratingValue.toFixed(1)} out of 5`}>
+                  <div class="flex text-champagne" aria-hidden="true">
+                    &#9733;&#9733;&#9733;&#9733;&#9734;
+                  </div>
+                  <span class="text-xs uppercase tracking-[0.3em] text-off-white/50">
+                    {product.ratingValue.toFixed(1)} / 5 · {product.reviewCount.toLocaleString()} buyer impressions
+                  </span>
+                </div>
+                <p class="text-sm font-semibold text-off-white">${product.price.toFixed(2)} {product.priceCurrency ?? 'USD'}</p>
+
+                <div class="grid gap-4">
+                  <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-champagne/80">Pros</p>
+                    <ul class="mt-2 space-y-1 leading-relaxed text-off-white/80">
+                      {product.pros.map((pro) => (
+                        <li>{pro}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-off-white/50">Cons</p>
+                    <ul class="mt-2 space-y-1 leading-relaxed text-off-white/60">
+                      {product.cons.map((con) => (
+                        <li>{con}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-auto space-y-3">
+                <a
+                  class="inline-flex w-full items-center justify-center rounded-full bg-champagne px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-charcoal transition hover:bg-champagne/80"
+                  href={product.affiliateUrl}
+                  target="_blank"
+                  rel="nofollow sponsored noopener"
+                  data-affiliate-link
+                  data-affiliate-id={product.id}
+                  data-affiliate-name={product.name}
+                  data-affiliate-url={product.affiliateUrl}
+                  data-affiliate-product-url={product.url}
+                  data-affiliate-source="reviews:spotlight"
+                >
+                  Buy Now
+                </a>
+                <a
+                  class="inline-flex w-full items-center justify-center rounded-full border border-off-white/30 px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-off-white transition hover:border-champagne/70 hover:text-champagne"
+                  href={`/reviews/${product.slug}`}
+                >
+                  Read Full Review
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="contact" class="border-t border-off-white/10 bg-black/30">
+      <div class="container grid gap-10 py-20 md:grid-cols-2">
+        <div class="space-y-4">
+          <p class="text-xs uppercase tracking-[0.45em] text-champagne/80">Concierge Desk</p>
+          <h2 class="font-display text-3xl">Partner with SwankyBoyz</h2>
+          <p class="text-base text-off-white/70">
+            Need a bespoke editorial package or white glove briefing? Share the project details and our editorial concierge responds within one business day.
+          </p>
+        </div>
+
+        <form class="grid gap-5 text-sm text-off-white/80">
+          <label class="grid gap-2">
+            <span class="text-xs uppercase tracking-[0.3em] text-off-white/60">Name</span>
+            <input
+              type="text"
+              placeholder="Full name"
+              class="rounded-full border border-off-white/20 bg-charcoal px-5 py-3 text-sm text-off-white placeholder:text-off-white/40 focus:border-champagne focus:outline-none focus:ring-2 focus:ring-champagne/40"
+            />
+          </label>
+          <label class="grid gap-2">
+            <span class="text-xs uppercase tracking-[0.3em] text-off-white/60">Email</span>
+            <input
+              type="email"
+              placeholder="you@company.com"
+              class="rounded-full border border-off-white/20 bg-charcoal px-5 py-3 text-sm text-off-white placeholder:text-off-white/40 focus:border-champagne focus:outline-none focus:ring-2 focus:ring-champagne/40"
+            />
+          </label>
+          <label class="grid gap-2">
+            <span class="text-xs uppercase tracking-[0.3em] text-off-white/60">Message</span>
+            <textarea
+              rows="4"
+              placeholder="Project scope, timeline, objectives..."
+              class="rounded-3xl border border-off-white/20 bg-charcoal px-5 py-4 text-sm text-off-white placeholder:text-off-white/40 focus:border-champagne focus:outline-none focus:ring-2 focus:ring-champagne/40"
+            ></textarea>
+          </label>
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center rounded-full bg-champagne px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-charcoal transition hover:bg-champagne/80"
+          >
+            Submit Inquiry
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+</Layout>

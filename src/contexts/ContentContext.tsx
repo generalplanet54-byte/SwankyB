@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { supabase, SUPABASE_CONFIGURED, Article as DBArticle } from '../lib/supabase';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { launchArticles } from '../data/launchArticles';
+import { launchProducts } from '../data/launchProducts';
+import { articleAffiliateMap } from '../data/articleAffiliateMap';
 
 export interface Article {
   id: string;
@@ -57,6 +58,69 @@ export const useContent = () => {
 export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  const updateCategories = (articleList: Article[]) => {
+    const nextCategories = Array.from(new Set(articleList.map((article) => article.category).filter(Boolean))).sort();
+    setCategories(nextCategories);
+  };
+
+  const hydrateArticlesWithProducts = (articleList: Article[]) => {
+    // Attach up to 3 affiliate products to each article by matching category or product name keywords
+    return articleList.map((article) => {
+      // Prefer explicit mappings
+      const mapped = articleAffiliateMap[article.slug] || [];
+
+      const matchesFromMap = mapped
+        .map((id) => launchProducts.find((p) => p.id === id))
+        .filter(Boolean)
+        .slice(0, 3)
+        .map((p) => ({
+          id: p!.id,
+          name: p!.name,
+          description: p!.description,
+          price: p!.price,
+          originalPrice: p!.originalPrice,
+          image: p!.image,
+          affiliateUrl: p!.affiliateUrl,
+          rating: p!.rating || 0,
+          provider: p!.provider as any,
+          category: p!.category
+        }));
+
+      const fallbackMatches = launchProducts.filter((p) => {
+        try {
+          const prodCat = (p.category || '').toLowerCase();
+          const artCat = (article.category || '').toLowerCase();
+          if (prodCat && artCat && prodCat === artCat) return true;
+          const title = (article.title || '').toLowerCase();
+          const name = (p.name || '').toLowerCase();
+          if (name.split(/\s+/).some((word) => word && title.includes(word))) return true;
+        } catch (err) {
+          return false;
+        }
+        return false;
+      }).slice(0, 3).map((p) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        originalPrice: p.originalPrice,
+        image: p.image,
+        affiliateUrl: p.affiliateUrl,
+        rating: p.rating || 0,
+        provider: p.provider as any,
+        category: p.category
+      }));
+
+      const matches = matchesFromMap.length ? matchesFromMap : fallbackMatches;
+
+      return {
+        ...article,
+        affiliateProducts: matches
+      };
+    });
+  };
 
   useEffect(() => {
     fetchArticles();
@@ -68,33 +132,13 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       // Try server-side public endpoint first (Cloudflare Pages function)
       try {
-        const res = await fetch('/api/content', {
-          headers: { 'Accept': 'application/json' }
-        });
+        const res = await fetch('/api/content');
         if (res.ok) {
           const json = await res.json();
           const articlesData = json.articles || [];
-          const articleProductsData = json.article_products || [];
 
-          const formattedArticles: Article[] = (articlesData || []).map((article: DBArticle) => {
-            const relatedProducts = (articleProductsData || [])
-              .filter((ap: any) => ap.article_id === article.id)
-              .map((ap: any) => {
-                const product = ap.products;
-                return {
-                  id: product.id,
-                  name: product.name,
-                  description: product.description,
-                  price: product.price ? `$${product.price}` : '',
-                  originalPrice: product.original_price ? `$${product.original_price}` : undefined,
-                  image: product.image_url,
-                  affiliateUrl: product.amazon_url,
-                  rating: product.rating || 0,
-                  provider: 'amazon' as const,
-                  category: product.category
-                };
-              });
-
+          const formattedArticles: Article[] = (articlesData || []).map((article: any) => {
+            
             return {
               id: article.id,
               title: article.title,
@@ -105,17 +149,29 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
               publishedAt: article.published_at,
               updatedAt: article.updated_at,
               featuredImage: article.featured_image,
-              category: article.category,
-              tags: article.tags || [],
+              category: article.category_name,
+              tags: article.tags.map((t: any) => t.name) || [],
               readTime: article.read_time,
               featured: false,
               seoTitle: article.meta_title || article.title,
               seoDescription: article.meta_description || article.excerpt,
-              affiliateProducts: relatedProducts
+              affiliateProducts: article.products.map((p: any) => ({
+                id: String(p.id),
+                name: p.name,
+                description: p.description,
+                price: p.price ? (typeof p.price === 'string' && p.price.startsWith('$') ? p.price : `$${p.price}`) : '',
+                originalPrice: p.original_price ? (typeof p.original_price === 'string' && p.original_price.startsWith('$') ? p.original_price : `$${p.original_price}`) : undefined,
+                image: p.primary_image,
+                affiliateUrl: p.amazon_url,
+                rating: p.rating || 0,
+                provider: 'amazon' as const,
+                category: ''
+              }))
             };
           });
 
           setArticles(formattedArticles);
+          updateCategories(formattedArticles);
           return;
         }
       } catch (err) {
@@ -124,89 +180,85 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       // If Supabase wasn't configured at build time (common in Bolt/StackBlitz),
       // fall back to the bundled `launchArticles` so the site still shows content.
-      if (!SUPABASE_CONFIGURED) {
-        setArticles(launchArticles);
-        return;
-      }
+      // if (!SUPABASE_CONFIGURED) {
+      //   const hydrated = hydrateArticlesWithProducts(launchArticles as Article[]);
+      //   setArticles(hydrated);
+      //   updateCategories(hydrated);
+      //   return;
+      // }
 
-      const { data: articlesData, error: articlesError } = await supabase
-        .from('articles')
-        .select('*')
-        .eq('is_published', true)
-        .order('published_at', { ascending: false });
+      // const { data: articlesData, error: articlesError } = await supabase
+      //   .from('articles')
+      //   .select('*')
+      //   .eq('is_published', true)
+      //   .order('published_at', { ascending: false });
 
-      if (articlesError) throw articlesError;
+      // if (articlesError) throw articlesError;
 
-      const { data: articleProductsData, error: articleProductsError } = await supabase
-        .from('article_products')
-        .select(`
-          article_id,
-          display_order,
-          products (*)
-        `)
-        .order('display_order', { ascending: true });
+      // const { data: articleProductsData, error: articleProductsError } = await supabase
+      //   .from('article_products')
+      //   .select(`
+      //     article_id,
+      //     display_order,
+      //     products (*)
+      //   `)
+      //   .order('display_order', { ascending: true });
 
-      if (articleProductsError) throw articleProductsError;
+      // if (articleProductsError) throw articleProductsError;
 
-      const formattedArticles: Article[] = (articlesData || []).map((article: DBArticle) => {
-        const relatedProducts = (articleProductsData || [])
-          .filter((ap: any) => ap.article_id === article.id)
-          .map((ap: any) => {
-            const product = ap.products;
-            return {
-              id: product.id,
-              name: product.name,
-              description: product.description,
-              price: product.price ? `$${product.price}` : '',
-              originalPrice: product.original_price ? `$${product.original_price}` : undefined,
-              image: product.image_url,
-              affiliateUrl: product.amazon_url,
-              rating: product.rating || 0,
-              provider: 'amazon' as const,
-              category: product.category
-            };
-          });
+      // const formattedArticles: Article[] = (articlesData || []).map((article: DBArticle) => {
+      //   const relatedProducts = (articleProductsData || [])
+      //     .filter((ap: any) => ap.article_id === article.id)
+      //     .map((ap: any) => {
+      //       const product = ap.products;
+      //       return {
+      //         id: product.id,
+      //         name: product.name,
+      //         description: product.description,
+      //         price: product.price ? `$${product.price}` : '',
+      //         originalPrice: product.original_price ? `$${product.original_price}` : undefined,
+      //         image: product.image_url,
+      //         affiliateUrl: product.amazon_url,
+      //         rating: product.rating || 0,
+      //         provider: 'amazon' as const,
+      //         category: product.category
+      //       };
+      //     });
 
-        return {
-          id: article.id,
-          title: article.title,
-          slug: article.slug,
-          excerpt: article.excerpt,
-          content: article.content,
-          author: article.author,
-          publishedAt: article.published_at,
-          updatedAt: article.updated_at,
-          featuredImage: article.featured_image,
-          category: article.category,
-          tags: article.tags || [],
-          readTime: article.read_time,
-          featured: false,
-          seoTitle: article.meta_title || article.title,
-          seoDescription: article.meta_description || article.excerpt,
-          affiliateProducts: relatedProducts
-        };
-      });
+      //   return {
+      //     id: article.id,
+      //     title: article.title,
+      //     slug: article.slug,
+      //     excerpt: article.excerpt,
+      //     content: article.content,
+      //     author: article.author,
+      //     publishedAt: article.published_at,
+      //     updatedAt: article.updated_at,
+      //     featuredImage: article.featured_image,
+      //     category: article.category,
+      //     tags: article.tags || [],
+      //     readTime: article.read_time,
+      //     featured: false,
+      //     seoTitle: article.meta_title || article.title,
+      //     seoDescription: article.meta_description || article.excerpt,
+      //     affiliateProducts: relatedProducts
+      //   };
+      // });
 
-      setArticles(formattedArticles);
+      // setArticles(formattedArticles);
+      // updateCategories(formattedArticles);
     } catch (error) {
       console.error('Error fetching articles:', error);
       // If Supabase query fails for any reason, fall back to bundled launchArticles
       // so the UI remains populated. This mirrors behavior on StackBlitz/Bolt.
-      setArticles(launchArticles);
+      const hydrated = hydrateArticlesWithProducts(launchArticles as Article[]);
+      setArticles(hydrated);
+      updateCategories(hydrated);
     } finally {
       setLoading(false);
     }
   };
   
-  const categories = useMemo(() => [
-    'Footwear',
-    'Smartphones',
-    'Laptops',
-    'Audio Equipment',
-    'Wearables',
-    'Technology',
-    'Health & Wellness'
-  ], []);
 
   const addArticle = useCallback((articleData: Omit<Article, 'id' | 'publishedAt' | 'updatedAt'>) => {
     const newArticle: Article = {

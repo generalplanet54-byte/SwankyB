@@ -1,6 +1,6 @@
 name = "swankyb-pages"
 
-# Cloudflare Pages configuration
+# Cloudflare Pages config - keep build command and set output dir
 compatibility_date = "2025-10-13"
 pages_build_output_dir = "dist"
 
@@ -13,9 +13,3 @@ pages_build_output_dir = "dist"
 [vars]
 VITE_BOLT_DATABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1d2N6d3BmbnN3d2N0dW12cXNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1Mzg4ODMsImV4cCI6MjA3NTExNDg4M30.EGziTHFcFPQprqmSrvvfxzEEHY2HVuknezkpGidd3UA"
 VITE_BOLT_DATABASE_URL = "https://wuwczwpfnswwctumvqsq.supabase.co"
-
-# D1 Database bindings (if needed for future use)
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "swankyb-db"
-# database_id = "your-database-id-here"

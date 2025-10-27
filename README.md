@@ -1,11 +1,11 @@
 # Premium Affiliate Marketing Website
 
-A high-performance affiliate marketing platform featuring SEO-optimized content, product reviews, and seamless Amazon affiliate integration. Built with React, TypeScript, Vite, Tailwind CSS, and Supabase.
+A high-performance affiliate marketing platform featuring SEO-optimized content, product reviews, and seamless Amazon affiliate integration. Built with React, TypeScript, Vite, Tailwind CSS, and Cloudflare D1.
 
 ## Features
 
 - **SEO-Optimized Content**: Meta tags, structured data, and semantic HTML for maximum search visibility
-- **Database-Driven**: All products and articles stored in Supabase for easy management
+- **Database-Driven**: All products and articles stored in Cloudflare D1 for easy management
 - **Responsive Design**: Beautiful, modern design that works perfectly on all devices
 - **Amazon Affiliate Integration**: Automatic affiliate link tracking and management
 - **Performance Optimized**: Fast page loads with Vite and optimized images
@@ -15,14 +15,14 @@ A high-performance affiliate marketing platform featuring SEO-optimized content,
 
 - **Frontend**: React 18, TypeScript, Tailwind CSS
 - **Build Tool**: Vite
-- **Database**: Supabase (PostgreSQL)
+- **Database**: Cloudflare D1
 - **Icons**: Lucide React
 - **Routing**: React Router DOM
 
 ## Prerequisites
 
 - Node.js 18+ and npm
-- Supabase account (database is pre-configured)
+- Cloudflare Account
 - Git for version control
 
 ## Local Development
@@ -35,12 +35,7 @@ npm install
 
 ### 2. Environment Variables
 
-The `.env` file is already configured with Supabase credentials:
-
-```env
-VITE_SUPABASE_URL=https://wuwczwpfnswwctumvqsq.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-```
+This project uses Cloudflare D1. The `wrangler.toml` file is configured to use a D1 database named `DB`.
 
 ### 3. Run Development Server
 
@@ -48,7 +43,7 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 npm run dev
 ```
 
-Visit `http://localhost:5173` to see your site.
+This will start the Vite development server and the Wrangler server for Cloudflare functions and D1 access. Visit `http://localhost:8788` to see your site.
 
 ### 4. Build for Production
 
@@ -61,13 +56,12 @@ The production build will be in the `dist` directory.
 ## Database Structure
 
 ### Products Table
-- 17 pre-loaded products (footwear, smartphones, laptops)
+- Pre-loaded products
 - Categories: Footwear, Smartphones, Laptops
 - Includes: prices, ratings, affiliate links, SEO metadata
 
 ### Articles Table
-- 6 comprehensive, SEO-optimized articles
-- Topics: Nike Cortez, Orthopedic Shoes, Foldable Phones, Gaming Phones, Flagships, MacBooks
+- Comprehensive, SEO-optimized articles
 - Includes: featured images, read times, tags, SEO metadata
 
 ### Article-Product Relationships
@@ -76,7 +70,7 @@ The production build will be in the `dist` directory.
 
 ## Deployment
 
-### Option 1: Deploy to Cloudflare Pages (Recommended)
+### Deploy to Cloudflare Pages (Recommended)
 
 Cloudflare Pages offers free hosting with excellent performance and automatic SSL.
 
@@ -115,12 +109,11 @@ git push -u origin main
    Node version: 18 or higher
    ```
 
-4. **Add Environment Variables**
-   In Settings → Environment variables, add:
-   ```
-   VITE_SUPABASE_URL=https://wuwczwpfnswwctumvqsq.supabase.co
-   VITE_SUPABASE_ANON_KEY=your-anon-key
-   ```
+4. **Add D1 Database Binding**
+   In your Pages project settings, go to **Settings > Functions > D1 database bindings**.
+   - Click **Add binding**.
+   - **Variable name**: `DB`
+   - **D1 database**: Select your D1 database.
 
 5. **Deploy**
    - Click **"Save and Deploy"**
@@ -136,56 +129,7 @@ git push -u origin main
 4. Follow DNS configuration instructions
 5. SSL certificate is automatically provisioned
 
-### Option 2: Deploy to GitHub Pages
-
-GitHub Pages offers free hosting for static sites.
-
-#### Step 1: Update Configuration
-
-Add to `vite.config.ts`:
-
-```typescript
-export default defineConfig({
-  base: '/YOUR_REPO_NAME/',
-  // ... rest of config
-});
-```
-
-#### Step 2: Install gh-pages
-
-```bash
-npm install --save-dev gh-pages
-```
-
-#### Step 3: Add Deploy Script
-
-Add to `package.json`:
-
-```json
-{
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  }
-}
-```
-
-#### Step 4: Deploy
-
-```bash
-npm run deploy
-```
-
-Your site will be live at `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
-
-#### Step 5: Enable GitHub Pages
-
-1. Go to your GitHub repository
-2. Click **Settings** → **Pages**
-3. Under "Source", select branch `gh-pages`
-4. Click **Save**
-
-### Option 3: Manual CLI Deployment to Cloudflare
+### Manual CLI Deployment to Cloudflare
 
 For more control or CI/CD integration:
 
@@ -216,95 +160,15 @@ All content is optimized for search engines:
 - Twitter Card tags
 - Canonical URLs
 
-### Structured Data
-- Product schema for rich snippets
-
-## Supabase connection troubleshooting
-
-If the site builds but no articles or products appear, it's usually because the Supabase client wasn't configured at build time. The frontend expects the following environment variables to be present during the Vite build:
-
-- VITE_SUPABASE_URL
-- VITE_SUPABASE_ANON_KEY
-
-Important notes:
-
-- Vite only exposes env variables prefixed with `VITE_` to the client bundle. Make sure the keys above include the `VITE_` prefix.
-- For local development, copy `.env.example` to `.env` and fill the values, then run `npm run dev` or `npm run build`.
-- For Cloudflare Pages deployments, add the environment variables in the Pages project settings (Settings → Environment variables) for the Production environment so they are available at build time.
-
-If you still see the error message "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your build environment.", verify:
-
-1. You committed the build to `dist` (for manual deployments) or Cloudflare built your site and the vars were set in Pages settings.
-2. The values match the Supabase project's URL and anon key.
-3. The anon key is valid (try a request from curl or Postman to your Supabase REST endpoint).
-
-For automated CI/CD (GitHub Actions), set repository secrets and pass them to the build step so Vite can embed them during `npm run build`.
-- Article schema for content
-- Organization schema
-- BreadcrumbList schema
-
-### Best Practices
-- Semantic HTML5 markup
-- Proper heading hierarchy (H1 → H2 → H3)
-- Alt text for all images
-- Clean URL structure
-- XML sitemap at `/sitemap.xml`
-- Robots.txt at `/robots.txt`
-
-### Performance
-- Lighthouse score: 95+ (all metrics)
-- Core Web Vitals optimized
-- Lazy loading for images
-- Code splitting
-- Optimized bundle size
-
-## Affiliate Link Tracking
-
-All Amazon affiliate links include:
-- Your affiliate tag
-- UTM parameters for analytics
-- `rel="nofollow sponsored"` attributes
-- Click tracking in analytics
-
-### Link Format
-```
-https://amzn.to/XXXXXXX?tag=YOUR_TAG&utm_source=site&utm_medium=affiliate
-```
-
 ## Content Management
 
 ### Adding New Products
 
-Products are stored in Supabase. To add new products:
-
-1. Access Supabase dashboard
-2. Navigate to Table Editor → `products`
-3. Insert new row with:
-   - name, slug, description
-   - category, subcategory
-   - amazon_url (your affiliate link)
-   - image_url (product image)
-   - price, original_price
-   - rating, review_count
-   - features (JSON array)
-   - meta_title, meta_description, meta_keywords
-   - is_featured, is_trending flags
+Products are stored in the D1 database. To add new products, you can either add them directly to the database or create a new migration file in `migrations/d1`.
 
 ### Adding New Articles
 
-Articles are also in Supabase:
-
-1. Navigate to Table Editor → `articles`
-2. Insert new row with:
-   - title, slug, excerpt
-   - content (HTML)
-   - category, tags (array)
-   - author, featured_image
-   - read_time
-   - meta_title, meta_description, meta_keywords
-   - is_published flag
-
-3. Link to products via `article_products` table
+Articles are also in the D1 database. To add new articles, you can either add them directly to the database or create a new migration file in `migrations/d1`.
 
 ## Analytics Setup
 

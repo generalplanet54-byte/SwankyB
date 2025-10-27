@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { launchArticles } from '../../data/launchArticles';
+import type { Article } from '../../contexts/ContentContext';
+
+interface PageProps {
+  article: Article;
+}
+
+export function getStaticPaths() {
+  return launchArticles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props as PageProps;
+
+const articleSeo = {
+  title: article.seoTitle ?? `${article.title} | SwankyBoyz`,
+  description: article.seoDescription ?? article.excerpt,
+  canonical: `/articles/${article.slug}`,
+  ogType: 'article' as const,
+  image: article.featuredImage
+    ? {
+        src: article.featuredImage,
+        alt: article.title,
+      }
+    : undefined,
+  publishedTime: article.publishedAt,
+  modifiedTime: article.updatedAt,
+  section: article.category,
+  tags: article.tags,
+};
+---
+<Layout {...articleSeo}>
+  <main class="bg-charcoal py-24">
+    <article class="container max-w-4xl space-y-12">
+      <header class="space-y-6 text-off-white">
+        <p class="text-xs uppercase tracking-[0.4em] text-champagne/80">{article.category}</p>
+        <h1 class="font-display text-4xl leading-tight sm:text-5xl">{article.title}</h1>
+        <div class="flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.25em] text-off-white/50">
+          <span>By {article.author}</span>
+          <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+          {article.readTime && <span>{article.readTime}</span>}
+          {article.updatedAt && article.updatedAt !== article.publishedAt && (
+            <span>Updated {new Date(article.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+          )}
+        </div>
+        {article.featuredImage && (
+          <div class="overflow-hidden rounded-3xl border border-off-white/10">
+            <img
+              src={article.featuredImage}
+              alt={article.title}
+              loading="lazy"
+              class="h-96 w-full object-cover"
+            />
+          </div>
+        )}
+      </header>
+
+      <div class="prose prose-invert max-w-none">
+        <section set:html={article.content}></section>
+      </div>
+
+      {article.tags?.length && (
+        <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.3em] text-off-white/60">
+          <span class="text-off-white/40">Filed under</span>
+          {article.tags.map((tag) => (
+            <span class="rounded-full border border-off-white/20 px-4 py-2">{tag}</span>
+          ))}
+        </div>
+      )}
+    </article>
+  </main>
+</Layout>

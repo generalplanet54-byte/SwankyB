@@ -12,8 +12,8 @@ image: "https://images.pexels.com/photos/3685530/pexels-photo-3685530.jpeg?auto=
 published: true
 featured: true
 publishedAt: 2024-01-15T10:00:00Z
-seoTitle: "Kiehl's Age Defender Power Serum Review: Anti-Aging Powerhouse 2024"
-seoDescription: "Complete Kiehl's Age Defender Power Serum review. Powerful anti-aging formula with vitamin C and peptides. See results, ingredients, and where to buy."
+seoTitle: "Kiehl's Age Defender Power Serum Review: Anti-Aging Powerhouse 2025"
+seoDescription: "Complete Kiehl's Age Defender Power Serum review. Powerful anti-aging formula with vitamin C and peptides. Expert-tested results, ingredients analysis, and where to buy."
 tags: ["skincare", "anti-aging", "vitamin c", "kiehls"]
 pros:
   - "Potent vitamin C and peptide formula"

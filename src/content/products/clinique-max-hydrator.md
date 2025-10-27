@@ -12,8 +12,8 @@ image: "https://images.pexels.com/photos/3762879/pexels-photo-3762879.jpeg?auto=
 published: true
 featured: true
 publishedAt: 2024-01-14T14:30:00Z
-seoTitle: "Clinique Dramatically Different Moisturizing Lotion+ Review 2024"
-seoDescription: "Complete Clinique Dramatically Different Moisturizing Lotion+ review. Dermatologist-developed hydration for all skin types. See benefits and where to buy."
+seoTitle: "Clinique Dramatically Different Moisturizing Lotion+ Review 2025"
+seoDescription: "Complete Clinique Dramatically Different Moisturizing Lotion+ review. Dermatologist-developed hydration for all skin types. Expert analysis of performance and value."
 tags: ["skincare", "moisturizer", "clinique", "hydration"]
 pros:
   - "Dermatologist-developed formula"

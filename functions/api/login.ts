@@ -1,26 +1,63 @@
 
-
 import { authenticateUser, createJWT, setJWTSecret } from '../auth';
 
+/**
+ * POST /api/login
+ * Authenticates user and sets secure HttpOnly cookie with JWT token
+ * Request body: { username: string, password: string }
+ */
 export async function onRequestPost(context: any) {
-  // Set JWT_SECRET from env for Cloudflare Pages Functions
-  setJWTSecret(context.env?.JWT_SECRET || '');
+  // Set JWT_SECRET from Cloudflare Pages environment variables
+  const jwtSecret = context.env?.JWT_SECRET;
+  
+  if (!jwtSecret) {
+    console.error('[/api/login] JWT_SECRET not configured in environment variables');
+    return new Response(JSON.stringify({ 
+      error: 'Server configuration error',
+      message: 'Authentication system not properly configured'
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://swankyboyz.com',
+        'Access-Control-Allow-Credentials': 'true'
+      }
+    });
+  }
+  
+  setJWTSecret(jwtSecret);
+  
   try {
     const { username, password } = await context.request.json();
     
     if (!username || !password) {
-      return new Response(JSON.stringify({ error: 'Username and password required' }), {
+      return new Response(JSON.stringify({ 
+        error: 'Username and password required',
+        message: 'Please provide both username and password'
+      }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'https://swankyboyz.com',
+          'Access-Control-Allow-Credentials': 'true'
+        }
       });
     }
     
     const user = await authenticateUser(username, password);
     
     if (!user) {
-      return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
+      console.log(`[/api/login] Failed login attempt for username: ${username}`);
+      return new Response(JSON.stringify({ 
+        error: 'Invalid credentials',
+        message: 'Username or password is incorrect'
+      }), {
         status: 401,
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'https://swankyboyz.com',
+          'Access-Control-Allow-Credentials': 'true'
+        }
       });
     }
     
@@ -29,6 +66,8 @@ export async function onRequestPost(context: any) {
       username: user.username,
       role: user.role
     });
+    
+    console.log(`[/api/login] Successful login for user: ${username}`);
     
     const response = new Response(JSON.stringify({
       success: true,
@@ -40,17 +79,35 @@ export async function onRequestPost(context: any) {
       }
     }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://swankyboyz.com',
+        'Access-Control-Allow-Credentials': 'true',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'strict-origin-when-cross-origin'
+      }
     });
     
-    // Set secure HTTP-only cookie
-    response.headers.set('Set-Cookie', `auth-token=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=86400; Path=/`);
+    // Set secure HTTP-only cookie with JWT token
+    // Note: In production, ensure domain matches your actual domain
+    response.headers.set(
+      'Set-Cookie', 
+      `auth-token=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=86400; Path=/`
+    );
     
     return response;
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.error('[/api/login] Login error:', error.message);
+    return new Response(JSON.stringify({ 
+      error: error.message || 'Login failed',
+      message: 'An error occurred during authentication'
+    }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://swankyboyz.com',
+        'Access-Control-Allow-Credentials': 'true'
+      }
     });
   }
 }

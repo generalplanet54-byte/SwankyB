@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Clock, User, Calendar, Share2, Tag } from 'lucide-react';
 import { useContent } from '../../contexts/ContentContext';
 import ProductCard from '../common/ProductCard';
-import Breadcrumb from '../common/Breadcrumb';
 import { useAffiliate } from '../../contexts/AffiliateContext';
+import Breadcrumbs, { BreadcrumbItem } from '../common/Breadcrumbs';
+import StructuredData from '../common/StructuredData';
+import { slugify } from '../../lib/slugify';
+
+const FALLBACK_SITE_URL = import.meta.env.VITE_SITE_URL || 'https://swankyboyz.com';
 
 const ArticlePage: React.FC = () => {
   const { articleSlug } = useParams<{ articleSlug: string }>();
@@ -31,6 +35,90 @@ const ArticlePage: React.FC = () => {
     .filter(product => product.category === article.category)
     .slice(0, 3);
 
+  const siteUrl = useMemo(() => {
+    if (typeof window !== 'undefined' && window.location.origin) {
+      return window.location.origin;
+    }
+    return FALLBACK_SITE_URL;
+  }, [FALLBACK_SITE_URL]);
+
+  const toAbsoluteUrl = useMemo(() => (
+    (path: string) => {
+      try {
+        return new URL(path, siteUrl).toString();
+      } catch (error) {
+        return path;
+      }
+    }
+  ), [siteUrl]);
+
+  const categorySlug = slugify(article.category);
+
+  const breadcrumbs: BreadcrumbItem[] = useMemo(() => ([
+    { label: 'Home', href: '/' },
+    { label: 'Articles', href: '/articles' },
+    { label: article.category, href: `/category/${categorySlug}` },
+    { label: article.title, href: `/article/${article.slug}` }
+  ]), [article.category, article.slug, article.title, categorySlug]);
+
+  const publishedAtISO = useMemo(() => {
+    try {
+      const date = new Date(article.publishedAt.replace(' ', 'T') + 'Z');
+      return date.toISOString();
+    } catch {
+      return new Date().toISOString();
+    }
+  }, [article.publishedAt]);
+  
+  const updatedAtISO = useMemo(() => {
+    if (!article.updatedAt) return publishedAtISO;
+    try {
+      const date = new Date(article.updatedAt.replace(' ', 'T') + 'Z');
+      return date.toISOString();
+    } catch {
+      return publishedAtISO;
+    }
+  }, [article.updatedAt, publishedAtISO]);
+
+  const articleStructuredData = useMemo(() => ({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.seoTitle || article.title,
+    description: article.seoDescription || article.excerpt,
+    image: article.featuredImage,
+    author: {
+      '@type': 'Person',
+      name: article.author
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'SwankyBoyz',
+      logo: {
+        '@type': 'ImageObject',
+        url: toAbsoluteUrl('/logo.png')
+      }
+    },
+    datePublished: publishedAtISO,
+    dateModified: updatedAtISO,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': toAbsoluteUrl(`/article/${article.slug}`)
+    },
+    articleSection: article.category,
+    keywords: article.tags
+  }), [article, publishedAtISO, toAbsoluteUrl, updatedAtISO]);
+
+  const breadcrumbStructuredData = useMemo(() => ({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.label,
+      item: toAbsoluteUrl(crumb.href || `/article/${article.slug}`)
+    }))
+  }), [article.slug, breadcrumbs, toAbsoluteUrl]);
+
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -46,14 +134,6 @@ const ArticlePage: React.FC = () => {
 
   return (
     <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Breadcrumb Navigation */}
-      <Breadcrumb
-        items={[
-          { label: 'Articles', href: '/articles' },
-          { label: article.title },
-        ]}
-      />
-
       {/* Article Header */}
       <header className="mb-12">
         <div className="flex items-center flex-wrap gap-2 mb-6">
@@ -86,7 +166,15 @@ const ArticlePage: React.FC = () => {
             </div>
             <div className="flex items-center space-x-2">
               <Calendar className="h-5 w-5 text-gray-400" />
-              <span className="text-sm">{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                {/* Render published date only when valid */}
+                {(() => {
+                  const pd = new Date(article.publishedAt);
+                  return !isNaN(pd.getTime()) ? (
+                    <span className="text-sm">{pd.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  ) : (
+                    <span className="text-sm text-gray-500">Unknown publish date</span>
+                  );
+                })()}
             </div>
             <div className="flex items-center space-x-2">
               <Clock className="h-5 w-5 text-gray-400" />
@@ -169,10 +257,15 @@ const ArticlePage: React.FC = () => {
           </div>
 
           <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-            Last updated: {new Date(article.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            Last updated: {(() => {
+              const ud = new Date(article.updatedAt);
+              return !isNaN(ud.getTime()) ? ud.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown';
+            })()}
           </p>
         </div>
       </footer>
+      
+      <StructuredData data={[articleStructuredData, breadcrumbStructuredData]} />
     </article>
   );
 };
