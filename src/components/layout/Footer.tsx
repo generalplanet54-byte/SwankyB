@@ -137,10 +137,11 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Categories</h4>
             <ul className="space-y-2">
-              <li><Link to="/category/grooming" className="text-gray-400 hover:text-white transition-colors duration-200">Executive Grooming</Link></li>
-              <li><Link to="/category/audio" className="text-gray-400 hover:text-white transition-colors duration-200">Premium Audio</Link></li>
-              <li><Link to="/category/accessories" className="text-gray-400 hover:text-white transition-colors duration-200">Luxury Accessories</Link></li>
-              <li><Link to="/category/fragrance" className="text-gray-400 hover:text-white transition-colors duration-200">Signature Fragrances</Link></li>
+              <li><Link to="/category/grooming" className="text-gray-400 hover:text-white transition-colors duration-200">Grooming</Link></li>
+              <li><Link to="/category/skincare" className="text-gray-400 hover:text-white transition-colors duration-200">Skincare</Link></li>
+              <li><Link to="/category/audio" className="text-gray-400 hover:text-white transition-colors duration-200">Audio</Link></li>
+              <li><Link to="/category/accessories" className="text-gray-400 hover:text-white transition-colors duration-200">Accessories</Link></li>
+              <li><Link to="/category/fragrance" className="text-gray-400 hover:text-white transition-colors duration-200">Fragrance</Link></li>
               <li><Link to="/articles" className="text-gray-400 hover:text-white transition-colors duration-200">All Articles</Link></li>
             </ul>
           </div>
@@ -154,7 +155,7 @@ const Footer: React.FC = () => {
               <li><Link to="/affiliate-disclosure" className="text-gray-400 hover:text-white transition-colors duration-200">Affiliate Disclosure</Link></li>
               <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors duration-200">Contact Us</Link></li>
               {isAdmin && (
-                <li><Link to="/admin" className="text-gray-400 hover:text-white transition-colors duration-200">Admin</Link></li>
+                <li><Link to="/admin/dashboard" className="text-gray-400 hover:text-white transition-colors duration-200">Admin</Link></li>
               )}
             </ul>
           </div>

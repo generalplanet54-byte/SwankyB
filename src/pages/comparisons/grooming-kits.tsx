@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ComparisonTable, type ComparisonProduct, type ComparisonFeature } from '@/components/ConversionOptimization';
-import Layout from '@/layouts/Layout.astro';
 
 // Grooming kit comparison data
 const groomingKits: ComparisonProduct[] = [
@@ -119,12 +118,17 @@ const kitFeatures: ComparisonFeature[] = [
 ];
 
 const GroomingKitsComparison: React.FC = () => {
+  useEffect(() => {
+    // Set page title and meta tags
+    document.title = 'Best Grooming Kits Comparison | Complete Grooming Sets | SwankyBoyz';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Compare the best grooming kits for men. Find complete shaving and beard grooming sets with expert reviews and ratings.');
+    }
+  }, []);
+
   return (
-    <Layout 
-      title="Best Grooming Kits Comparison | Complete Grooming Sets | SwankyBoyz"
-      description="Compare the best grooming kits for men. Find complete shaving and beard grooming sets with expert reviews and ratings."
-    >
-      <main className="bg-charcoal min-h-screen py-16">
+    <main className="bg-charcoal min-h-screen py-16">
         <div className="container space-y-12">
           {/* Header */}
           <div className="space-y-4">
@@ -302,8 +306,7 @@ const GroomingKitsComparison: React.FC = () => {
           </section>
         </div>
       </main>
-    </Layout>
-  );
-};
+    );
+  };
 
 export default GroomingKitsComparison;

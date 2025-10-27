@@ -1,10 +1,11 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ContentProvider } from './contexts/ContentContext';
 import { AffiliateProvider } from './contexts/AffiliateContext';
+import { initializeWebVitalsMonitoring } from './lib/performanceMonitoring';
 import { 
   StickyCTA, 
   FloatingActionButton, 
@@ -33,6 +34,11 @@ const LoadingFallback = () => (
 );
 
 function App() {
+  useEffect(() => {
+    // Initialize Web Vitals monitoring on app mount
+    initializeWebVitalsMonitoring();
+  }, []);
+
   return (
     <ThemeProvider>
       <ContentProvider>

@@ -4,6 +4,8 @@
  * Usage: Import ImageOptimizer in React components or use as reference for Astro pages
  */
 
+import React from 'react';
+
 interface ImageOptimizationOptions {
   src: string;
   alt: string;
@@ -89,47 +91,40 @@ export const OptimizedImage: React.FC<ImageOptimizationOptions> = ({
   const aspectRatio = height && width ? (height / width) * 100 : 66.67;
 
   return (
-    <picture className={`image-wrapper ${isLoaded ? 'loaded' : 'loading'}`}>
-      {/* WebP format (smaller file size, modern browsers) */}
-      <source
-        srcSet={`
+    React.createElement('picture', { className: `image-wrapper ${isLoaded ? 'loaded' : 'loading'}` },
+      React.createElement('source', {
+        srcSet: `
           ${smallUrl.includes('format=') ? smallUrl : generateResponsiveImageUrl(src, 300, 'webp')} 300w,
           ${mediumUrl.includes('format=') ? mediumUrl : generateResponsiveImageUrl(src, 600, 'webp')} 600w,
           ${largeUrl.includes('format=') ? largeUrl : generateResponsiveImageUrl(src, 1200, 'webp')} 1200w
-        `}
-        sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
-        type="image/webp"
-      />
-
-      {/* JPEG fallback (older browsers) */}
-      <source
-        srcSet={`
+        `,
+        sizes: sizes || '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw',
+        type: 'image/webp',
+      }),
+      React.createElement('source', {
+        srcSet: `
           ${smallUrl} 300w,
           ${mediumUrl} 600w,
           ${largeUrl} 1200w
-        `}
-        sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
-        type="image/jpeg"
-      />
-
-      {/* Fallback img tag */}
-      <img
-        src={mediumUrl}
-        alt={alt}
-        width={width}
-        height={height}
-        loading={priority ? 'eager' : loading}
-        decoding={decoding}
-        className={`${className} responsive-image`}
-        style={{
+        `,
+        sizes: sizes || '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw',
+        type: 'image/jpeg',
+      }),
+      React.createElement('img', {
+        src: mediumUrl,
+        alt: alt,
+        width: width,
+        height: height,
+        loading: priority ? 'eager' : loading,
+        decoding: decoding,
+        className: `${className} responsive-image`,
+        style: {
           aspectRatio: `${width} / ${height}`,
           objectFit: 'cover',
-        }}
-        onLoad={() => setIsLoaded(true)}
-      />
-
-      {/* CSS placeholder while loading */}
-      <style jsx>{`
+        },
+        onLoad: () => setIsLoaded(true),
+      }),
+      React.createElement('style', { jsx: true }, `
         .image-wrapper {
           display: block;
           width: 100%;
@@ -157,8 +152,8 @@ export const OptimizedImage: React.FC<ImageOptimizationOptions> = ({
             background-position: -200% 0;
           }
         }
-      `}</style>
-    </picture>
+      `)
+    )
   );
 };
 
@@ -289,11 +284,12 @@ export const reportImageMetrics = () => {
     try {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if (entry.element?.tagName === 'IMG') {
+          const lcpEntry = entry as PerformanceEntry & { element?: Element; renderTime?: number };
+          if (lcpEntry.element?.tagName === 'IMG') {
             console.log('LCP Image:', {
-              src: (entry.element as HTMLImageElement).src,
+              src: (lcpEntry.element as HTMLImageElement).src,
               loadTime: entry.startTime,
-              renderTime: entry.renderTime,
+              renderTime: lcpEntry.renderTime,
             });
           }
         }
@@ -307,10 +303,11 @@ export const reportImageMetrics = () => {
     try {
       const clsObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if (!entry.hadRecentInput) {
+          const clsEntry = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number; sources?: unknown[] };
+          if (!clsEntry.hadRecentInput) {
             console.log('Image CLS:', {
-              value: entry.value,
-              sources: entry.sources,
+              value: clsEntry.value,
+              sources: clsEntry.sources,
             });
           }
         }

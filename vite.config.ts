@@ -22,6 +22,7 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'supabase-vendor': ['@supabase/supabase-js'],
+          'icons': ['lucide-react'],
         },
       },
     },
@@ -33,6 +34,10 @@ export default defineConfig({
         drop_debugger: true,
       },
     },
+    // Performance optimizations
+    target: 'esnext',
+    reportCompressedSize: false,
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     port: 5173,
