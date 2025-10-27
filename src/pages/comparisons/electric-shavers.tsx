@@ -251,7 +251,7 @@ const ComparisonPage: React.FC = () => {
 
           {/* FAQ Section */}
           <section className="space-y-6">
-            <h2 className="font-display text-2xl text-off-white font-bold">Frequently Asked Questions</h2>
+            <h2 className="font-display text-2xl text-off-white font-bold">Frequently Asked Questions About Premium Electric Shavers</h2>
             
             <div className="space-y-4">
               <details className="group bg-charcoal/50 rounded-lg border border-off-white/10 p-6">
@@ -261,7 +261,7 @@ const ComparisonPage: React.FC = () => {
                 </summary>
                 <p className="mt-4 text-off-white/80 text-sm">
                   Foil shavers (Braun) give a closer shave but require more precision. Rotary shavers (Philips) are more forgiving with technique. 
-                  Try both if possible - personal preference matters more than specs.
+                  Try both if possible - personal preference matters more than specs. Pair with the right <a href="/comparisons/skincare-products" className="text-champagne hover:underline">moisturizer for post-shave care</a>.
                 </p>
               </details>
 
@@ -272,7 +272,7 @@ const ComparisonPage: React.FC = () => {
                 </summary>
                 <p className="mt-4 text-off-white/80 text-sm">
                   Quality shavers' blades last 18-24 months with daily use. Budget for $40-80 replacement heads annually. 
-                  This is included in our cost-per-shave calculations above.
+                  This is included in our cost-per-shave calculations above. Many users pair shavers with <a href="/comparisons/grooming-kits" className="text-champagne hover:underline">complete grooming kits</a> for maintenance.
                 </p>
               </details>
 
@@ -285,6 +285,28 @@ const ComparisonPage: React.FC = () => {
                   No, but it significantly extends blade life and adds convenience. Manual cleaning works fine, but automatic is worth it for $50-100.
                 </p>
               </details>
+            </div>
+          </section>
+
+          {/* Related Comparisons Section */}
+          <section className="space-y-6 bg-charcoal/40 rounded-2xl border border-off-white/5 p-8">
+            <h2 className="font-display text-2xl text-off-white font-bold">Related Comparisons & Resources</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Complete Grooming Solutions</h3>
+                <p className="text-sm text-off-white/70">Looking for more than just a shaver? Explore our grooming kits comparison featuring all-in-one solutions with trimmers, clippers, and accessories.</p>
+                <a href="/comparisons/grooming-kits" className="text-sm text-champagne hover:underline">→ Compare grooming kits</a>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Post-Shave Skincare</h3>
+                <p className="text-sm text-off-white/70">After you shave, proper moisturizing is essential. Our skincare comparison covers the best moisturizers and after-shave balms for sensitive skin.</p>
+                <a href="/comparisons/skincare-products" className="text-sm text-champagne hover:underline">→ Browse skincare products</a>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Grooming Guides & Articles</h3>
+                <p className="text-sm text-off-white/70">Want to master your grooming routine? Read our expert guides on shaving techniques, beard care, and style tips from professionals.</p>
+                <a href="/articles" className="text-sm text-champagne hover:underline">→ Read grooming guides</a>
+              </div>
             </div>
           </section>
 

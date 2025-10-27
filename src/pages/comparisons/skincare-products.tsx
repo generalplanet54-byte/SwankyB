@@ -338,6 +338,28 @@ const SkincareComparison: React.FC = () => {
             </div>
           </section>
 
+          {/* Related Comparisons Section */}
+          <section className="space-y-6 bg-charcoal/40 rounded-2xl border border-off-white/5 p-8">
+            <h2 className="font-display text-2xl text-off-white font-bold">Related Comparisons & Resources</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Best Electric Shavers</h3>
+                <p className="text-sm text-off-white/70">Pair your premium skincare with the right shaver. Our electric shavers comparison features models that minimize irritation and work with sensitive skin.</p>
+                <a href="/comparisons/electric-shavers" className="text-sm text-champagne hover:underline">→ Compare shavers</a>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Complete Grooming Kits</h3>
+                <p className="text-sm text-off-white/70">Need more than just skincare? Explore grooming kits that include everything from shavers to trimmers for complete grooming maintenance.</p>
+                <a href="/comparisons/grooming-kits" className="text-sm text-champagne hover:underline">→ Browse kits</a>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Skincare Guides & Tips</h3>
+                <p className="text-sm text-off-white/70">Learn how to maximize your skincare routine with expert tips on application, timing, and complementary products.</p>
+                <a href="/articles" className="text-sm text-champagne hover:underline">→ Read guides</a>
+              </div>
+            </div>
+          </section>
+
           {/* CTA */}
           <section className="text-center space-y-6 bg-gradient-to-r from-champagne/10 to-amber-400/10 rounded-2xl border border-champagne/20 p-12">
             <h2 className="font-display text-3xl text-off-white font-bold">Start Your Premium Skincare Routine Today</h2>

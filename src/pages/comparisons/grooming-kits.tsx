@@ -328,6 +328,28 @@ const GroomingKitsComparison: React.FC = () => {
             </div>
           </section>
 
+          {/* Related Comparisons Section */}
+          <section className="space-y-6 bg-charcoal/40 rounded-2xl border border-off-white/5 p-8">
+            <h2 className="font-display text-2xl text-off-white font-bold">Related Comparisons & Resources</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Premium Electric Shavers</h3>
+                <p className="text-sm text-off-white/70">Want a dedicated premium shaver? Compare the best electric shavers with advanced features like automatic cleaning stations and superior motor power.</p>
+                <a href="/comparisons/electric-shavers" className="text-sm text-champagne hover:underline">→ Compare shavers</a>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Post-Grooming Skincare</h3>
+                <p className="text-sm text-off-white/70">Complete your grooming routine with the right moisturizers and after-shave products. Our skincare comparison covers options for all skin types.</p>
+                <a href="/comparisons/skincare-products" className="text-sm text-champagne hover:underline">→ Browse skincare</a>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Grooming Techniques & Tips</h3>
+                <p className="text-sm text-off-white/70">Master your grooming kit with our expert guides covering proper use, maintenance, and pro tips for best results.</p>
+                <a href="/articles" className="text-sm text-champagne hover:underline">→ Read grooming guides</a>
+              </div>
+            </div>
+          </section>
+
           {/* CTA */}
           <section className="text-center space-y-6 bg-gradient-to-r from-champagne/10 to-amber-400/10 rounded-2xl border border-champagne/20 p-12">
             <h2 className="font-display text-3xl text-off-white font-bold">Ready to Simplify Your Grooming Routine?</h2>

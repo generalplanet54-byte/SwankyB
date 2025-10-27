@@ -352,6 +352,28 @@ const WirelessEarbudsComparison: React.FC = () => {
             </div>
           </section>
 
+          {/* Related Comparisons Section */}
+          <section className="space-y-6 bg-charcoal/40 rounded-2xl border border-off-white/5 p-8">
+            <h2 className="font-display text-2xl text-off-white font-bold">Related Comparisons & Resources</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Best Electric Shavers</h3>
+                <p className="text-sm text-off-white/70">Complement your audio experience with premium grooming. Compare the best electric shavers for a refined appearance and smooth shave.</p>
+                <a href="/comparisons/electric-shavers" className="text-sm text-champagne hover:underline">→ Compare shavers</a>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Premium Skincare</h3>
+                <p className="text-sm text-off-white/70">Look your best while listening in style. Our skincare comparison covers moisturizers and grooming products for professionals.</p>
+                <a href="/comparisons/skincare-products" className="text-sm text-champagne hover:underline">→ Browse skincare</a>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-semibold text-champagne">Audio Guides & Reviews</h3>
+                <p className="text-sm text-off-white/70">Master your new earbuds with expert guides on optimization, features, and pro tips for best audio quality.</p>
+                <a href="/articles" className="text-sm text-champagne hover:underline">→ Read audio guides</a>
+              </div>
+            </div>
+          </section>
+
           {/* CTA */}
           <section className="text-center space-y-6 bg-gradient-to-r from-champagne/10 to-amber-400/10 rounded-2xl border border-champagne/20 p-12">
             <h2 className="font-display text-3xl text-off-white font-bold">Upgrade Your Audio Experience Today</h2>
