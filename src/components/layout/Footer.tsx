@@ -94,16 +94,40 @@ const Footer: React.FC = () => {
               you make informed purchasing decisions.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+              <a 
+                href="https://twitter.com/swankyboyz" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
+                aria-label="Follow us on Twitter"
+              >
                 <Twitter className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+              <a 
+                href="https://instagram.com/swankyboyz" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
+                aria-label="Follow us on Instagram"
+              >
                 <Instagram className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+              <a 
+                href="https://youtube.com/@swankyboyz" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
+                aria-label="Subscribe to our YouTube channel"
+              >
                 <Youtube className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+              <a 
+                href="https://facebook.com/swankyboyz" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
+                aria-label="Like us on Facebook"
+              >
                 <Facebook className="h-6 w-6" />
               </a>
             </div>
@@ -113,11 +137,11 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Categories</h4>
             <ul className="space-y-2">
-              <li><Link to="/category/skincare" className="text-gray-400 hover:text-white transition-colors duration-200">Skincare</Link></li>
-              <li><Link to="/category/audio" className="text-gray-400 hover:text-white transition-colors duration-200">Audio</Link></li>
-              <li><Link to="/category/accessories" className="text-gray-400 hover:text-white transition-colors duration-200">Accessories</Link></li>
-              <li><Link to="/category/fragrance" className="text-gray-400 hover:text-white transition-colors duration-200">Fragrance</Link></li>
               <li><Link to="/category/grooming" className="text-gray-400 hover:text-white transition-colors duration-200">Grooming</Link></li>
+              <li><Link to="/category/audio-equipment" className="text-gray-400 hover:text-white transition-colors duration-200">Audio Equipment</Link></li>
+              <li><Link to="/category/smartphones" className="text-gray-400 hover:text-white transition-colors duration-200">Smartphones</Link></li>
+              <li><Link to="/category/technology" className="text-gray-400 hover:text-white transition-colors duration-200">Technology</Link></li>
+              <li><Link to="/articles" className="text-gray-400 hover:text-white transition-colors duration-200">All Articles</Link></li>
             </ul>
           </div>
 

@@ -14,6 +14,10 @@ const ArticlesListPage = lazy(() => import('./components/pages/ArticlesListPage'
 const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard'));
 const AdminLogin = lazy(() => import('./components/admin/AdminLogin'));
 const ProtectedAdminRoute = lazy(() => import('./components/admin/ProtectedAdminRoute'));
+const PrivacyPolicy = lazy(() => import('./components/pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./components/pages/TermsOfService'));
+const AffiliateDisclosure = lazy(() => import('./components/pages/AffiliateDisclosure'));
+const ContactUs = lazy(() => import('./components/pages/ContactUs'));
 
 // Loading component
 const LoadingFallback = () => (
@@ -43,6 +47,10 @@ function App() {
                         <AdminDashboard />
                       </ProtectedAdminRoute>
                     } />
+                    <Route path="/privacy" element={<PrivacyPolicy />} />
+                    <Route path="/terms" element={<TermsOfService />} />
+                    <Route path="/affiliate-disclosure" element={<AffiliateDisclosure />} />
+                    <Route path="/contact" element={<ContactUs />} />
                   </Routes>
                 </Suspense>
               </main>
