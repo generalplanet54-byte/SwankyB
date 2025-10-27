@@ -68,7 +68,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       // Try server-side public endpoint first (Cloudflare Pages function)
       try {
-        const res = await fetch('/api/content');
+        const res = await fetch('/api/content', {
+          headers: { 'Accept': 'application/json' }
+        });
         if (res.ok) {
           const json = await res.json();
           const articlesData = json.articles || [];

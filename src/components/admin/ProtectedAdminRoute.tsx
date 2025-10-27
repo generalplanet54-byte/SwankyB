@@ -9,7 +9,10 @@ const ProtectedAdminRoute: React.FC<{ children: React.ReactElement }> = ({ child
     let mounted = true;
     (async () => {
       try {
-        const res = await fetch('/api/admin/me', { credentials: 'include' });
+        const res = await fetch('/api/admin/me', { 
+          credentials: 'include',
+          headers: { 'Accept': 'application/json' }
+        });
         if (!mounted) return;
         if (res.ok) {
           setAuthenticated(true);
@@ -17,6 +20,7 @@ const ProtectedAdminRoute: React.FC<{ children: React.ReactElement }> = ({ child
           setAuthenticated(false);
         }
       } catch (err) {
+        console.warn('Admin authentication API not available in development mode:', err);
         setAuthenticated(false);
       } finally {
         if (mounted) setLoading(false);

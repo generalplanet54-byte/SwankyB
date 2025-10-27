@@ -24,11 +24,15 @@ const Footer: React.FC = () => {
     let mounted = true;
     (async () => {
       try {
-        const res = await fetch('/api/admin/me', { credentials: 'include' });
+        const res = await fetch('/api/admin/me', { 
+          credentials: 'include',
+          headers: { 'Accept': 'application/json' }
+        });
         if (!mounted) return;
         setIsAdmin(res.ok);
       } catch (err) {
         if (!mounted) return;
+        console.warn('Admin authentication API not available in development mode:', err);
         setIsAdmin(false);
       }
     })();
