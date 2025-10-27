@@ -24,10 +24,12 @@ export default {
         charcoal: '#1A1A1A',
         'off-white': '#FAFAF8',
         champagne: '#D4AF37',
-        // Brand tokens derived from the site logo
-        brand: '#D4AF37',
-        'brand-dark': '#b88924',
-        'brand-contrast': '#0f0f0f',
+        // Brand tokens derived from MANSCAPED logo sampling
+        brand: '#86603D',        // Primary brand brown
+        'brand-dark': '#483529', // Dark brown for hover/accent
+        'brand-light': '#9A6F48', // Light brown for softer accents
+        'brand-tan': '#B7A48F',   // Lightest tan for backgrounds
+        'brand-contrast': '#1E1711', // Very dark brown for text
       },
       fontFamily: {
         display: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],

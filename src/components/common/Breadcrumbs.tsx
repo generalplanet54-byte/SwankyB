@@ -23,7 +23,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
           const content = item.href && !isLast ? (
             <Link
               to={item.href}
-              className="font-medium text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors"
+              className="font-medium text-gray-600 hover:text-brand dark:text-gray-300 dark:hover:text-brand-light transition-colors"
             >
               {item.label}
             </Link>

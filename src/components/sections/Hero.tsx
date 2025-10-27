@@ -17,7 +17,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 text-white py-20">
+    <section className="relative bg-gradient-to-br from-brand-dark via-brand to-brand-light text-white py-20">
       <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
 
             <button
               onClick={() => handleExploreProduct('prod-sony-wf-1000xm4')}
-              className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 inline-flex items-center space-x-2"
+              className="bg-transparent border-2 border-white hover:bg-white hover:text-brand-contrast px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 inline-flex items-center space-x-2"
             >
               <Star className="h-5 w-5" />
               <span>Shop Best Earbuds</span>
@@ -52,16 +52,16 @@ const Hero: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">{stats.productsReviewed || '500+'}</div>
-              <div className="text-blue-100">Products Reviewed</div>
+              <div className="text-3xl font-bold text-brand-tan mb-2">{stats.productsReviewed || '500+'}</div>
+              <div className="text-gray-200">Products Reviewed</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">{stats.monthlyReaders}</div>
-              <div className="text-blue-100">Monthly Readers</div>
+              <div className="text-3xl font-bold text-brand-tan mb-2">{stats.monthlyReaders}</div>
+              <div className="text-gray-200">Monthly Readers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">{stats.satisfaction}</div>
-              <div className="text-blue-100">Customer Satisfaction</div>
+              <div className="text-3xl font-bold text-brand-tan mb-2">{stats.satisfaction}</div>
+              <div className="text-gray-200">Customer Satisfaction</div>
             </div>
           </div>
         </div>

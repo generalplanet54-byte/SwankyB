@@ -56,34 +56,37 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         if (res.ok) {
           const json = await res.json();
           const productsData = json.products || [];
-          const formattedProducts: AffiliateProduct[] = (productsData || []).map((product: any) => ({
-            id: String(product.id),
-            name: product.name,
-            description: product.description,
-            price: product.price ? (typeof product.price === 'string' && product.price.startsWith('$') ? product.price : `$${product.price}`) : '',
-            originalPrice: product.original_price ? (typeof product.original_price === 'string' && product.original_price.startsWith('$') ? product.original_price : `$${product.original_price}`) : undefined,
-            image: product.primary_image,
-            affiliateUrl: product.amazon_url,
-            rating: product.rating || 0,
-            provider: 'amazon' as const,
-            category: product.category || 'general',
-            commission: 10.0
-          }));
-          if (formattedProducts.length) {
+          
+          // Only use API data if we got valid products
+          if (productsData && productsData.length > 0) {
+            const formattedProducts: AffiliateProduct[] = (productsData || []).map((product: any) => ({
+              id: String(product.id),
+              name: product.name,
+              description: product.description,
+              price: product.price ? (typeof product.price === 'string' && product.price.startsWith('$') ? product.price : `$${product.price}`) : '',
+              originalPrice: product.original_price ? (typeof product.original_price === 'string' && product.original_price.startsWith('$') ? product.original_price : `$${product.original_price}`) : undefined,
+              image: product.primary_image,
+              affiliateUrl: product.amazon_url,
+              rating: product.rating || 0,
+              provider: 'amazon' as const,
+              category: product.category || 'general',
+              commission: 10.0
+            }));
             setProducts(formattedProducts);
             return;
           }
-          useLaunchProducts();
-          return;
         }
       } catch (err) {
-        // fallback to client-side supabase
+        console.log('Products API failed, using local data:', err);
+        // Continue to fallback
       }
 
     } catch (error) {
       console.error('Error fetching products:', error);
-      useLaunchProducts();
     } finally {
+      // Always fall back to local products data in development
+      console.log('Using local products data');
+      useLaunchProducts();
       setLoading(false);
     }
   };

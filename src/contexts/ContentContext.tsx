@@ -137,55 +137,57 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           const json = await res.json();
           const articlesData = json.articles || [];
 
-          const formattedArticles: Article[] = (articlesData || []).map((article: any) => {
-            
-            return {
-              id: article.id,
-              title: article.title,
-              slug: article.slug,
-              excerpt: article.excerpt,
-              content: article.content,
-              author: article.author,
-              publishedAt: article.published_at,
-              updatedAt: article.updated_at,
-              featuredImage: article.featured_image,
-              category: article.category_name,
-              tags: article.tags.map((t: any) => t.name) || [],
-              readTime: article.read_time,
-              featured: false,
-              seoTitle: article.meta_title || article.title,
-              seoDescription: article.meta_description || article.excerpt,
-              affiliateProducts: article.products.map((p: any) => ({
-                id: String(p.id),
-                name: p.name,
-                description: p.description,
-                price: p.price ? (typeof p.price === 'string' && p.price.startsWith('$') ? p.price : `$${p.price}`) : '',
-                originalPrice: p.original_price ? (typeof p.original_price === 'string' && p.original_price.startsWith('$') ? p.original_price : `$${p.original_price}`) : undefined,
-                image: p.primary_image,
-                affiliateUrl: p.amazon_url,
-                rating: p.rating || 0,
-                provider: 'amazon' as const,
-                category: ''
-              }))
-            };
-          });
+          // Only proceed if we actually got articles from the API
+          if (articlesData && articlesData.length > 0) {
+            const formattedArticles: Article[] = (articlesData || []).map((article: any) => {
+              
+              return {
+                id: article.id,
+                title: article.title,
+                slug: article.slug,
+                excerpt: article.excerpt,
+                content: article.content,
+                author: article.author,
+                publishedAt: article.published_at,
+                updatedAt: article.updated_at,
+                featuredImage: article.featured_image,
+                category: article.category_name,
+                tags: article.tags?.map((t: any) => t.name) || [],
+                readTime: article.read_time,
+                featured: false,
+                seoTitle: article.meta_title || article.title,
+                seoDescription: article.meta_description || article.excerpt,
+                affiliateProducts: article.products?.map((p: any) => ({
+                  id: String(p.id),
+                  name: p.name,
+                  description: p.description,
+                  price: p.price ? (typeof p.price === 'string' && p.price.startsWith('$') ? p.price : `$${p.price}`) : '',
+                  originalPrice: p.original_price ? (typeof p.original_price === 'string' && p.original_price.startsWith('$') ? p.original_price : `$${p.original_price}`) : undefined,
+                  image: p.primary_image,
+                  affiliateUrl: p.amazon_url,
+                  rating: p.rating || 0,
+                  provider: 'amazon' as const,
+                  category: ''
+                })) || []
+              };
+            });
 
-          setArticles(formattedArticles);
-          updateCategories(formattedArticles);
-          return;
+            setArticles(formattedArticles);
+            updateCategories(formattedArticles);
+            return;
+          }
         }
       } catch (err) {
-        // fallback to client-side Supabase if server endpoint unavailable
+        console.log('API endpoint failed, falling back to local data:', err);
+        // Continue to fallback below
       }
 
-      // If Supabase wasn't configured at build time (common in Bolt/StackBlitz),
-      // fall back to the bundled `launchArticles` so the site still shows content.
-      // if (!SUPABASE_CONFIGURED) {
-      //   const hydrated = hydrateArticlesWithProducts(launchArticles as Article[]);
-      //   setArticles(hydrated);
-      //   updateCategories(hydrated);
-      //   return;
-      // }
+      // Fall back to local articles data since server APIs are not available in dev
+      console.log('Using local articles data as fallback');
+      const hydrated = hydrateArticlesWithProducts(launchArticles as Article[]);
+      setArticles(hydrated);
+      updateCategories(hydrated);
+      return;
 
       // const { data: articlesData, error: articlesError } = await supabase
       //   .from('articles')
