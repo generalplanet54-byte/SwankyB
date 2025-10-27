@@ -246,7 +246,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       author: 'SwankyBoyz Team',
       publishedAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      featuredImage: generateRelevantImage(topic, category),
+      featuredImage: generateRelevantImage(category),
       category,
       tags: [topic.toLowerCase(), category.toLowerCase(), 'review', 'guide'],
       readTime,
@@ -259,7 +259,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return newArticle;
   }, []);
 
-  const generateRelevantImage = useCallback((topic: string, category: string): string => {
+  const generateRelevantImage = useCallback((category: string): string => {
     const imageMap: Record<string, string[]> = {
       'Footwear': [
         'https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
