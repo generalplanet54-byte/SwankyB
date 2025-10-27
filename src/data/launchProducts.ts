@@ -21,8 +21,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
   // GROOMING - Electric Shavers & Trimmers
   {
     id: 'prod-braun-series-9-pro-plus',
-    name: 'Braun Series 9 PRO+ Electric Shaver',
-    description: 'Braun\'s flagship five-element shaver with ProComfort head, 60-minute battery life, and SmartCare cleaning center for effortless daily grooming.',
+    name: 'Best Premium Electric Shaver | Braun Series 9 PRO+',
+    description: 'Premium 5-element electric shaver with ProComfort head for effortless grooming. 60-minute battery, SmartCare cleaning center. Best for all beard types. Professional precision.',
     price: '$299.99',
     originalPrice: '$349.99',
     image: 'https://images.unsplash.com/photo-1596462502278-af3c571fb3d4?w=800&h=600&fit=crop',
@@ -38,8 +38,8 @@ export const launchProducts: LaunchAffiliateProduct[] = [
   },
   {
     id: 'prod-braun-series-8',
-    name: 'Braun Series 8 8567cc Electric Razor',
-    description: 'High-performance 4+1 shaving system engineered for dense beards with precision trimmer and SmartCare Center.',
+    name: 'Best Electric Shaver for Dense Beards | Braun Series 8',
+    description: 'Professional 4+1 electric shaver engineered for dense, thick beards. Precision trimmer, SmartCare Center, 45-minute battery. Best value premium option for demanding grooming.',
     price: '$199.99',
     originalPrice: '$229.99',
     image: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&h=600&fit=crop',
