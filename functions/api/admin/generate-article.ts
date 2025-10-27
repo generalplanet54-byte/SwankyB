@@ -9,28 +9,29 @@ export async function onRequestPost(context: any) {
       return new Response(JSON.stringify({ error: 'Topic is required' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
     }
 
-    // If OPENAI_API_KEY provided, call OpenAI chat completion to produce structured JSON.
-    const openaiKey = env.OPENAI_API_KEY || env.OPENAI_API_KEY?.value || '';
-    if (openaiKey) {
+    // If ANTHROPIC_API_KEY provided, call Claude Haiku to produce structured JSON.
+    const anthropicKey = env.ANTHROPIC_API_KEY || env.ANTHROPIC_API_KEY?.value || '';
+    if (anthropicKey) {
       try {
         const prompt = `You are an assistant that outputs a JSON object describing a complete SEO-optimized article for the topic: "${topic}" in the category: "${category}". Output only valid JSON with the following fields: title, excerpt, content (HTML string, use semantic tags like <h2>, <p>, <ul>, <li>), seoTitle, seoDescription, tags (array), readTime (e.g., '6 min read'), featuredImage (a URL). Ensure content is at least 6 sections and uses headings. Do not include any extra text outside the JSON.`;
 
-        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${openaiKey}`
+            'x-api-key': anthropicKey,
+            'anthropic-version': '2023-06-01'
           },
           body: JSON.stringify({
-            model: 'gpt-4o-mini',
-            messages: [{ role: 'user', content: prompt }],
+            model: 'claude-3-5-haiku-20241022',
             max_tokens: 1200,
+            messages: [{ role: 'user', content: prompt }],
             temperature: 0.7
           })
         });
 
         const json = await res.json();
-        const contentText = json?.choices?.[0]?.message?.content || json?.choices?.[0]?.text || '';
+        const contentText = json?.content?.[0]?.text || '';
 
         // Try to parse JSON from model output
         let parsed: any = null;
@@ -46,7 +47,7 @@ export async function onRequestPost(context: any) {
         }
       } catch (err: any) {
         // Continue to fallback
-        console.error('OpenAI call failed:', err?.message || err);
+        console.error('Anthropic Claude call failed:', err?.message || err);
       }
     }
 

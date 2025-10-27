@@ -5,6 +5,11 @@ import Footer from './components/layout/Footer';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ContentProvider } from './contexts/ContentContext';
 import { AffiliateProvider } from './contexts/AffiliateContext';
+import { 
+  StickyCTA, 
+  FloatingActionButton, 
+  ExitIntentPopup 
+} from './components/ConversionOptimization';
 
 // Lazy load pages for better code splitting
 const Homepage = lazy(() => import('./components/pages/Homepage'));
@@ -35,6 +40,30 @@ function App() {
           <Router>
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
               <Header />
+              
+              {/* Global Conversion Optimization Components */}
+              <StickyCTA 
+                title="👉 Compare Premium Options"
+                subtitle="Expert picks with exclusive deals"
+                ctaText="View Buying Guide"
+                ctaUrl="#product-comparison"
+                showAfterScroll={30}
+              />
+              
+              <FloatingActionButton
+                title="Buying Guide"
+                description="Expert recommendations & exclusive deals"
+                ctaText="Open Now"
+                showAfterScroll={25}
+              />
+              
+              <ExitIntentPopup
+                title="Wait! Get Our Free Buying Guide"
+                description="Expert recommendations for premium grooming products + exclusive discount codes"
+                ctaText="Download Free PDF"
+                pdfUrl="/guides/ultimate-grooming-guide.pdf"
+              />
+              
               <main id="main-content" className="flex-grow">
                 <Suspense fallback={<LoadingFallback />}>
                   <Routes>

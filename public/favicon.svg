@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Luxury Gold Background -->
+  <rect width="32" height="32" fill="#1A1A1A" rx="8"/>
+  
+  <!-- Gold Accent Circle -->
+  <circle cx="16" cy="16" r="13" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+  
+  <!-- "S" Initial with Luxury Style -->
+  <text x="16" y="22" font-family="'Playfair Display', serif" font-size="24" font-weight="700" fill="#D4AF37" text-anchor="middle" letter-spacing="0.05em">S</text>
+  
+  <!-- Decorative Elements -->
+  <circle cx="16" cy="6" r="1.5" fill="#D4AF37"/>
+  <circle cx="16" cy="26" r="1.5" fill="#D4AF37"/>
+</svg>
