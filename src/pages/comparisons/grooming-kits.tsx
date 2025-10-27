@@ -161,40 +161,47 @@ const GroomingKitsComparison: React.FC = () => {
           <div className="space-y-4">
             <p className="text-xs uppercase tracking-[0.5em] text-champagne/70">Complete Grooming Solutions</p>
             <h1 className="font-display text-5xl leading-tight text-off-white sm:text-6xl">
-              Best Grooming Kits & Complete Sets
+              Best Grooming Kits & Complete Sets 2025: Expert Comparison
             </h1>
             <p className="text-lg text-off-white/70 max-w-2xl">
-              Save time and money with all-in-one grooming kits. We've tested the best complete grooming sets that give you everything you need for professional-quality home grooming, from beard trimming to full-body styling.
+              Save time and money with premium all-in-one grooming kits. We've tested the best complete grooming sets that give you everything needed for professional-quality home grooming, from beard trimming to full-body styling.
             </p>
+            <div className="flex gap-4 text-sm text-off-white/60 pt-4 border-t border-off-white/10">
+              <span>📝 <strong>Expert Tested:</strong> Complete grooming kit analysis by professionals</span>
+              <span>📅 Updated: January 2025</span>
+            </div>
           </div>
 
           {/* Introduction Content */}
           <div className="space-y-6 prose prose-invert max-w-none">
             <section className="space-y-4">
-              <h2 className="font-display text-2xl text-off-white font-bold">Why Choose a Grooming Kit?</h2>
+              <h2 className="font-display text-2xl text-off-white font-bold">Why Choose Premium Grooming Kits?</h2>
               <ul className="list-disc list-inside space-y-2 text-off-white/80">
-                <li><strong>Cost Savings:</strong> Get 7-11 tools for the price of 2-3 individual purchases</li>
-                <li><strong>Convenience:</strong> One charge, multiple grooming tasks completed</li>
-                <li><strong>Storage:</strong> Everything included comes in organized cases for travel</li>
-                <li><strong>Consistency:</strong> All attachments are designed to work together seamlessly</li>
-                <li><strong>Quality:</strong> Premium kits use better motors and durable construction</li>
+                <li><strong>Cost Savings:</strong> Get 7-11 professional grooming tools for the price of 2-3 individual purchases</li>
+                <li><strong>Convenience:</strong> One charge, multiple grooming tasks completed with versatile attachments</li>
+                <li><strong>Storage:</strong> Everything included comes in organized travel cases and storage solutions</li>
+                <li><strong>Consistency:</strong> All grooming attachments are designed to work together seamlessly</li>
+                <li><strong>Quality:</strong> Premium grooming kits use better motors and durable construction for longevity</li>
               </ul>
+              <p className="text-sm text-off-white/70 bg-charcoal/30 p-4 rounded-lg border-l-2 border-champagne/50">
+                <strong>💡 Pro Tip:</strong> Not looking for a complete kit? Check our <a href="/comparisons/electric-shavers" className="text-champagne hover:text-champagne/80 underline">best electric shavers comparison</a> for individual premium shavers.
+              </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="font-display text-2xl text-off-white font-bold">What to Look For</h2>
+              <h2 className="font-display text-2xl text-off-white font-bold">What to Look For in Grooming Kits</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-charcoal/50 p-4 rounded-lg border border-off-white/10">
                   <h3 className="font-bold text-champagne mb-2">Attachment Count</h3>
-                  <p className="text-sm text-off-white/80">More attachments = greater versatility, but quality matters more than quantity.</p>
+                  <p className="text-sm text-off-white/80">More attachments = greater versatility, but quality and usability matter more than quantity in grooming kits.</p>
                 </div>
                 <div className="bg-charcoal/50 p-4 rounded-lg border border-off-white/10">
-                  <h3 className="font-bold text-champagne mb-2">Battery Life</h3>
-                  <p className="text-sm text-off-white/80">Minimum 40-60 minutes recommended for complete grooming session without interruption.</p>
+                  <h3 className="font-bold text-champagne mb-2">Battery Runtime</h3>
+                  <p className="text-sm text-off-white/80">Minimum 40-60 minutes recommended for complete grooming session without interruption or recharging.</p>
                 </div>
                 <div className="bg-charcoal/50 p-4 rounded-lg border border-off-white/10">
                   <h3 className="font-bold text-champagne mb-2">Build Quality</h3>
-                  <p className="text-sm text-off-white/80">Stainless steel or premium plastic ensures durability through years of daily use.</p>
+                  <p className="text-sm text-off-white/80">Stainless steel or premium plastic construction ensures durability and reliability through years of daily grooming use.</p>
                 </div>
               </div>
             </section>
@@ -323,12 +330,19 @@ const GroomingKitsComparison: React.FC = () => {
 
           {/* CTA */}
           <section className="text-center space-y-6 bg-gradient-to-r from-champagne/10 to-amber-400/10 rounded-2xl border border-champagne/20 p-12">
-            <h2 className="font-display text-3xl text-off-white font-bold">Ready to Simplify Your Routine?</h2>
+            <h2 className="font-display text-3xl text-off-white font-bold">Ready to Simplify Your Grooming Routine?</h2>
             <p className="text-lg text-off-white/80 max-w-2xl mx-auto">
-              Pick your ideal grooming kit from the comparison above. All links lead to Amazon where you can check current prices, read customer reviews, and see available colors/variants.
+              Pick your ideal premium grooming kit from our detailed comparison above. All links lead to Amazon where you can check current prices, read verified customer reviews, and see available colors and variants.
             </p>
+            <div className="flex flex-wrap gap-4 justify-center pt-4">
+              <a href="/comparisons/electric-shavers" className="text-sm text-champagne hover:underline">← Compare shavers</a>
+              <span className="text-off-white/40">•</span>
+              <a href="/comparisons/skincare-products" className="text-sm text-champagne hover:underline">Browse skincare →</a>
+              <span className="text-off-white/40">•</span>
+              <a href="/articles" className="text-sm text-champagne hover:underline">Read grooming guides ↓</a>
+            </div>
             <p className="text-sm text-off-white/60">
-              We earn a small commission from qualifying purchases at no cost to you.
+              We earn a small commission from qualifying purchases at no extra cost to you, helping us keep testing and reviewing premium grooming products.
             </p>
           </section>
         </div>

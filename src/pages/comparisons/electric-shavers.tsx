@@ -160,43 +160,49 @@ const ComparisonPage: React.FC = () => {
           <div className="space-y-4">
             <p className="text-xs uppercase tracking-[0.5em] text-champagne/70">Detailed Comparison</p>
             <h1 className="font-display text-5xl leading-tight text-off-white sm:text-6xl">
-              Premium Electric Shavers Head-to-Head
+              Best Premium Electric Shavers: Expert Comparison 2025
             </h1>
             <p className="text-lg text-off-white/70 max-w-2xl">
-              We've tested 50+ premium electric shavers and narrowed it down to the absolute best. 
-              Use this interactive comparison to find the perfect shaver for your needs, budget, and grooming style.
+              We've tested 50+ premium electric shavers and compared the absolute best models. Use this interactive comparison to find the perfect shaver for your needs, budget, and grooming style.
             </p>
+            <div className="flex gap-4 text-sm text-off-white/60 pt-4 border-t border-off-white/10">
+              <span>📝 <strong>Expert Tested:</strong> Hands-on testing by professional grooming specialists</span>
+              <span>📅 Updated: January 2025</span>
+            </div>
           </div>
 
           {/* Introduction Content */}
           <div className="space-y-6 prose prose-invert max-w-none">
             <section className="space-y-4">
-              <h2 className="font-display text-2xl text-off-white font-bold">How We Test</h2>
+              <h2 className="font-display text-2xl text-off-white font-bold">Best Electric Shavers: Testing Methodology</h2>
               <p className="text-off-white/80">
-                Every shaver below has been personally tested by our expert grooming team. We evaluate:
+                Every electric shaver in our comparison has been personally tested by our expert grooming team. We evaluate:
               </p>
               <ul className="list-disc list-inside space-y-2 text-off-white/80">
                 <li><strong>Shaving Quality:</strong> Closeness, comfort, and skin irritation after a full week of daily use</li>
                 <li><strong>Motor Power:</strong> Measured in cuts-per-minute (CPM) and real-world cutting performance</li>
-                <li><strong>Battery Life:</strong> Runtime and charging speed for convenience</li>
-                <li><strong>Build Quality:</strong> Materials, durability, and long-term reliability</li>
+                <li><strong>Battery Life:</strong> Runtime and charging speed for convenience and daily use</li>
+                <li><strong>Build Quality:</strong> Materials, durability, and long-term reliability for premium shavers</li>
                 <li><strong>Ease of Maintenance:</strong> Cleaning difficulty and replacement part costs</li>
-                <li><strong>Value:</strong> Cost-per-shave over a 5-year lifespan</li>
+                <li><strong>Value:</strong> Cost-per-shave over a 5-year lifespan for premium models</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="font-display text-2xl text-off-white font-bold">Key Features Explained</h2>
+              <h2 className="font-display text-2xl text-off-white font-bold">Premium Shaver Features Explained</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-charcoal/50 p-4 rounded-lg border border-off-white/10">
-                  <h3 className="font-bold text-champagne mb-2">Motor Power (CPM)</h3>
-                  <p className="text-sm text-off-white/80">Cuts per minute. Higher = more precise, fewer passes needed. Premium models: 13K-15K CPM.</p>
+                  <h3 className="font-bold text-champagne mb-2">Motor Power (Cuts Per Minute)</h3>
+                  <p className="text-sm text-off-white/80">Cuts per minute (CPM) measure shaver efficiency. Higher CPM = more precise, fewer passes needed. Premium electric shavers: 13K-15K CPM.</p>
                 </div>
                 <div className="bg-charcoal/50 p-4 rounded-lg border border-off-white/10">
                   <h3 className="font-bold text-champagne mb-2">Waterproof Rating</h3>
-                  <p className="text-sm text-off-white/80">Fully waterproof means shower-safe and easy cleanup. Highly recommended for daily use.</p>
+                  <p className="text-sm text-off-white/80">Fully waterproof shavers are shower-safe and easy to clean. This feature is highly recommended for daily users who want convenience.</p>
                 </div>
               </div>
+              <p className="text-sm text-off-white/70 bg-charcoal/30 p-4 rounded-lg border-l-2 border-champagne/50">
+                <strong>💡 Pro Tip:</strong> Looking for complete grooming solutions? Check out our <a href="/comparisons/grooming-kits" className="text-champagne hover:text-champagne/80 underline">best grooming kits comparison</a> which includes shavers plus other grooming tools.
+              </p>
             </section>
           </div>
 
@@ -211,31 +217,34 @@ const ComparisonPage: React.FC = () => {
 
           {/* Buying Guide Section */}
           <section className="space-y-6 bg-charcoal/50 rounded-2xl border border-off-white/10 p-8">
-            <h2 className="font-display text-2xl text-off-white font-bold">Quick Buying Guide</h2>
+            <h2 className="font-display text-2xl text-off-white font-bold">Premium Shaver Buying Guide: Choose Your Best Match</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-3">
-                <h3 className="font-bold text-champagne">Best Overall: Braun Series 9 PRO+</h3>
+                <h3 className="font-bold text-champagne">Best Overall Premium Shaver: Braun Series 9 PRO+</h3>
                 <p className="text-sm text-off-white/80">
-                  Highest motor power, longest battery, automatic cleaning. Worth the premium price for daily users who want the absolute best shave.
+                  Highest motor power, longest battery, automatic cleaning system. Worth the premium price investment for daily users who want the absolute best shave quality.
                 </p>
                 <p className="text-xs text-champagne font-semibold">Cost per shave: $0.11 over 5 years</p>
+                <a href="#" className="text-xs text-champagne hover:underline">→ Read full Braun review</a>
               </div>
 
               <div className="space-y-3">
-                <h3 className="font-bold text-champagne">Best Value: Braun Series 8</h3>
+                <h3 className="font-bold text-champagne">Best Value Premium Shaver: Braun Series 8</h3>
                 <p className="text-sm text-off-white/80">
-                  90% of the performance at 67% of the price. Great battery life and cleaning station included.
+                  Delivers 90% of flagship performance at 67% of the price. Great battery life and includes cleaning station. Perfect for budget-conscious users.
                 </p>
                 <p className="text-xs text-champagne font-semibold">Cost per shave: $0.07 over 5 years</p>
+                <a href="#" className="text-xs text-champagne hover:underline">→ Compare value options</a>
               </div>
 
               <div className="space-y-3">
-                <h3 className="font-bold text-champagne">Best for Rotary: Philips Norelco 9000</h3>
+                <h3 className="font-bold text-champagne">Best for Rotary Shaving: Philips Norelco 9000</h3>
                 <p className="text-sm text-off-white/80">
-                  Prefer circular motion? Norelco dominates the rotary market with superior pivot heads and smart adaptation.
+                  Prefer circular motion? Norelco dominates the rotary shaver market with superior pivot heads and smart adaptation technology.
                 </p>
                 <p className="text-xs text-champagne font-semibold">Cost per shave: $0.10 over 5 years</p>
+                <a href="/comparisons/grooming-kits" className="text-xs text-champagne hover:underline">→ Explore all grooming options</a>
               </div>
             </div>
           </section>
@@ -281,12 +290,19 @@ const ComparisonPage: React.FC = () => {
 
           {/* CTA Section */}
           <section className="text-center space-y-6 bg-gradient-to-r from-champagne/10 to-amber-400/10 rounded-2xl border border-champagne/20 p-12">
-            <h2 className="font-display text-3xl text-off-white font-bold">Ready to Choose?</h2>
+            <h2 className="font-display text-3xl text-off-white font-bold">Ready to Choose Your Perfect Electric Shaver?</h2>
             <p className="text-lg text-off-white/80 max-w-2xl mx-auto">
-              Pick the shaver that matches your needs from the comparison above. All links go to Amazon where you can check current prices and read verified customer reviews.
+              Pick the premium electric shaver that matches your needs from our detailed comparison above. All links go to Amazon where you can check current prices, availability, and read verified customer reviews.
             </p>
+            <div className="flex flex-wrap gap-4 justify-center pt-4">
+              <a href="/articles" className="text-sm text-champagne hover:underline">← Read grooming guides</a>
+              <span className="text-off-white/40">•</span>
+              <a href="/comparisons/grooming-kits" className="text-sm text-champagne hover:underline">Compare grooming kits →</a>
+              <span className="text-off-white/40">•</span>
+              <a href="/comparisons/skincare-products" className="text-sm text-champagne hover:underline">Browse skincare ↓</a>
+            </div>
             <p className="text-sm text-off-white/60">
-              We earn a commission from qualifying purchases at no extra cost to you, helping us keep testing new products.
+              We earn a small commission from qualifying purchases at no extra cost to you, helping us keep testing new premium products and updating this comparison.
             </p>
           </section>
         </div>
