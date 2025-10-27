@@ -3,7 +3,6 @@
  * Renders product spotlight grid and injects JSON-LD schema markup
  */
 
-import React from 'react';
 import { useProductSchema } from './ProductSchemaInjector';
 
 interface SpotlightProduct {

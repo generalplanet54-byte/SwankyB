@@ -36,7 +36,6 @@ export function generateProductSchema(options: ProductSchemaOptions) {
     availability = 'InStock',
     sku,
     brand = 'SwankyBoyz',
-    siteUrl = 'https://swankyboyz.com',
     productUrl,
   } = options;
 
@@ -84,11 +83,7 @@ export function generateAggregateOfferSchema(
   products: Array<{
     price: string;
     originalPrice?: string;
-  }>,
-  options?: {
-    siteUrl?: string;
-    category?: string;
-  }
+  }>
 ) {
   const prices = products.map(p => parseFloat(p.price.replace('$', '').replace(',', '')));
   const minPrice = Math.min(...prices);
@@ -210,7 +205,7 @@ export function generateProductCollectionSchema(
     siteUrl?: string;
   }
 ) {
-  const { collectionName, description, siteUrl = 'https://swankyboyz.com' } = options;
+  const { collectionName, description } = options;
 
   return {
     '@context': 'https://schema.org',

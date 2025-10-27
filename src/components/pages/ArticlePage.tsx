@@ -4,7 +4,7 @@ import { Clock, User, Calendar, Share2, Tag } from 'lucide-react';
 import { useContent } from '../../contexts/ContentContext';
 import ProductCard from '../common/ProductCard';
 import { useAffiliate } from '../../contexts/AffiliateContext';
-import Breadcrumbs, { BreadcrumbItem } from '../common/Breadcrumbs';
+import type { BreadcrumbItem } from '../common/Breadcrumbs';
 import StructuredData from '../common/StructuredData';
 import { slugify } from '../../lib/slugify';
 
