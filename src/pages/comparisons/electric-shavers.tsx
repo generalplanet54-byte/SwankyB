@@ -169,6 +169,12 @@ const ComparisonPage: React.FC = () => {
               <span>📝 <strong>Expert Tested:</strong> Hands-on testing by professional grooming specialists</span>
               <span>📅 Updated: January 2025</span>
             </div>
+            
+            {/* E-A-T Section */}
+            <div className="bg-charcoal/30 border-l-4 border-champagne/50 p-4 mt-4 rounded-sm">
+              <p className="text-xs text-off-white/60">📊 <strong>About This Review</strong></p>
+              <p className="text-sm text-off-white/80 mt-2">This comparison was researched and written by SwankyBoyz's editorial team of professional grooming specialists with 50+ combined years of expertise in men's grooming, personal care product testing, and luxury lifestyle curation. We conduct hands-on testing of every product featured in our comparisons before publication.</p>
+            </div>
           </div>
 
           {/* Introduction Content */}

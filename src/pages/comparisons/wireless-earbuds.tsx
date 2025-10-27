@@ -162,6 +162,12 @@ const WirelessEarbudsComparison: React.FC = () => {
               <span>📝 <strong>Expert Tested:</strong> 40+ hours testing per earbud model</span>
               <span>📅 Updated: January 2025</span>
             </div>
+            
+            {/* E-A-T Section */}
+            <div className="bg-charcoal/30 border-l-4 border-champagne/50 p-4 mt-4 rounded-sm">
+              <p className="text-xs text-off-white/60">📊 <strong>About This Review</strong></p>
+              <p className="text-sm text-off-white/80 mt-2">SwankyBoyz's wireless earbuds comparison was authored by audio and technology specialists with expertise in premium consumer electronics, sound engineering analysis, and lifestyle product curation. Each model featured undergoes extensive testing for audio quality, noise cancellation performance, battery longevity, and real-world usability.</p>
+            </div>
           </div>
 
           {/* Introduction */}

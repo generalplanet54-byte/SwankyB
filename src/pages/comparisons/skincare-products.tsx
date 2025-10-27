@@ -170,6 +170,12 @@ const SkincareComparison: React.FC = () => {
               <span>📝 <strong>Expert Tested:</strong> Dermatology-informed product comparison</span>
               <span>📅 Updated: January 2025</span>
             </div>
+            
+            {/* E-A-T Section */}
+            <div className="bg-charcoal/30 border-l-4 border-champagne/50 p-4 mt-4 rounded-sm">
+              <p className="text-xs text-off-white/60">📊 <strong>About This Review</strong></p>
+              <p className="text-sm text-off-white/80 mt-2">SwankyBoyz's skincare comparison was developed by our editorial team of dermatology-informed grooming experts with specialized knowledge in men's skincare formulations, skin type analysis, and post-shave care. All products have been tested for effectiveness, ingredient quality, and real-world performance.</p>
+            </div>
           </div>
 
           {/* Introduction */}

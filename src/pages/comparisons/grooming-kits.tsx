@@ -170,6 +170,12 @@ const GroomingKitsComparison: React.FC = () => {
               <span>📝 <strong>Expert Tested:</strong> Complete grooming kit analysis by professionals</span>
               <span>📅 Updated: January 2025</span>
             </div>
+            
+            {/* E-A-T Section */}
+            <div className="bg-charcoal/30 border-l-4 border-champagne/50 p-4 mt-4 rounded-sm">
+              <p className="text-xs text-off-white/60">📊 <strong>About This Review</strong></p>
+              <p className="text-sm text-off-white/80 mt-2">This comprehensive grooming kit comparison was researched by SwankyBoyz's expert editorial team with deep expertise in men's grooming tools, product functionality, and value analysis. Every kit featured here has undergone rigorous hands-on testing for durability, performance, and user satisfaction.</p>
+            </div>
           </div>
 
           {/* Introduction Content */}
