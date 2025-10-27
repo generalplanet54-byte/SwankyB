@@ -24,6 +24,10 @@ export default {
         charcoal: '#1A1A1A',
         'off-white': '#FAFAF8',
         champagne: '#D4AF37',
+        // Brand tokens derived from the site logo
+        brand: '#D4AF37',
+        'brand-dark': '#b88924',
+        'brand-contrast': '#0f0f0f',
       },
       fontFamily: {
         display: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],
