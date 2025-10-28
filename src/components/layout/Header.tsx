@@ -31,11 +31,11 @@ const Header: React.FC = () => {
   }, [searchQuery, navigate]);
 
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+    <header className="bg-off-white dark:bg-charcoal shadow-lg sticky top-0 z-50 transition-colors duration-300">
       {/* Skip to main content for accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-champagne focus:text-charcoal focus:rounded"
       >
         Skip to main content
       </a>
@@ -43,9 +43,9 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <Zap className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-            <span className="text-2xl font-bold text-gray-900 dark:text-white">
-              Swanky<span className="text-blue-600 dark:text-blue-400">Boyz</span>
+            <Zap className="h-8 w-8 text-champagne" />
+            <span className="text-2xl font-bold text-charcoal dark:text-off-white">
+              Swanky<span className="text-champagne">Boyz</span>
             </span>
           </Link>
 
@@ -55,7 +55,7 @@ const Header: React.FC = () => {
               <Link
                 key={link.href}
                 to={link.href}
-                className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-semibold"
+                className="text-charcoal dark:text-off-white hover:text-champagne dark:hover:text-champagne transition-colors duration-200 font-semibold"
               >
                 {link.name}
               </Link>
@@ -64,7 +64,7 @@ const Header: React.FC = () => {
               <Link
                 key={category.slug}
                 to={`/category/${category.slug}`}
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium"
+                className="text-charcoal/70 dark:text-off-white/70 hover:text-champagne dark:hover:text-champagne transition-colors duration-200 font-medium"
               >
                 {category.name}
               </Link>
@@ -74,13 +74,13 @@ const Header: React.FC = () => {
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="hidden md:flex items-center space-x-2">
             <div className="relative">
-              <Search className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <Search className="h-5 w-5 text-charcoal/40 dark:text-off-white/40 absolute left-3 top-1/2 transform -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 w-64 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="pl-10 pr-4 py-2 w-64 border border-charcoal/20 dark:border-off-white/20 rounded-lg focus:ring-2 focus:ring-champagne focus:border-transparent bg-off-white dark:bg-charcoal text-charcoal dark:text-off-white placeholder:text-charcoal/50 dark:placeholder:text-off-white/50"
               />
             </div>
           </form>
@@ -90,12 +90,12 @@ const Header: React.FC = () => {
             <button
               onClick={toggleTheme}
               aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+              className="p-2 rounded-lg bg-charcoal/10 dark:bg-off-white/10 hover:bg-charcoal/20 dark:hover:bg-off-white/20 transition-colors duration-200"
             >
               {theme === 'dark' ? (
-                <Sun className="h-5 w-5 text-yellow-500" />
+                <Sun className="h-5 w-5 text-champagne" />
               ) : (
-                <Moon className="h-5 w-5 text-gray-700" />
+                <Moon className="h-5 w-5 text-charcoal" />
               )}
             </button>
 
@@ -103,12 +103,12 @@ const Header: React.FC = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMenuOpen}
-              className="lg:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+              className="lg:hidden p-2 rounded-lg bg-charcoal/10 dark:bg-off-white/10 hover:bg-charcoal/20 dark:hover:bg-off-white/20 transition-colors duration-200"
             >
               {isMenuOpen ? (
-                <X className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+                <X className="h-6 w-6 text-charcoal dark:text-off-white" />
               ) : (
-                <Menu className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+                <Menu className="h-6 w-6 text-charcoal dark:text-off-white" />
               )}
             </button>
           </div>
@@ -116,14 +116,14 @@ const Header: React.FC = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="lg:hidden py-4 border-t border-charcoal/10 dark:border-off-white/10">
             <nav className="flex flex-col space-y-4">
               {primaryLinks.map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-semibold"
+                  className="text-charcoal dark:text-off-white hover:text-champagne dark:hover:text-champagne transition-colors duration-200 font-semibold"
                 >
                   {link.name}
                 </Link>
@@ -133,7 +133,7 @@ const Header: React.FC = () => {
                   key={category.slug}
                   to={`/category/${category.slug}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium"
+                  className="text-charcoal/70 dark:text-off-white/70 hover:text-champagne dark:hover:text-champagne transition-colors duration-200 font-medium"
                 >
                   {category.name}
                 </Link>
@@ -142,13 +142,13 @@ const Header: React.FC = () => {
             
             <form onSubmit={handleSearch} className="mt-4 md:hidden">
               <div className="relative">
-                <Search className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                <Search className="h-5 w-5 text-charcoal/40 dark:text-off-white/40 absolute left-3 top-1/2 transform -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="pl-10 pr-4 py-2 w-full border border-charcoal/20 dark:border-off-white/20 rounded-lg focus:ring-2 focus:ring-champagne focus:border-transparent bg-off-white dark:bg-charcoal text-charcoal dark:text-off-white placeholder:text-charcoal/50 dark:placeholder:text-off-white/50"
                 />
               </div>
             </form>
