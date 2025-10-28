@@ -17,6 +17,8 @@ const Homepage = lazy(() => import('./components/pages/Homepage'));
 const CategoryPage = lazy(() => import('./components/pages/CategoryPage'));
 const ArticlePage = lazy(() => import('./components/pages/ArticlePage'));
 const ArticlesListPage = lazy(() => import('./components/pages/ArticlesListPage'));
+const CategoriesPage = lazy(() => import('./components/pages/CategoriesPage'));
+const JournalPage = lazy(() => import('./components/pages/JournalPage'));
 const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard'));
 const AdminLogin = lazy(() => import('./components/admin/AdminLogin'));
 const ProtectedAdminRoute = lazy(() => import('./components/admin/ProtectedAdminRoute'));
@@ -75,6 +77,8 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Homepage />} />
                     <Route path="/articles" element={<ArticlesListPage />} />
+                    <Route path="/categories" element={<CategoriesPage />} />
+                    <Route path="/journal" element={<JournalPage />} />
                     <Route path="/category/:categorySlug" element={<CategoryPage />} />
                     <Route path="/article/:articleSlug" element={<ArticlePage />} />
                     <Route path="/admin" element={<AdminLogin />} />
