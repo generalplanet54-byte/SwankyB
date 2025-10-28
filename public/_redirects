@@ -1,14 +1,15 @@
-# Astro static pages - do not redirect
-/privacy-policy/* /privacy-policy 200
-/terms/* /terms 200
-/cookie-policy/* /cookie-policy 200
-/affiliate-disclosure/* /affiliate-disclosure 200
-/contact/* /contact 200
-/articles/* /articles 200
-/reviews/* /reviews 200
-/category/* /category 200
-/comparisons/* /comparisons 200
-/products/* /products 200
+# React Router pages - catch-all fallback
+/categories /index.html 200
+/journal /index.html 200
+/articles /index.html 200
+/category/* /index.html 200
+/article/* /index.html 200
+/admin/* /index.html 200
+/privacy /index.html 200
+/terms /index.html 200
+/affiliate-disclosure /index.html 200
+/contact /index.html 200
+/test-fixes /index.html 200
 
-# React SPA fallback - catch-all for React Router
+# SPA fallback - catch-all for React Router
 /* /index.html 200

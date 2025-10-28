@@ -8,6 +8,26 @@
     <priority>1.0</priority>
   </url>
   
+  <!-- Navigation Hubs -->
+  <url>
+    <loc>https://swankyboyz.com/categories</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/journal</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://swankyboyz.com/articles</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
   <!-- Legal & Policy Pages -->
   <url>
     <loc>https://swankyboyz.com/affiliate-disclosure</loc>
