@@ -8,10 +8,10 @@
 
   // Configuration
   const config = {
-    affiliateTag: 'tag=swankyboyz-20',
-    amazon: 'amzn.to',
-    imageRetryCount: 3,
-    imageRetryDelay: 500
+  affiliateTag: 'swankyboyz-20',
+  imageRetryCount: 2,
+  imageRetryDelay: 1000,
+  localImagePaths: ['/images/', '/assets/'] // Don't retry local images
   };
 
   /**
@@ -120,8 +120,14 @@
     const images = document.querySelectorAll('img');
     
     images.forEach(img => {
+      // Skip local images - they should load fine
+      const src = img.getAttribute('src') || img.src;
+      if (config.localImagePaths.some(path => src.includes(path))) {
+        return; // Local images are reliable, no need to enhance
+      }
+
       // Store original src
-      const originalSrc = img.src;
+  const originalSrc = src;
       let retryCount = 0;
 
       // Listen for image load errors
@@ -134,20 +140,11 @@
             this.src = originalSrc + '?' + Date.now();
           }, config.imageRetryDelay * retryCount);
         } else {
-          // Use placeholder after all retries fail
-          this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%231A1A1A" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="24" fill="%23D4AF37" text-anchor="middle" dominant-baseline="central"%3EImage Unavailable%3C/text%3E%3C/svg%3E';
-          this.alt = 'Image unavailable';
-          this.style.backgroundColor = '#f0f0f0';
+          // Fallback to local placeholder
+          this.src = '/assets/product-placeholder.png';
+          this.alt = 'Product placeholder';
         }
-      });
-
-      // Set onload handler
-      img.addEventListener('load', function() {
-        this.style.opacity = '1';
-      });
-
-      // Add loading state
-      img.style.opacity = '0.7';
+      }, { once: false });
     });
   }
 
@@ -191,7 +188,12 @@
    * Fix dynamic image URLs with query parameters
    */
   function fixImageURLs() {
-    const images = document.querySelectorAll('img[src*="unsplash"], img[src*="pexels"], img[src*="cloudinary"]');
+    // Only fix external images, not our local ones
+    const images = document.querySelectorAll('img[src*="unsplash"], img[src*="pexels"]');
+    
+    if (images.length === 0) {
+      return; // No external images to fix
+    }
     
     images.forEach(img => {
       let src = img.getAttribute('src');
@@ -210,6 +212,7 @@
       }
       
       img.setAttribute('src', src);
+  console.log('⚠️ SwankyBoyz: External image detected (should be local):', src);
     });
   }
 
@@ -229,34 +232,40 @@
    * Run all fixes
    */
   function runFixes() {
-    console.log('SwankyBoyz Dynamic Fixes: Initializing...');
+  console.log('🚀 SwankyBoyz: Initializing dynamic fixes...');
+    
+  let fixCount = 0;
     
     try {
       enhanceAffiliateLinks();
-      console.log('✓ Affiliate links enhanced');
+  fixCount++;
     } catch (e) {
-      console.error('✗ Error enhancing affiliate links:', e);
+  console.warn('⚠️ SwankyBoyz: Error enhancing affiliate links:', e);
     }
 
     try {
       fixAffiliateErrors();
-      console.log('✓ Affiliate errors fixed');
+  fixCount++;
     } catch (e) {
-      console.error('✗ Error fixing affiliate links:', e);
+  console.warn('⚠️ SwankyBoyz: Error fixing affiliate links:', e);
     }
 
     try {
-      fixImageURLs();
-      console.log('✓ Image URLs optimized');
+      const externalImages = document.querySelectorAll('img[src*="unsplash"], img[src*="pexels"]');
+      if (externalImages.length > 0) {
+        fixImageURLs();
+        console.log(`✅ SwankyBoyz: Fixed ${externalImages.length} broken images`);
+        fixCount++;
+      }
     } catch (e) {
-      console.error('✗ Error optimizing images:', e);
+  console.warn('⚠️ SwankyBoyz: Error optimizing images:', e);
     }
 
     try {
       enhanceImages();
-      console.log('✓ Image loading enhanced');
+  fixCount++;
     } catch (e) {
-      console.error('✗ Error enhancing images:', e);
+  console.warn('⚠️ SwankyBoyz: Error enhancing images:', e);
     }
 
     // Re-run fixes when React renders new content
@@ -267,9 +276,8 @@
         window.swankyFixesTimeout = setTimeout(() => {
           try {
             enhanceAffiliateLinks();
-            enhanceImages();
           } catch (e) {
-            console.error('Error in mutation observer:', e);
+            console.warn('⚠️ SwankyBoyz: Error in observer:', e);
           }
         }, 500);
       });
@@ -281,7 +289,7 @@
       });
     }
 
-    console.log('SwankyBoyz Dynamic Fixes: Ready');
+  console.log('✨ SwankyBoyz: All fixes applied successfully!');
   }
 
   // Initialize when script loads
