@@ -72,7 +72,7 @@ export const ImageUtils = {
   /**
    * Get optimized image path (for future CDN integration)
    */
-  getOptimizedPath: (path: string, width?: number, quality?: number): string => {
+  getOptimizedPath: (path: string): string => {
     // For now, return the original path
     // In the future, this can be extended to add query parameters or use a CDN
     return ImageUtils.normalizePath(path);
