@@ -159,57 +159,21 @@
   
   <!-- Premium Product Pages - Grooming & Luxury Focus -->
   <url>
-    <loc>https://swankyboyz.com/products/braun-series-9-pro-plus</loc>
+    <loc>https://swankyboyz.com/products/braun-series-9-pro-plus-electric-shaver</loc>
     <lastmod>2025-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://swankyboyz.com/products/kiehl-s-age-defender</loc>
+    <loc>https://swankyboyz.com/products/manscaped-beard-hedger-premium-trimmer</loc>
     <lastmod>2025-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://swankyboyz.com/products/jack-black-eye-rescue</loc>
+    <loc>https://swankyboyz.com/products/wahl-stainless-steel-lithium-ion-2-0-plus-slate-trimmer</loc>
     <lastmod>2025-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/products/clinique-max-hydrator</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/products/garmin-fenix-8-amoled-sapphire</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/products/samsung-galaxy-s25-ultra</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/products/macbook-pro-16-m4-pro</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/products/asus-rog-strix-g18</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://swankyboyz.com/products/herman-miller-aeron</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
   </url>
 </urlset>
