@@ -3,13 +3,6 @@
  * Comprehensive tracking for affiliate revenue optimization
  */
 
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
-  }
-}
-
 export interface AffiliateClickEvent {
   product_name: string;
   product_id: string;
@@ -94,9 +87,6 @@ export const trackScrollDepth = (): void => {
   };
 
   window.addEventListener('scroll', handleScroll, { passive: true });
-  
-  // Clean up on page unload
-  return () => window.removeEventListener('scroll', handleScroll);
 };
 
 /**
