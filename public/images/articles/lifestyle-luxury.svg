@@ -1,0 +1,17 @@
+<svg width="1200" height="675" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2332;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B3A3A;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#grad)"/>
+  <g transform="translate(600, 297.5)" fill="#C5A572" opacity="0.4">
+    <g transform="translate(-40, -40) scale(3.5)">
+      <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18l-8-4V8.5l8-4 8 4V16l-8 4z"/>
+    </g>
+  </g>
+  <text x="600" y="625" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle" opacity="0.9">
+    Luxury Lifestyle
+  </text>
+</svg>

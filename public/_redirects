@@ -2,20 +2,14 @@
 /categories /index.html 200
 /journal /index.html 200
 /articles /index.html 200
-/articles/* /index.html 200
 /category/* /index.html 200
-/comparisons/* /index.html 200
+/article/* /index.html 200
 /admin/* /index.html 200
 /privacy /index.html 200
 /terms /index.html 200
 /affiliate-disclosure /index.html 200
 /contact /index.html 200
 /test-fixes /index.html 200
-
-# Legacy URL redirects to new structure
-/article/* /articles/:splat 301
-/privacy-policy /privacy 301
-/cookie-policy /terms 301
 
 # SPA fallback - catch-all for React Router
 /* /index.html 200

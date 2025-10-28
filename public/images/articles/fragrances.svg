@@ -1,0 +1,17 @@
+<svg width="1200" height="675" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2332;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2C2C2C;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#grad)"/>
+  <g transform="translate(600, 297.5)" fill="#C5A572" opacity="0.4">
+    <g transform="translate(-40, -40) scale(3.5)">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+    </g>
+  </g>
+  <text x="600" y="625" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#FFFFFF" text-anchor="middle" opacity="0.9">
+    Premium Fragrances
+  </text>
+</svg>

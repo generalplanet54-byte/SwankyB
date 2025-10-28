@@ -18,11 +18,13 @@ const Newsletter: React.FC = () => {
             "✨ Premium buying guides"
           ]}
           onSuccess={(email) => {
-            // Track newsletter signup
-            if (window.gtag) {
-              window.gtag('event', 'newsletter_signup', {
-                method: 'inline_form',
-                email_domain: email.split('@')[1]
+            console.log('Newsletter signup:', email);
+            // Track conversion
+            const gtag = (window as any).gtag;
+            if (gtag) {
+              gtag('event', 'newsletter_signup', {
+                event_category: 'email_marketing',
+                event_label: 'homepage_newsletter'
               });
             }
           }}
