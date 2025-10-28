@@ -6,6 +6,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ContentProvider } from './contexts/ContentContext';
 import { AffiliateProvider } from './contexts/AffiliateContext';
 import { initializeWebVitalsMonitoring } from './lib/performanceMonitoring';
+import { initializeAdvancedAnalytics } from './lib/advancedAnalytics';
 import { 
   StickyCTA, 
   FloatingActionButton
@@ -42,6 +43,14 @@ function App() {
   useEffect(() => {
     // Initialize Web Vitals monitoring on app mount
     initializeWebVitalsMonitoring();
+    
+    // Initialize advanced analytics tracking
+    const cleanupAnalytics = initializeAdvancedAnalytics();
+    
+    // Cleanup on unmount
+    return () => {
+      if (cleanupAnalytics) cleanupAnalytics();
+    };
   }, []);
 
   return (

@@ -48,7 +48,13 @@ const ContactUs: React.FC = () => {
       });
 
       if (response.ok) {
-        console.log('Contact form submitted successfully:', formData);
+        // Track form submission
+        if (window.gtag) {
+          window.gtag('event', 'form_submit', {
+            form_name: 'contact_form',
+            form_destination: 'customer_support'
+          });
+        }
         setIsSubmitted(true);
         
         // Reset form after 3 seconds

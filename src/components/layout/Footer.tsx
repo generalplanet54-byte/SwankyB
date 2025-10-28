@@ -6,18 +6,18 @@ const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      // In a real implementation, this would integrate with MailerLite/Mailchimp
-      console.log('Subscribing email:', email);
+    const handleSubscribe = (e: React.FormEvent) => {
+      e.preventDefault();
+      // Track footer newsletter signup
+      if (window.gtag) {
+        window.gtag('event', 'newsletter_signup', {
+          method: 'footer_form',
+          email_domain: email.split('@')[1]
+        });
+      }
       setIsSubscribed(true);
-      setEmail('');
-      setTimeout(() => setIsSubscribed(false), 3000);
-    }
-  };
-
-  const currentYear = new Date().getFullYear();
+      setTimeout(() => setEmail(''), 2000);
+    };  const currentYear = new Date().getFullYear();
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
