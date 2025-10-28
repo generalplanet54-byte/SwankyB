@@ -7,7 +7,7 @@ const skincareProducts: ComparisonProduct[] = [
   {
     id: 'prod-clinique-lotion',
     name: 'Clinique Dramatically Different Lotion+',
-    image: 'https://images.pexels.com/photos/3762879/pexels-photo-3762879.jpeg?auto=compress&cs=tinysrgb&w=400',
+  image: '/images/articles/skincare.svg',
     price: '$32.00',
     rating: 4.5,
     affiliateUrl: 'https://www.amazon.com/dp/B00BQZSR5E?tag=swankyboyz-20',
@@ -26,7 +26,7 @@ const skincareProducts: ComparisonProduct[] = [
   {
     id: 'prod-cetaphil-cleanser',
     name: 'CeraVe Facial Moisturizing Lotion',
-    image: 'https://images.pexels.com/photos/3722662/pexels-photo-3722662.jpeg?auto=compress&cs=tinysrgb&w=400',
+  image: '/images/articles/skincare-alt.svg',
     price: '$14.99',
     rating: 4.6,
     affiliateUrl: 'https://www.amazon.com/s?k=CeraVe+facial+lotion',
@@ -44,7 +44,7 @@ const skincareProducts: ComparisonProduct[] = [
   {
     id: 'prod-olay-regenerist',
     name: 'Olay Men Ultra Comfort Balm',
-    image: 'https://images.pexels.com/photos/3587620/pexels-photo-3587620.jpeg?auto=compress&cs=tinysrgb&w=400',
+  image: '/images/articles/skincare.svg',
     price: '$6.99',
     rating: 4.2,
     affiliateUrl: 'https://www.amazon.com/s?k=Olay+men+lotion',

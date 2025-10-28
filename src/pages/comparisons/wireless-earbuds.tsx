@@ -7,7 +7,7 @@ const wirelessEarbuds: ComparisonProduct[] = [
   {
     id: 'prod-apple-airpods-pro',
     name: 'Apple AirPods Pro (2nd Gen)',
-    image: 'https://images.unsplash.com/photo-1585386959984-a4155228ef44?auto=format&fit=crop&w=400&q=80',
+    image: '/images/articles/tech-gadgets.svg',
     price: '$249.00',
     rating: 4.8,
     affiliateUrl: 'https://www.amazon.com/dp/B0BDHX8Z63?tag=swankyboyz-20',
@@ -25,7 +25,7 @@ const wirelessEarbuds: ComparisonProduct[] = [
   {
     id: 'prod-sony-wf-1000xm4',
     name: 'Sony WF-1000XM4',
-    image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: '/images/articles/tech-gadgets.svg',
     price: '$278.00',
     rating: 4.7,
     affiliateUrl: 'https://www.amazon.com/dp/B094CZTQWX?tag=swankyboyz-20',
@@ -42,7 +42,7 @@ const wirelessEarbuds: ComparisonProduct[] = [
   {
     id: 'prod-bose-quietcomfort',
     name: 'Bose QuietComfort Ultra',
-    image: 'https://images.pexels.com/photos/3587876/pexels-photo-3587876.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: '/images/articles/tech-gadgets.svg',
     price: '$299.00',
     rating: 4.6,
     affiliateUrl: 'https://www.amazon.com/s?k=Bose+QuietComfort+Ultra',

@@ -120,31 +120,7 @@
     const images = document.querySelectorAll('img');
     
     images.forEach(img => {
-      // Skip local images - they should load fine
-      const src = img.getAttribute('src') || img.src;
-      if (config.localImagePaths.some(path => src.includes(path))) {
-        return; // Local images are reliable, no need to enhance
-      }
-
-      // Store original src
-  const originalSrc = src;
-      let retryCount = 0;
-
-      // Listen for image load errors
-      img.addEventListener('error', function() {
-        retryCount++;
-        
-        if (retryCount < config.imageRetryCount) {
-          // Retry loading the image
-          setTimeout(() => {
-            this.src = originalSrc + '?' + Date.now();
-          }, config.imageRetryDelay * retryCount);
-        } else {
-          // Fallback to local placeholder
-          this.src = '/assets/product-placeholder.png';
-          this.alt = 'Product placeholder';
-        }
-      }, { once: false });
+      // All images should now be local SVGs. No Unsplash/Pexels images should remain.
     });
   }
 
@@ -188,32 +164,7 @@
    * Fix dynamic image URLs with query parameters
    */
   function fixImageURLs() {
-    // Only fix external images, not our local ones
-    const images = document.querySelectorAll('img[src*="unsplash"], img[src*="pexels"]');
-    
-    if (images.length === 0) {
-      return; // No external images to fix
-    }
-    
-    images.forEach(img => {
-      let src = img.getAttribute('src');
-      
-      // Ensure images have proper parameters for optimization
-      if (src.includes('unsplash.com')) {
-        // Add Unsplash optimization parameters
-        if (!src.includes('?')) {
-          src += '?auto=format&fit=crop&w=400&q=80';
-        }
-      } else if (src.includes('pexels.com')) {
-        // Add Pexels optimization parameters
-        if (!src.includes('?')) {
-          src += '?auto=compress&cs=tinysrgb&w=400';
-        }
-      }
-      
-      img.setAttribute('src', src);
-  console.log('⚠️ SwankyBoyz: External image detected (should be local):', src);
-    });
+    // All images should now be local SVGs. No external images to fix.
   }
 
   /**
@@ -250,16 +201,7 @@
   console.warn('⚠️ SwankyBoyz: Error fixing affiliate links:', e);
     }
 
-    try {
-      const externalImages = document.querySelectorAll('img[src*="unsplash"], img[src*="pexels"]');
-      if (externalImages.length > 0) {
-        fixImageURLs();
-        console.log(`✅ SwankyBoyz: Fixed ${externalImages.length} broken images`);
-        fixCount++;
-      }
-    } catch (e) {
-  console.warn('⚠️ SwankyBoyz: Error optimizing images:', e);
-    }
+    // All images should now be local SVGs. No external images to fix.
 
     try {
       enhanceImages();

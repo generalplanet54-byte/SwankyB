@@ -80,7 +80,7 @@ export async function onRequestPost(context: any) {
       seoDescription: `Find the best ${topic} products, expert reviews, and buying tips in our comprehensive guide.`,
       tags: [topic.toLowerCase(), category.toLowerCase(), 'guide'],
       readTime,
-      featuredImage: `https://images.pexels.com/photos/210019/pexels-photo-210019.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`,
+  featuredImage: `/images/articles/masculine-luxury.svg`,
       category
     };
 

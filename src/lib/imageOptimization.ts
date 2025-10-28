@@ -23,34 +23,19 @@ interface ImageOptimizationOptions {
  * Format: https://cdn.example.com/file/format=auto,width=400,quality=80/image.jpg
  */
 export const generateResponsiveImageUrl = (
-  baseUrl: string,
-  width: number,
-  format: 'webp' | 'jpeg' | 'auto' = 'auto',
-  quality: number = 80
+  baseUrl: string
 ): string => {
   if (!baseUrl) return '';
-  
-  // If using Unsplash/Pexels CDN, use their built-in params
-  if (baseUrl.includes('unsplash.com')) {
-    const separator = baseUrl.includes('?') ? '&' : '?';
-    return `${baseUrl}${separator}w=${width}&q=${quality}&fit=crop`;
-  }
-  
-  if (baseUrl.includes('pexels.com')) {
-    const separator = baseUrl.includes('?') ? '&' : '?';
-    return `${baseUrl}${separator}w=${width}&q=${quality}`;
-  }
-  
-  // For Cloudflare Image Resizing (when using own CDN)
-  // Format: https://cdn.example.com/image/format=auto,width=400,quality=80
-  return `${baseUrl}?format=${format}&width=${width}&quality=${quality}`;
+  // All images should be local SVGs. No Unsplash/Pexels/CDN images allowed.
+  // For local SVGs, just return the path. No resizing needed.
+  return baseUrl;
 };
 
 /**
  * React Component: Responsive Image with WebP Support and Lazy Loading
  * Usage:
  * <OptimizedImage
- *   src="https://images.unsplash.com/photo-123?auto=format&fit=crop&w=400&q=80"
+ *   src="/images/articles/tech-gadgets.svg"
  *   alt="Product image"
  *   width={400}
  *   height={300}
@@ -70,17 +55,17 @@ export const OptimizedImage: React.FC<ImageOptimizationOptions> = ({
   const [isLoaded, setIsLoaded] = React.useState(!priority);
 
   // Generate responsive image URLs
-  const smallUrl = generateResponsiveImageUrl(src, 300);
-  const mediumUrl = generateResponsiveImageUrl(src, 600);
-  const largeUrl = generateResponsiveImageUrl(src, 1200);
+  const smallUrl = generateResponsiveImageUrl(src);
+  const mediumUrl = generateResponsiveImageUrl(src);
+  const largeUrl = generateResponsiveImageUrl(src);
 
   return (
     React.createElement('picture', { className: `image-wrapper ${isLoaded ? 'loaded' : 'loading'}` },
       React.createElement('source', {
         srcSet: `
-          ${smallUrl.includes('format=') ? smallUrl : generateResponsiveImageUrl(src, 300, 'webp')} 300w,
-          ${mediumUrl.includes('format=') ? mediumUrl : generateResponsiveImageUrl(src, 600, 'webp')} 600w,
-          ${largeUrl.includes('format=') ? largeUrl : generateResponsiveImageUrl(src, 1200, 'webp')} 1200w
+          ${smallUrl} 300w,
+          ${mediumUrl} 600w,
+          ${largeUrl} 1200w
         `,
         sizes: sizes || '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw',
         type: 'image/webp',

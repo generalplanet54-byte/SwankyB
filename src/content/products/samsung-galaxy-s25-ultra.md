@@ -7,7 +7,7 @@ rating: 4.9
 reviewCount: 3847
 category: "Smartphones"
 brand: "Samsung"
-image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80"
+image: "/images/articles/smartphone.svg"
 published: true
 featured: true
 publishedAt: 2025-01-15T10:00:00Z

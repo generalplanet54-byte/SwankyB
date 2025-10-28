@@ -7,7 +7,7 @@ const groomingKits: ComparisonProduct[] = [
   {
     id: 'prod-braun-series-7-kit',
     name: 'Braun Series 7 11-in-1 Grooming Kit',
-    image: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=400&q=80',
+  image: '/images/articles/grooming.svg',
     price: '$119.99',
     rating: 4.7,
     affiliateUrl: 'https://amzn.to/46SQyY4',
@@ -26,7 +26,7 @@ const groomingKits: ComparisonProduct[] = [
   {
     id: 'prod-braun-hair-clippers-9-in-1',
     name: 'Braun 9-in-1 Beard & Trimmer Kit',
-    image: 'https://images.unsplash.com/photo-1595475884562-073c30d45670?auto=format&fit=crop&w=400&q=80',
+  image: '/images/articles/grooming-alt.svg',
     price: '$59.99',
     rating: 4.5,
     affiliateUrl: 'https://amzn.to/47nIqPk',
@@ -44,7 +44,7 @@ const groomingKits: ComparisonProduct[] = [
   {
     id: 'prod-wahl-stainless-steel-kit',
     name: 'WAHL Stainless Steel Grooming Kit',
-    image: 'https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=400&q=80',
+  image: '/images/articles/grooming.svg',
     price: '$79.99',
     rating: 4.4,
     affiliateUrl: 'https://amzn.to/4n5fGPU',

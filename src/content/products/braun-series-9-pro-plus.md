@@ -7,7 +7,7 @@ rating: 4.7
 reviewCount: 3842
 category: "Grooming"
 brand: "Braun"
-image: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1200&q=80"
+image: "/images/articles/grooming.svg"
 published: true
 featured: true
 publishedAt: 2025-01-18T15:00:00Z

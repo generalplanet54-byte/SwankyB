@@ -8,7 +8,7 @@ rating: 4.4
 reviewCount: 2156
 category: "Skincare"
 brand: "Clinique"
-image: "https://images.pexels.com/photos/3762879/pexels-photo-3762879.jpeg?auto=compress&cs=tinysrgb&w=800"
+image: "/images/articles/skincare-alt.svg"
 published: true
 featured: true
 publishedAt: 2024-01-14T14:30:00Z

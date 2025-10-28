@@ -7,7 +7,7 @@ rating: 4.9
 reviewCount: 2156
 category: "Laptops"
 brand: "Apple"
-image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80"
+image: "/images/articles/tech-gadgets.svg"
 published: true
 featured: true
 publishedAt: 2025-01-18T14:00:00Z

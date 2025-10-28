@@ -315,40 +315,40 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     // Sophisticated masculine luxury imagery targeting affluent men aged 21-70
     const imageMap: Record<string, string[]> = {
       'Footwear': [
-        'https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', // Luxury leather dress shoes
-        'https://images.unsplash.com/photo-1584735175315-9d5df23860e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'  // Premium sneakers on marble
+        '/images/articles/footwear.svg',
+        '/images/articles/footwear-alt.svg'
       ],
       'Smartphones': [
-        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', // iPhone in luxury setting
-        'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'  // Premium smartphone on executive desk
+        '/images/articles/smartphone.svg',
+        '/images/articles/smartphone-alt.svg'
       ],
       'Audio Equipment': [
-        'https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', // Executive with premium headphones
-        'https://images.unsplash.com/photo-1572902809086-c2e4912bcc20?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'  // Luxury earbuds in sophisticated setting
+        '/images/articles/audio-equipment.svg',
+        '/images/articles/audio-equipment-alt.svg'
       ],
       'Technology': [
-        'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', // Sophisticated workspace
-        'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'  // Premium tech on executive desk
+        '/images/articles/tech-gadgets.svg',
+        '/images/articles/tech-gadgets-alt.svg'
       ],
       'Grooming': [
-        'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', // Distinguished man with luxury grooming products
-        'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'  // Premium electric shaver in luxury bathroom
+        '/images/articles/grooming.svg',
+        '/images/articles/grooming-alt.svg'
       ],
       'Skincare': [
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', // Confident executive man
-        'https://images.unsplash.com/photo-1556228852-80dc098eee8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'  // Luxury men's skincare products
+        '/images/articles/skincare.svg',
+        '/images/articles/skincare-alt.svg'
       ],
       'Accessories': [
-        'https://images.unsplash.com/photo-1627123424574-724758594e93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', // Premium leather wallet and accessories
-        'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'  // Luxury men's accessories flat lay
+        '/images/articles/accessories.svg',
+        '/images/articles/accessories-alt.svg'
       ],
       'Fragrance': [
-        'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', // Sophisticated man with cologne
-        'https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'  // Luxury fragrance bottles
+        '/images/articles/fragrance.svg',
+        '/images/articles/fragrance-alt.svg'
       ],
       'default': [
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', // Confident executive
-        'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'  // Sophisticated businessman
+        '/images/articles/masculine-luxury.svg',
+        '/images/articles/masculine-luxury-alt.svg'
       ]
     };
 

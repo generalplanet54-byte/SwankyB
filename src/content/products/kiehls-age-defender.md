@@ -8,7 +8,7 @@ rating: 4.6
 reviewCount: 1247
 category: "Skincare"
 brand: "Kiehl's"
-image: "https://images.pexels.com/photos/3685530/pexels-photo-3685530.jpeg?auto=compress&cs=tinysrgb&w=800"
+image: "/images/articles/skincare.svg"
 published: true
 featured: true
 publishedAt: 2024-01-15T10:00:00Z

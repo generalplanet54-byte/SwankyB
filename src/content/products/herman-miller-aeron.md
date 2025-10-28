@@ -8,7 +8,7 @@ rating: 4.8
 reviewCount: 2847
 category: "Office Furniture"
 brand: "Herman Miller"
-image: "https://images.pexels.com/photos/4050320/pexels-photo-4050320.jpeg?auto=compress&cs=tinysrgb&w=800"
+image: "/images/articles/accessories.svg"
 published: true
 featured: true
 publishedAt: 2024-01-11T16:20:00Z

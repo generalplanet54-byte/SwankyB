@@ -7,7 +7,7 @@ rating: 4.6
 reviewCount: 2943
 category: "Laptops"
 brand: "ASUS"
-image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1200&q=80"
+image: "/images/articles/tech-gadgets-alt.svg"
 published: true
 featured: true
 publishedAt: 2025-01-18T17:00:00Z

@@ -9,7 +9,7 @@ const CategoryShowcase: React.FC = () => {
       slug: 'grooming',
       icon: Briefcase,
       description: 'Sophisticated grooming essentials for the discerning gentleman',
-      image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+  image: '/images/articles/grooming.svg',
       color: 'from-slate-700 to-slate-900'
     },
     {
@@ -17,7 +17,7 @@ const CategoryShowcase: React.FC = () => {
       slug: 'audio-equipment',
       icon: Smartphone,
       description: 'Luxury audio equipment for the sophisticated professional',
-      image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+  image: '/images/articles/audio-equipment.svg',
       color: 'from-blue-800 to-indigo-900'
     },
     {
@@ -25,7 +25,7 @@ const CategoryShowcase: React.FC = () => {
       slug: 'accessories',
       icon: Gem,
       description: 'Executive accessories that command respect and attention',
-      image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+  image: '/images/articles/accessories.svg',
       color: 'from-amber-700 to-orange-800'
     },
     {
@@ -33,7 +33,7 @@ const CategoryShowcase: React.FC = () => {
       slug: 'fragrance',
       icon: Heart,
       description: 'Distinguished scents that define executive presence',
-      image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+  image: '/images/articles/fragrance.svg',
       color: 'from-emerald-700 to-green-800'
     },
     {
@@ -41,7 +41,7 @@ const CategoryShowcase: React.FC = () => {
       slug: 'technology',
       icon: Dumbbell,
       description: 'Cutting-edge tech for the modern executive lifestyle',
-      image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+  image: '/images/articles/tech-gadgets.svg',
       color: 'from-purple-700 to-violet-800'
     }
   ];

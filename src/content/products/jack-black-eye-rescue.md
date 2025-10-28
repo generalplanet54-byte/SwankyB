@@ -8,7 +8,7 @@ rating: 4.3
 reviewCount: 892
 category: "Men's Skincare"
 brand: "Jack Black"
-image: "https://images.pexels.com/photos/3685530/pexels-photo-3685530.jpeg?auto=compress&cs=tinysrgb&w=800"
+image: "/images/articles/skincare.svg"
 published: true
 featured: true
 publishedAt: 2024-01-13T09:15:00Z

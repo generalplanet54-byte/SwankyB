@@ -7,7 +7,7 @@ rating: 4.8
 reviewCount: 1876
 category: "Smartwatches"
 brand: "Garmin"
-image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=1200&q=80"
+image: "/images/articles/tech-gadgets.svg"
 published: true
 featured: true
 publishedAt: 2025-01-18T16:00:00Z

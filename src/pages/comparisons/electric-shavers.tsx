@@ -7,7 +7,7 @@ const premiumShavers: ComparisonProduct[] = [
   {
     id: 'prod-braun-series-9-pro-plus',
     name: 'Braun Series 9 PRO+',
-    image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80',
+  image: '/images/articles/grooming.svg',
     price: '$299.99',
     rating: 4.8,
     affiliateUrl: 'https://amzn.to/4ooMFju',
@@ -26,7 +26,7 @@ const premiumShavers: ComparisonProduct[] = [
   {
     id: 'prod-braun-series-8',
     name: 'Braun Series 8',
-    image: 'https://images.unsplash.com/photo-1493863641943-9b68992a8d07?auto=format&fit=crop&w=400&q=80',
+  image: '/images/articles/grooming-alt.svg',
     price: '$199.99',
     rating: 4.6,
     affiliateUrl: 'https://amzn.to/43cCrdG',
@@ -44,7 +44,7 @@ const premiumShavers: ComparisonProduct[] = [
   {
     id: 'prod-philips-norelco-9000',
     name: 'Philips Norelco 9000',
-    image: 'https://images.unsplash.com/photo-1596462502278-af3c571fb3d4?auto=format&fit=crop&w=400&q=80',
+  image: '/images/articles/grooming.svg',
     price: '$279.99',
     rating: 4.7,
     affiliateUrl: 'https://amzn.to/4oqhQ2L',
