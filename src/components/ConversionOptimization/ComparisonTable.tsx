@@ -91,6 +91,10 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({
                       src={product.image}
                       alt={product.name}
                       className="h-full w-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/assets/product-placeholder.png';
+                        (e.target as HTMLImageElement).alt = 'Product image placeholder';
+                      }}
                     />
                   </div>
                   <div className="space-y-2">

@@ -93,6 +93,10 @@ const ArticlesListPage: React.FC = () => {
                     src={article.featuredImage}
                     alt={article.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/assets/product-placeholder.png';
+                      (e.target as HTMLImageElement).alt = 'Article image placeholder';
+                    }}
                   />
                   <div className="absolute top-4 left-4">
                     <span className="bg-blue-600 text-white px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wide">

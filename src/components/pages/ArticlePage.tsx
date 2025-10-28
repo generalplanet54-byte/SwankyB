@@ -195,6 +195,10 @@ const ArticlePage: React.FC = () => {
           src={article.featuredImage}
           alt={article.title}
           className="w-full h-80 md:h-[32rem] object-cover rounded-2xl shadow-2xl"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/assets/product-placeholder.png';
+            (e.target as HTMLImageElement).alt = 'Article image placeholder';
+          }}
         />
       </header>
 

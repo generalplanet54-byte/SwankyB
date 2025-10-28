@@ -16,6 +16,10 @@ const ArticleCard: React.FC<ArticleCardProps> = memo(({ article }) => {
           alt={article.title}
           className="w-full h-48 object-cover"
           loading="lazy"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/assets/product-placeholder.png';
+            (e.target as HTMLImageElement).alt = 'Article image placeholder';
+          }}
         />
         <div className="absolute top-4 left-4">
           <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">

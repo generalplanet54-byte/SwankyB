@@ -80,6 +80,10 @@ export function ProductSpotlightsWithSchema({ products }: ProductSpotlightsWithS
                   alt={product.name}
                   loading="lazy"
                   className="h-60 w-full object-cover transition duration-500 group-hover:scale-105"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/assets/product-placeholder.png';
+                    (e.target as HTMLImageElement).alt = 'Product image placeholder';
+                  }}
                 />
                 <div className="absolute inset-x-0 bottom-0 flex justify-between bg-gradient-to-t from-black/80 to-transparent p-4">
                   <div>

@@ -29,6 +29,10 @@ const FeaturedArticles: React.FC = () => {
                   src={featuredArticles[0].featuredImage}
                   alt={featuredArticles[0].title}
                   className="w-full h-64 lg:h-96 object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/assets/product-placeholder.png';
+                    (e.target as HTMLImageElement).alt = 'Article image placeholder';
+                  }}
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -90,6 +94,10 @@ const FeaturedArticles: React.FC = () => {
                     src={article.featuredImage}
                     alt={article.title}
                     className="w-32 h-32 object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/assets/product-placeholder.png';
+                      (e.target as HTMLImageElement).alt = 'Article image placeholder';
+                    }}
                   />
                 </div>
                 
@@ -146,6 +154,10 @@ const FeaturedArticles: React.FC = () => {
                   src={article.featuredImage}
                   alt={article.title}
                   className="w-full h-48 object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/assets/product-placeholder.png';
+                    (e.target as HTMLImageElement).alt = 'Article image placeholder';
+                  }}
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
