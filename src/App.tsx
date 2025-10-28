@@ -8,8 +8,7 @@ import { AffiliateProvider } from './contexts/AffiliateContext';
 import { initializeWebVitalsMonitoring } from './lib/performanceMonitoring';
 import { 
   StickyCTA, 
-  FloatingActionButton, 
-  ExitIntentPopup 
+  FloatingActionButton
 } from './components/ConversionOptimization';
 
 // Lazy load pages for better code splitting
@@ -27,6 +26,10 @@ const TermsOfService = lazy(() => import('./components/pages/TermsOfService'));
 const AffiliateDisclosure = lazy(() => import('./components/pages/AffiliateDisclosure'));
 const ContactUs = lazy(() => import('./components/pages/ContactUs'));
 const TestDynamicFixes = lazy(() => import('./components/pages/TestDynamicFixes'));
+const WirelessEarbudsComparison = lazy(() => import('./pages/comparisons/wireless-earbuds'));
+const ElectricShaversComparison = lazy(() => import('./pages/comparisons/electric-shavers'));
+const GroomingKitsComparison = lazy(() => import('./pages/comparisons/grooming-kits'));
+const SkinCareComparison = lazy(() => import('./pages/comparisons/skincare-products'));
 
 // Loading component
 const LoadingFallback = () => (
@@ -65,13 +68,6 @@ function App() {
                 showAfterScroll={25}
               />
               
-              <ExitIntentPopup
-                title="Wait! Get Our Free Buying Guide"
-                description="Expert recommendations for premium grooming products + exclusive discount codes"
-                ctaText="Download Free PDF"
-                pdfUrl="/guides/ultimate-grooming-guide.pdf"
-              />
-              
               <main id="main-content" className="flex-grow">
                 <Suspense fallback={<LoadingFallback />}>
                   <Routes>
@@ -80,7 +76,7 @@ function App() {
                     <Route path="/categories" element={<CategoriesPage />} />
                     <Route path="/journal" element={<JournalPage />} />
                     <Route path="/category/:categorySlug" element={<CategoryPage />} />
-                    <Route path="/article/:articleSlug" element={<ArticlePage />} />
+                    <Route path="/articles/:articleSlug" element={<ArticlePage />} />
                     <Route path="/admin" element={<AdminLogin />} />
                     <Route path="/admin/dashboard" element={
                       <ProtectedAdminRoute>
@@ -92,6 +88,10 @@ function App() {
                     <Route path="/affiliate-disclosure" element={<AffiliateDisclosure />} />
                     <Route path="/contact" element={<ContactUs />} />
                     <Route path="/test-fixes" element={<TestDynamicFixes />} />
+                    <Route path="/comparisons/wireless-earbuds" element={<WirelessEarbudsComparison />} />
+                    <Route path="/comparisons/electric-shavers" element={<ElectricShaversComparison />} />
+                    <Route path="/comparisons/grooming-kits" element={<GroomingKitsComparison />} />
+                    <Route path="/comparisons/skincare-products" element={<SkinCareComparison />} />
                   </Routes>
                 </Suspense>
               </main>
