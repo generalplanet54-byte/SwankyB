@@ -315,8 +315,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     // Sophisticated masculine luxury imagery targeting affluent men aged 21-70
     const imageMap: Record<string, string[]> = {
       'Footwear': [
-        '/images/articles/footwear.svg',
-        '/images/articles/footwear-alt.svg'
+        '/images/articles/style-guide.svg',
+        '/images/articles/style-guide.svg'
       ],
       'Smartphones': [
         '/images/articles/smartphone.svg',
