@@ -12,10 +12,16 @@
   html {
     font-family: theme('fontFamily.sans');
     background-color: theme('colors.charcoal');
+    /* Smooth color transitions for dark mode toggle */
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   body {
     @apply bg-charcoal text-off-white antialiased;
+    /* Enable smooth transitions for color scheme changes */
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   h1,
@@ -26,6 +32,23 @@
   h6 {
     font-family: theme('fontFamily.display');
     @apply text-off-white tracking-tightest;
+    transition: color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Global dark mode transition support */
+  * {
+    @apply transition-colors duration-300;
+  }
+  
+  /* Optimize transitions for specific properties */
+  *[class*="bg-"],
+  *[class*="text-"],
+  *[class*="border-"],
+  button,
+  a {
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
@@ -55,6 +78,36 @@
     white-space: normal;
   }
 
+  /* Dark mode transition utilities */
+  .dark-transition {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .dark-transition-colors {
+    @apply transition-colors duration-300 ease-out;
+  }
+
+  .dark-transition-shadow {
+    @apply transition-shadow duration-300 ease-out;
+  }
+
+  .dark-transition-transform {
+    @apply transition-transform duration-300 ease-out;
+  }
+
+  /* Smooth hover states for buttons and interactive elements */
+  button,
+  [role="button"],
+  a[href] {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  button:hover,
+  [role="button"]:hover,
+  a[href]:hover {
+    @apply transition-all duration-200 ease-out;
+  }
+
   /* Custom article content styles to ensure readability */
   .article-content h1,
   .article-content h2,
@@ -62,7 +115,7 @@
   .article-content h4,
   .article-content h5,
   .article-content h6 {
-    @apply font-bold tracking-tight text-gray-900 dark:text-white;
+    @apply font-bold tracking-tight text-gray-900 dark:text-white dark-transition-colors;
     margin-top: 1.5em;
     margin-bottom: 0.75em;
   }
@@ -92,42 +145,42 @@
   }
 
   .article-content p {
-    @apply text-gray-800 dark:text-gray-200 leading-relaxed;
+    @apply text-gray-800 dark:text-gray-200 leading-relaxed dark-transition-colors;
     margin-bottom: 1em;
     line-height: 1.7;
   }
 
   .article-content ul,
   .article-content ol {
-    @apply text-gray-800 dark:text-gray-200;
+    @apply text-gray-800 dark:text-gray-200 dark-transition-colors;
     margin-bottom: 1em;
   }
 
   .article-content li {
-    @apply text-gray-800 dark:text-gray-200;
+    @apply text-gray-800 dark:text-gray-200 dark-transition-colors;
     margin-bottom: 0.5em;
   }
 
   .article-content a {
-    @apply text-blue-600 dark:text-blue-400 hover:underline;
+    @apply text-blue-600 dark:text-blue-400 hover:underline dark-transition-colors;
   }
 
   .article-content strong,
   .article-content b {
-    @apply text-gray-900 dark:text-white font-semibold;
+    @apply text-gray-900 dark:text-white font-semibold dark-transition-colors;
   }
 
   .article-content blockquote {
-    @apply border-l-4 border-blue-500 pl-4 text-gray-700 dark:text-gray-300 italic;
+    @apply border-l-4 border-blue-500 pl-4 text-gray-700 dark:text-gray-300 italic dark-transition-colors;
     margin: 1.5em 0;
   }
 
   .article-content code {
-    @apply bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-1 py-0.5 rounded text-sm;
+    @apply bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-1 py-0.5 rounded text-sm dark-transition-colors;
   }
 
   .article-content pre {
-    @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto;
+    @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto dark-transition-colors;
     margin: 1em 0;
   }
 
@@ -142,7 +195,7 @@
   
   .affiliate-link::after {
     content: "🔗";
-    @apply ml-1 text-xs opacity-60;
+    @apply ml-1 text-xs opacity-60 dark-transition;
   }
   
   .affiliate-link:hover::after {
@@ -151,13 +204,13 @@
 
   /* Price formatting */
   .price, .product-price {
-    @apply font-semibold text-green-600 dark:text-green-400;
+    @apply font-semibold text-green-600 dark:text-green-400 dark-transition-colors;
   }
 
   /* Image placeholder styling */
   img[src$="product-placeholder.png"],
   img[src*="data:image/svg+xml"] {
-    @apply bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg;
+    @apply bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg dark-transition-colors;
   }
 }
 /* Force deployment update - Tue Oct 14 18:32:59 UTC 2025 */
