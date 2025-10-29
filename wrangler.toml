@@ -4,15 +4,20 @@ name = "swankyb-pages"
 compatibility_date = "2025-10-13"
 pages_build_output_dir = "dist"
 
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "swankyboyz-db"
+database_id = "your-d1-database-id"
+
 # Build configuration is not supported in wrangler.toml for Pages
 # Build command should be configured in Cloudflare Pages dashboard or package.json
 # [build]
 # command = "npm run build"
 
-# Environment variables for Supabase (Bolt Database)
+# Environment variables 
 [vars]
-VITE_BOLT_DATABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1d2N6d3BmbnN3d2N0dW12cXNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1Mzg4ODMsImV4cCI6MjA3NTExNDg4M30.EGziTHFcFPQprqmSrvvfxzEEHY2HVuknezkpGidd3UA"
-VITE_BOLT_DATABASE_URL = "https://wuwczwpfnswwctumvqsq.supabase.co"
-
 # JWT authentication secret for admin endpoints
 JWT_SECRET = "your-super-secret-jwt-key-change-in-production-12345"
+# Site configuration
+SITE_URL = "https://swankyboyz.com"

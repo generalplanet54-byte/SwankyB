@@ -599,5 +599,78 @@ export const launchProducts: LaunchAffiliateProduct[] = [
     bestseller: true,
     stockCount: 72,
     trending: true
+  },
+  
+  // LUXURY ACCESSORIES - Premium Collection
+  {
+    id: 'prod-premium-skeleton-watch',
+    name: 'Premium Men\'s Automatic Skeleton Watch with Gold Dial',
+    description: 'Standout luxury timepiece featuring automatic movement, skeleton dial design with gold or rose-gold accents. Premium mechanical craftsmanship for the discerning gentleman.',
+    price: '$299.99',
+    originalPrice: '$499.99',
+    image: '/images/products/fashion/watch.svg',
+    affiliateUrl: 'https://amzn.to/496SE8j',
+    rating: 4.6,
+    provider: 'amazon',
+    category: 'Luxury',
+    commission: 15,
+    bestseller: true,
+    rareFind: true
+  },
+  {
+    id: 'prod-leather-briefcase-premium',
+    name: 'High-End Men\'s Leather Briefcase in Premium Full-Grain Leather',
+    description: 'Executive briefcase/backpack in premium full-grain leather (black or dark brown). Professional design with multiple compartments for modern business needs.',
+    price: '$249.99',
+    originalPrice: '$329.99',
+    image: '/images/products/fashion/briefcase.svg',
+    affiliateUrl: 'https://amzn.to/4huaDHR',
+    rating: 4.7,
+    provider: 'amazon',
+    category: 'Luxury',
+    commission: 12,
+    bestseller: true
+  },
+  {
+    id: 'prod-designer-cologne-woody',
+    name: 'Top-Tier Designer Cologne with Woody/Spicy Notes',
+    description: 'Signature scent item - designer or niche cologne for men featuring sophisticated woody and spicy notes. Long-lasting fragrance for the modern gentleman.',
+    price: '$89.99',
+    originalPrice: '$129.99',
+    image: '/images/products/grooming/cologne.svg',
+    affiliateUrl: 'https://amzn.to/3JwTC30',
+    rating: 4.5,
+    provider: 'amazon',
+    category: 'Grooming',
+    commission: 10,
+    trending: true
+  },
+  {
+    id: 'prod-exotic-leather-wallet',
+    name: 'Exotic Leather Wallet - Crocodile Embossed Premium Cardholder',
+    description: 'Slim, elegant cardholder crafted from crocodile or alligator embossed leather. Luxury wallet with RFID protection and premium construction.',
+    price: '$79.99',
+    originalPrice: '$99.99',
+    image: '/images/products/fashion/wallet.svg',
+    affiliateUrl: 'https://www.amazon.com/Unique-Genuine-Crocodile-Alligator-Leather/dp/B07P3KVGG1?crid=2MWSFBSHQJMPI&dib=eyJ2IjoiMSJ9.xrJbNIakprYohY76yQ9p_7wDBf5x-x3u_6qWIDGU81G8I8kBi__2hmZLqcd3R1RaXM8HSuks6hoBpHtYEHsuOAKq0TW4WLFIA3DIhDNVaV4.239gcbxToRsd8go5RtvVEUTCvMOnXJMflUiajq0czPw&dib_tag=se&keywords=exotic+leather+wallet%2Fcardholder+%28slim%2C+elegant%2C+crafted+from+crocodile+or+alligator+embossed+leather%29&qid=1761575150&refinements=p_36%3A8600-&rnid=2661611011&sprefix=exotic+leather+wallet%2Fcardholder+slim%2C+elegant%2C+crafted+from+crocodile+or+alligator+embossed+leather+%2Caps%2C321&sr=8-6&linkCode=ll1&tag=swankyboyz-20&linkId=ccaff97f2ec528ccdb1ccfb3714542c9&language=en_US&ref_=as_li_ss_tl',
+    rating: 4.4,
+    provider: 'amazon',
+    category: 'Luxury',
+    commission: 8,
+    rareFind: true
+  },
+  {
+    id: 'prod-luxury-grooming-kit',
+    name: 'Luxury Men\'s Grooming Kit with Electric Shaver & Skincare',
+    description: 'Complete grooming solution with precision electric shaver, trimmer, and high-quality skincare products. Professional-grade tools for the modern gentleman.',
+    price: '$199.99',
+    originalPrice: '$249.99',
+    image: '/images/products/grooming/grooming-kit.svg',
+    affiliateUrl: 'https://www.amazon.com/dp/B0FC58N2QL?_encoding=UTF8&ie=UTF8&sp_csd=d2lkZ2V0TmFtZT1zcF9yaGZfc2VhcmNoX3BlcnNvbmFsaXplZA%3D%3D&pd_rd_w=Kqop8&content-id=amzn1.sym.ed82556b-5073-4521-a186-65fb40557bf5&pf_rd_p=ed82556b-5073-4521-a186-65fb40557bf5&pf_rd_r=N1F0NR0FWDNQ6KB20WRV&pd_rd_wg=CwCQd&pd_rd_r=b8f43856-643b-42ad-b11f-e2c32868945a&th=1&linkCode=ll1&tag=swankyboyz-20&linkId=f52b5093953ace8a5ae8212dd28b15b8&language=en_US&ref_=as_li_ss_tl',
+    rating: 4.6,
+    provider: 'amazon',
+    category: 'Grooming',
+    commission: 12,
+    bestseller: true
   }
 ];

@@ -130,9 +130,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     try {
       setLoading(true);
 
-      // Try server-side public endpoint first (Cloudflare Pages function)
+      // Try server-side D1 endpoint first (Cloudflare Pages function)
       try {
-        const res = await fetch('/api/content');
+        const res = await fetch('/api/articles-d1');
         if (res.ok) {
           const json = await res.json();
           const articlesData = json.articles || [];
@@ -150,23 +150,32 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
               updatedAt: article.updated_at,
               featuredImage: article.featured_image,
               category: article.category_name,
-              tags: article.tags.map((t: any) => t.name) || [],
+              tags: article.tags?.map((t: any) => t.name) || [],
               readTime: article.read_time,
               featured: false,
               seoTitle: article.meta_title || article.title,
               seoDescription: article.meta_description || article.excerpt,
-              affiliateProducts: article.products.map((p: any) => ({
-                id: String(p.id),
-                name: p.name,
-                description: p.description,
-                price: p.price ? (typeof p.price === 'string' && p.price.startsWith('$') ? p.price : `$${p.price}`) : '',
-                originalPrice: p.original_price ? (typeof p.original_price === 'string' && p.original_price.startsWith('$') ? p.original_price : `$${p.original_price}`) : undefined,
-                image: p.primary_image,
-                affiliateUrl: p.amazon_url,
-                rating: p.rating || 0,
-                provider: 'amazon' as const,
-                category: ''
-              }))
+              affiliateProducts: article.products?.map((p: any) => {
+                // Fix price formatting - avoid double $ symbols
+                const formatPrice = (price: any) => {
+                  if (!price) return '';
+                  const priceStr = String(price);
+                  return priceStr.startsWith('$') ? priceStr : `$${priceStr}`;
+                };
+
+                return {
+                  id: String(p.id),
+                  name: p.name,
+                  description: p.description,
+                  price: formatPrice(p.price),
+                  originalPrice: p.original_price ? formatPrice(p.original_price) : undefined,
+                  image: p.primary_image,
+                  affiliateUrl: p.amazon_url,
+                  rating: p.rating || 0,
+                  provider: 'amazon' as const,
+                  category: p.category || ''
+                };
+              }) || []
             };
           });
 
@@ -175,7 +184,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           return;
         }
       } catch (err) {
-        // fallback to client-side Supabase if server endpoint unavailable
+        console.warn('D1 API endpoint not available, falling back to local data:', err);
       }
 
       // If Supabase wasn't configured at build time (common in Bolt/StackBlitz),

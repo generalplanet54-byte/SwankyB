@@ -21,21 +21,33 @@
     </script>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Expert men's grooming guides, premium product reviews, and lifestyle recommendations. From electric shavers to grooming kits - discover the best tools for modern gentlemen." />
-    <meta name="keywords" content="mens grooming, electric shavers, grooming kits, product reviews, braun shavers, manscaped, wahl trimmers, men's lifestyle, premium grooming tools" />
+    <meta name="description" content="Premium product reviews, lifestyle guides & expert recommendations for modern men. Discover luxury watches, smartphones, laptops, grooming tools, audio equipment & premium accessories with comprehensive buying guides." />
+    <meta name="keywords" content="mens grooming, luxury watches, smartphones, laptops, premium accessories, product reviews, lifestyle guides, audio equipment, footwear, luxury goods, tech reviews, buying guides" />
     <meta name="author" content="SwankyBoyz" />
+    <meta name="publisher" content="SwankyBoyz" />
+    <meta name="language" content="English" />
+    <meta name="geo.region" content="US" />
+    <meta name="geo.placename" content="United States" />
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="SwankyBoyz - Expert Men's Grooming Guides & Reviews" />
-    <meta property="og:description" content="Expert men's grooming guides, premium product reviews, and recommendations for modern gentlemen. Find the best grooming tools and techniques." />
+    <meta property="og:title" content="SwankyBoyz - Premium Product Reviews & Lifestyle Guides for Modern Men" />
+    <meta property="og:description" content="Discover luxury watches, smartphones, laptops, grooming tools & premium accessories. Expert reviews, buying guides & lifestyle recommendations for discerning gentlemen." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://swankyboyz.com" />
     <meta property="og:site_name" content="SwankyBoyz" />
+    <meta property="og:image" content="https://swankyboyz.com/logo.svg" />
+    <meta property="og:image:width" content="400" />
+    <meta property="og:image:height" content="400" />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:locale" content="en_US" />
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SwankyBoyz - Men's Grooming Experts" />
-    <meta name="twitter:description" content="Expert grooming guides and premium product reviews for modern gentlemen." />
+    <meta name="twitter:site" content="@SwankyBoyz" />
+    <meta name="twitter:creator" content="@SwankyBoyz" />
+    <meta name="twitter:title" content="SwankyBoyz - Premium Products & Lifestyle for Modern Men" />
+    <meta name="twitter:description" content="Expert reviews of luxury watches, smartphones, laptops, grooming & lifestyle products. Comprehensive buying guides for discerning gentlemen." />
+    <meta name="twitter:image" content="https://swankyboyz.com/logo.svg" />
     
     <!-- Robots Meta -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -57,42 +69,65 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://swankyboyz.com" />
     
-    <!-- Structured Data - Organization -->
+    <!-- Comprehensive Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "SwankyBoyz",
-      "url": "https://swankyboyz.com",
-      "logo": "https://swankyboyz.com/logo.png",
-      "description": "Premium product reviews, lifestyle guides, and expert recommendations for modern men. Specializing in grooming, tech, accessories, and lifestyle products.",
-      "sameAs": [
-        "https://swankyboyz.com"
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "Customer Service",
-        "url": "https://swankyboyz.com"
-      }
-    }
-    </script>
-    
-    <!-- Structured Data - Website -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "SwankyBoyz",
-      "url": "https://swankyboyz.com",
-      "description": "Premium product reviews and lifestyle guides for modern men",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://swankyboyz.com/search?q={search_term_string}"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://swankyboyz.com/#organization",
+          "name": "SwankyBoyz",
+          "url": "https://swankyboyz.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://swankyboyz.com/logo.svg",
+            "width": 400,
+            "height": 400
+          },
+          "description": "Premium product reviews, lifestyle guides, and expert recommendations for modern men. Specializing in luxury watches, smartphones, laptops, grooming, tech, accessories, and lifestyle products.",
+          "foundingDate": "2024",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Service",
+            "url": "https://swankyboyz.com"
+          },
+          "sameAs": ["https://swankyboyz.com"]
         },
-        "query-input": "required name=search_term_string"
-      }
+        {
+          "@type": "WebSite",
+          "@id": "https://swankyboyz.com/#website",
+          "url": "https://swankyboyz.com",
+          "name": "SwankyBoyz",
+          "description": "Premium product reviews and lifestyle guides for modern men",
+          "publisher": {"@id": "https://swankyboyz.com/#organization"},
+          "inLanguage": "en-US",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://swankyboyz.com/search?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "ItemList",
+          "name": "Product Categories",
+          "description": "Browse our curated collection of premium products",
+          "numberOfItems": 8,
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Luxury", "url": "https://swankyboyz.com/categories/luxury"},
+            {"@type": "ListItem", "position": 2, "name": "Smartphones", "url": "https://swankyboyz.com/categories/smartphones"},
+            {"@type": "ListItem", "position": 3, "name": "Laptops", "url": "https://swankyboyz.com/categories/laptops"},
+            {"@type": "ListItem", "position": 4, "name": "Audio Equipment", "url": "https://swankyboyz.com/categories/audio-equipment"},
+            {"@type": "ListItem", "position": 5, "name": "Footwear", "url": "https://swankyboyz.com/categories/footwear"},
+            {"@type": "ListItem", "position": 6, "name": "Watches", "url": "https://swankyboyz.com/categories/watches"},
+            {"@type": "ListItem", "position": 7, "name": "Grooming", "url": "https://swankyboyz.com/categories/grooming"},
+            {"@type": "ListItem", "position": 8, "name": "Tech", "url": "https://swankyboyz.com/categories/tech"}
+          ]
+        }
+      ]
     }
     </script>
   </head>

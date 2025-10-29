@@ -56,12 +56,19 @@ export const AffiliateProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         if (res.ok) {
           const json = await res.json();
           const productsData = json.products || [];
+          // Fix price formatting - avoid double $ symbols
+          const formatPrice = (price: any) => {
+            if (!price) return '';
+            const priceStr = String(price);
+            return priceStr.startsWith('$') ? priceStr : `$${priceStr}`;
+          };
+
           const formattedProducts: AffiliateProduct[] = (productsData || []).map((product: any) => ({
             id: String(product.id),
             name: product.name,
             description: product.description,
-            price: product.price ? (typeof product.price === 'string' && product.price.startsWith('$') ? product.price : `$${product.price}`) : '',
-            originalPrice: product.original_price ? (typeof product.original_price === 'string' && product.original_price.startsWith('$') ? product.original_price : `$${product.original_price}`) : undefined,
+            price: formatPrice(product.price),
+            originalPrice: product.original_price ? formatPrice(product.original_price) : undefined,
             image: product.primary_image,
             affiliateUrl: product.amazon_url,
             rating: product.rating || 0,
