@@ -35,7 +35,9 @@ npm install
 
 ### 2. Environment Variables
 
-This project uses Cloudflare D1. The `wrangler.toml` file is configured to use a D1 database named `DB`.
+This project uses Cloudflare D1. The `wrangler.toml` file is configured to use a D1 database with the binding name `DB` and database name `swankyboyz_d1_final`. 
+
+**Important**: Make sure to update the `database_id` in `wrangler.toml` with your actual D1 database ID from the Cloudflare Dashboard.
 
 ### 3. Run Development Server
 
@@ -113,7 +115,8 @@ git push -u origin main
    In your Pages project settings, go to **Settings > Functions > D1 database bindings**.
    - Click **Add binding**.
    - **Variable name**: `DB`
-   - **D1 database**: Select your D1 database.
+   - **D1 database**: Select your D1 database (e.g., `swankyboyz_d1_final`)
+   - This connects your database to the Pages project
 
 5. **Deploy**
    - Click **"Save and Deploy"**
