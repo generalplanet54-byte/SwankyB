@@ -13,6 +13,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function seedDatabase() {
+  // Skip seeding in production environment
+  if (process.env.CF_PAGES === '1' || process.env.NODE_ENV === 'production') {
+    console.log('⏭️  Skipping database seeding in production environment');
+    return;
+  }
+  
   console.log('🌱 Starting D1 Database Seeding...\n');
 
   // Open database connection

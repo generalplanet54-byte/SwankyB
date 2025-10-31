@@ -10,11 +10,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "postbuild": "node scripts/seed-d1.js",
+    "build:prod": "astro build",
     "preview": "astro preview",
     "preview:pages": "wrangler pages dev dist --port 8788",
     "lint": "eslint .",
     "generate-sitemap": "node scripts/generate-sitemap.js",
-    "link-media": "node scripts/link-media.js"
+    "link-media": "node scripts/link-media.js",
+    "seed": "node scripts/seed-d1.js"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.10",
