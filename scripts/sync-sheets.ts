@@ -136,7 +136,6 @@ async function syncProducts(db: any) {
     }
     
     const validatedImage = validateImage(image, id, "product");
-    const altText = generateAltText(name, brand, "product");
     
     try {
       await db.run(
@@ -211,14 +210,16 @@ async function syncArticles(db: any) {
     }
     
     try {
+      // Note: Visuals are stored in semantic_keywords as JSON since there's no dedicated visuals column
+      // In production, consider adding a visuals column or using a separate table
       await db.run(
         `INSERT INTO articles (
           id, title, slug, excerpt, content,
           featured_image, 
           published_at, status,
           meta_title, meta_description,
-          read_time
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          read_time, semantic_keywords
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           id,
           title,
@@ -230,12 +231,10 @@ async function syncArticles(db: any) {
           "published",
           meta_title || title,
           meta_description || excerpt,
-          calculateReadTime(content)
+          calculateReadTime(content),
+          visualsJSON  // Store visuals in semantic_keywords for now
         ]
       );
-      
-      // Store visuals in a separate metadata table if needed
-      // Or store in article content as structured data
       
       successCount++;
     } catch (error) {
