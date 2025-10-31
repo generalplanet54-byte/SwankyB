@@ -192,7 +192,9 @@ GA4 tracking is designed to be non-blocking:
 4. **public/sw.js** - Service Worker (excludes analytics from caching)
    ```javascript
    // Skip caching for Google Analytics requests
-   if (event.request.url.includes('google-analytics.com')) {
+   const url = new URL(event.request.url);
+   if (url.hostname === 'www.google-analytics.com' || 
+       url.hostname === 'www.googletagmanager.com') {
      event.respondWith(fetch(event.request));
      return;
    }
