@@ -8,13 +8,50 @@ interface PageProps {
 }
 
 export function getStaticPaths() {
+  // For static builds, use the launch articles
   return launchArticles.map((article) => ({
     params: { slug: article.slug },
     props: { article },
   }));
 }
 
-const { article } = Astro.props as PageProps;
+// Try to get article from D1 if available (for dynamic rendering)
+let article = Astro.props.article as Article;
+
+// If running on Cloudflare with D1, try to fetch from database
+if (Astro.locals.runtime?.env?.DB && !article) {
+  const { slug } = Astro.params;
+  try {
+    const dbArticle = await Astro.locals.runtime.env.DB.prepare(
+      'SELECT * FROM articles WHERE slug = ? AND status = ?'
+    ).bind(slug, 'published').first();
+    
+    if (dbArticle) {
+      // Parse visuals JSON
+      const visuals = dbArticle.visuals ? JSON.parse(dbArticle.visuals) : [];
+      
+      article = {
+        id: dbArticle.id.toString(),
+        title: dbArticle.title,
+        slug: dbArticle.slug,
+        excerpt: dbArticle.excerpt,
+        content: dbArticle.content,
+        featuredImage: dbArticle.featured_image,
+        category: dbArticle.category_id?.toString() || '',
+        author: dbArticle.author || 'SwankyBoyz Team',
+        publishedAt: dbArticle.published_at || dbArticle.created_at,
+        updatedAt: dbArticle.updated_at,
+        readTime: dbArticle.read_time,
+        tags: [],
+        seoTitle: dbArticle.meta_title,
+        seoDescription: dbArticle.meta_description,
+        visuals: visuals
+      } as Article & { visuals: any[] };
+    }
+  } catch (error) {
+    console.error('Error fetching article from D1:', error);
+  }
+}
 
 const articleSeo = {
   title: article.seoTitle ?? `${article.title} | SwankyBoyz`,
@@ -62,6 +99,38 @@ const articleSeo = {
       <div class="prose prose-invert max-w-none">
         <section set:html={article.content}></section>
       </div>
+
+      {/* Render visuals if available (images/videos) */}
+      {article.visuals && article.visuals.length > 0 && (
+        <div class="space-y-6">
+          <h2 class="font-display text-2xl text-off-white">Visual Content</h2>
+          <div class="grid gap-6 md:grid-cols-2">
+            {article.visuals.map((visual: any) => (
+              visual.type === 'image' ? (
+                <div class="overflow-hidden rounded-2xl border border-off-white/10 shadow-lg">
+                  <img
+                    src={visual.src}
+                    alt={visual.alt}
+                    loading="lazy"
+                    class="h-64 w-full object-cover"
+                  />
+                </div>
+              ) : visual.type === 'video' ? (
+                <div class="overflow-hidden rounded-2xl border border-off-white/10 shadow-lg">
+                  <video
+                    src={visual.src}
+                    controls
+                    aria-label={visual.alt}
+                    class="h-64 w-full object-cover"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ) : null
+            ))}
+          </div>
+        </div>
+      )}
 
       {article.tags?.length && (
         <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.3em] text-off-white/60">

@@ -23,3 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Database files
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+src/data/seed-linked.json
