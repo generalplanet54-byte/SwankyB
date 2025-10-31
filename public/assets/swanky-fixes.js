@@ -105,6 +105,8 @@
             this.src = CONFIG.placeholderImage;
             this.alt = 'Product image placeholder';
             this.dataset.swankyFixed = 'true';
+            // Log individual async fix
+            console.log('✅ SwankyBoyz: Fixed broken image after load failure');
           }
         };
       }
@@ -221,18 +223,20 @@
       if (!window.swankyBoyzInitialized) {
         console.log('🚀 SwankyBoyz: Initializing dynamic fixes...');
         window.swankyBoyzInitialized = true;
-      }
-      
-      createPlaceholderImage();
-      fixPrices();
-      fixImages();
-      fixAmazonLinks();
-      addAffiliateTracking();
-      
-      // Only log success on first run to reduce console noise
-      if (window.swankyBoyzInitialized && !window.swankyBoyzFirstRunComplete) {
+        
+        createPlaceholderImage();
+        fixPrices();
+        fixImages();
+        fixAmazonLinks();
+        addAffiliateTracking();
+        
         console.log('✨ SwankyBoyz: All fixes applied successfully!');
-        window.swankyBoyzFirstRunComplete = true;
+      } else {
+        // For subsequent runs, just apply fixes without logging initialization
+        createPlaceholderImage();
+        fixPrices();
+        fixImages();
+        fixAmazonLinks();
       }
     } catch (error) {
       console.error('❌ SwankyBoyz: Error applying fixes:', error);
