@@ -1,56 +1,63 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { launchArticles } from '../../data/launchArticles';
-import type { Article } from '../../contexts/ContentContext';
 
-interface PageProps {
-  article: Article;
+export const prerender = false;
+
+const { slug } = Astro.params;
+const runtime = Astro.locals.runtime;
+
+// Get article from D1 database
+let article = null;
+let visuals = [];
+
+if (runtime && runtime.env && runtime.env.DB) {
+  try {
+    const result = await runtime.env.DB.prepare(
+      'SELECT * FROM articles WHERE slug = ?'
+    ).bind(slug).first();
+    
+    article = result;
+    
+    if (article && article.visuals) {
+      visuals = JSON.parse(article.visuals);
+    }
+  } catch (error) {
+    console.error('Database error:', error);
+  }
 }
 
-export function getStaticPaths() {
-  return launchArticles.map((article) => ({
-    params: { slug: article.slug },
-    props: { article },
-  }));
+// If article not found, return 404
+if (!article) {
+  return Astro.redirect('/404');
 }
 
-const { article } = Astro.props as PageProps;
+const formattedDate = article.date ? new Date(article.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}) : '';
 
 const articleSeo = {
-  title: article.seoTitle ?? `${article.title} | SwankyBoyz`,
-  description: article.seoDescription ?? article.excerpt,
-  canonical: `/articles/${article.slug}`,
-  ogType: 'article' as const,
-  image: article.featuredImage
-    ? {
-        src: article.featuredImage,
-        alt: article.title,
-      }
-    : undefined,
-  publishedTime: article.publishedAt,
-  modifiedTime: article.updatedAt,
-  section: article.category,
-  tags: article.tags,
+  title: `${article.title} | SwankyBoyz`,
+  description: article.excerpt,
 };
 ---
 <Layout {...articleSeo}>
   <main class="bg-charcoal py-24">
     <article class="container max-w-4xl space-y-12">
       <header class="space-y-6 text-off-white">
-        <p class="text-xs uppercase tracking-[0.4em] text-champagne/80">{article.category}</p>
+        {article.category && (
+          <p class="text-xs uppercase tracking-[0.4em] text-champagne/80">{article.category}</p>
+        )}
         <h1 class="font-display text-4xl leading-tight sm:text-5xl">{article.title}</h1>
         <div class="flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.25em] text-off-white/50">
-          <span>By {article.author}</span>
-          <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-          {article.readTime && <span>{article.readTime}</span>}
-          {article.updatedAt && article.updatedAt !== article.publishedAt && (
-            <span>Updated {new Date(article.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-          )}
+          <span>By SwankyBoyz Team</span>
+          <span>{formattedDate}</span>
         </div>
-        {article.featuredImage && (
+        {article.cover_image && (
           <div class="overflow-hidden rounded-3xl border border-off-white/10">
             <img
-              src={article.featuredImage}
+              src={article.cover_image}
               alt={article.title}
               loading="lazy"
               class="h-96 w-full object-cover"
@@ -59,18 +66,60 @@ const articleSeo = {
         )}
       </header>
 
-      <div class="prose prose-invert max-w-none">
-        <section set:html={article.content}></section>
-      </div>
-
-      {article.tags?.length && (
-        <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.3em] text-off-white/60">
-          <span class="text-off-white/40">Filed under</span>
-          {article.tags.map((tag) => (
-            <span class="rounded-full border border-off-white/20 px-4 py-2">{tag}</span>
+      {/* Article Visuals */}
+      {visuals.length > 0 && (
+        <div class="space-y-6">
+          {visuals.map((visual) => (
+            visual.type === "image" ? (
+              <figure class="overflow-hidden rounded-2xl border border-off-white/10">
+                <img 
+                  src={visual.src} 
+                  alt={visual.alt} 
+                  class="w-full h-auto object-cover" 
+                  loading="lazy"
+                />
+                {visual.alt && (
+                  <figcaption class="text-sm text-off-white/60 mt-2 text-center px-4 pb-4">
+                    {visual.alt}
+                  </figcaption>
+                )}
+              </figure>
+            ) : visual.type === "video" ? (
+              <figure class="overflow-hidden rounded-2xl border border-off-white/10">
+                <video 
+                  src={visual.src} 
+                  controls 
+                  class="w-full h-auto" 
+                  aria-label={visual.alt}
+                  preload="metadata"
+                />
+                {visual.alt && (
+                  <figcaption class="text-sm text-off-white/60 mt-2 text-center px-4 pb-4">
+                    {visual.alt}
+                  </figcaption>
+                )}
+              </figure>
+            ) : null
           ))}
         </div>
       )}
+
+      <div class="prose prose-invert max-w-none prose-headings:text-off-white prose-p:text-off-white/80 prose-strong:text-off-white prose-a:text-champagne hover:prose-a:text-champagne/80">
+        <section set:html={article.content}></section>
+      </div>
+
+      {/* Back to articles */}
+      <div class="pt-8 border-t border-off-white/10">
+        <a 
+          href="/articles" 
+          class="inline-flex items-center gap-2 text-champagne hover:text-champagne/80 font-medium uppercase text-xs tracking-[0.3em]"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to all articles
+        </a>
+      </div>
     </article>
   </main>
 </Layout>

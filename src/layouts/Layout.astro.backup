@@ -1,0 +1,116 @@
+import Header from '../components/Header.astro';
+import type { SeoInput } from '../lib/seo';
+import {
+  buildArticleJsonLd,
+  buildMetaTags,
+  buildOrganizationJsonLd,
+  resolveSeo,
+} from '../lib/seo';
+
+type Props = SeoInput;
+
+const props = Astro.props as Props;
+const seo = resolveSeo(props);
+const metaTags = buildMetaTags(props);
+const organizationJsonLd = buildOrganizationJsonLd();
+const articleJsonLd = buildArticleJsonLd(props);
+const analyticsToken =
+  import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN ?? import.meta.env.PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN;
+const additionalJsonLd = props.structuredData
+  ? Array.isArray(props.structuredData)
+    ? props.structuredData
+    : [props.structuredData]
+  : [];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VZHNBYXJ3S"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-VZHNBYXJ3S');
+    </script>
+    
+  <meta name="generator" content={Astro.generator} />
+  <title>{seo.title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    {metaTags.map((entry) =>
+      entry.tag === 'meta' ? (
+        <meta {...entry.attrs} />
+      ) : (
+        <link {...entry.attrs} />
+      )
+    )}
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(organizationJsonLd)}></script>
+    {articleJsonLd && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(articleJsonLd)}></script>
+    )}
+    {additionalJsonLd.map((entry) => (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(entry)}></script>
+    ))}
+  </head>
+  <body class="min-h-screen bg-charcoal text-off-white">
+    <Header />
+    <slot />
+
+    <script is:inline>
+      const endpoint = '/api/affiliate-click';
+
+      const hashAffiliateClick = (anchor) => {
+        const payload = {
+          productId: anchor.dataset.affiliateId || null,
+          productName: anchor.dataset.affiliateName || null,
+          productUrl: anchor.dataset.affiliateProductUrl || null,
+          affiliateUrl: anchor.dataset.affiliateUrl || anchor.href,
+          source: anchor.dataset.affiliateSource || window.location.pathname,
+        };
+
+        const body = JSON.stringify(payload);
+
+        if (navigator.sendBeacon) {
+          const blob = new Blob([body], { type: 'application/json' });
+          navigator.sendBeacon(endpoint, blob);
+        } else {
+          fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body,
+            keepalive: true,
+          }).catch(() => {});
+        }
+      };
+
+      const registerAffiliateLinks = () => {
+        document.querySelectorAll('[data-affiliate-link]').forEach((anchor) => {
+          anchor.addEventListener('click', () => hashAffiliateClick(anchor), { passive: true });
+        });
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', registerAffiliateLinks);
+      } else {
+        registerAffiliateLinks();
+      }
+    </script>
+
+    {analyticsToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${analyticsToken}"}`}
+      ></script>
+    )}
+  </body>
+</html>

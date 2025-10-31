@@ -1,6 +1,47 @@
 ---
-import { ProductSpotlightsWithSchema } from '../components/ProductSpotlightsWithSchema';
 import { spotlightProducts } from '../data/spotlightProducts';
 ---
 
-<ProductSpotlightsWithSchema client:load products={spotlightProducts} />
+<section class="py-16 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-8 text-center">Featured Products</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {spotlightProducts.map((product) => (
+        <article class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+          {product.image && (
+            <img 
+              src={product.image} 
+              alt={product.name}
+              class="w-full h-48 object-cover"
+              loading="lazy"
+            />
+          )}
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">{product.name}</h3>
+            {product.brand && (
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{product.brand}</p>
+            )}
+            {product.description && (
+              <p class="text-gray-700 dark:text-gray-300 mb-4">{product.description}</p>
+            )}
+            {product.price && (
+              <p class="text-lg font-bold text-blue-600 dark:text-blue-400 mb-4">
+                ${product.price}
+              </p>
+            )}
+            {product.amazon_url && (
+              <a 
+                href={product.amazon_url}
+                target="_blank"
+                rel="nofollow noopener"
+                class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+              >
+                View on Amazon
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

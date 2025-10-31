@@ -1,0 +1,138 @@
+---
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const runtime = Astro.locals.runtime;
+
+// Get article from D1 database
+let article = null;
+let visuals = [];
+
+if (runtime && runtime.env && runtime.env.DB) {
+  try {
+    const result = await runtime.env.DB.prepare(
+      'SELECT * FROM articles WHERE slug = ?'
+    ).bind(slug).first();
+    
+    article = result;
+    
+    if (article && article.visuals) {
+      visuals = JSON.parse(article.visuals);
+    }
+  } catch (error) {
+    console.error('Database error:', error);
+  }
+}
+
+// If article not found, return 404
+if (!article) {
+  return Astro.redirect('/404');
+}
+
+const formattedDate = article.date ? new Date(article.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}) : '';
+---
+
+<ArticleLayout
+  title={article.title}
+  description={article.excerpt || ''}
+>
+  <article class="max-w-4xl mx-auto px-4 py-8 md:py-12">
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+        {article.title}
+      </h1>
+      
+      {article.excerpt && (
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-4">
+          {article.excerpt}
+        </p>
+      )}
+      
+      <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+        <time datetime={article.date}>
+          {formattedDate}
+        </time>
+        {article.read_time && (
+          <span>• {article.read_time}</span>
+        )}
+      </div>
+    </header>
+
+    {/* Article Visuals */}
+    <div class="space-y-6 mb-8">
+      {visuals.map((visual) => (
+        visual.type === "image" ? (
+          <figure class="overflow-hidden rounded-2xl shadow-lg">
+            <img 
+              src={visual.src} 
+              alt={visual.alt} 
+              class="w-full h-auto object-cover" 
+              loading="lazy"
+              width="800"
+              height="600"
+            />
+            {visual.alt && (
+              <figcaption class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center px-4">
+                {visual.alt}
+              </figcaption>
+            )}
+          </figure>
+        ) : visual.type === "video" ? (
+          <figure class="overflow-hidden rounded-2xl shadow-lg">
+            <video 
+              src={visual.src} 
+              controls 
+              class="w-full h-auto" 
+              aria-label={visual.alt}
+              preload="metadata"
+            />
+            {visual.alt && (
+              <figcaption class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center px-4">
+                {visual.alt}
+              </figcaption>
+            )}
+          </figure>
+        ) : null
+      ))}
+    </div>
+
+    {/* Article Content */}
+    <div 
+      class="prose prose-lg max-w-none dark:prose-invert prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800 dark:prose-a:text-blue-400"
+      set:html={article.content}
+    />
+
+    {/* Back to articles link */}
+    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+      <a 
+        href="/articles" 
+        class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to all articles
+      </a>
+    </div>
+  </article>
+</ArticleLayout>
+
+<style>
+  /* Ensure images are responsive */
+  article img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Style for embedded videos */
+  article video {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
