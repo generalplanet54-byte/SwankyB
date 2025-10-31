@@ -29,8 +29,9 @@ self.addEventListener('fetch', (event) => {
   // Skip caching for Google Analytics requests
   // GA4 tracking requests return 204 No Content, which is expected behavior
   // 204 means the data was successfully received by Google's servers
-  if (event.request.url.includes('google-analytics.com') || 
-      event.request.url.includes('googletagmanager.com')) {
+  const url = new URL(event.request.url);
+  if (url.hostname === 'www.google-analytics.com' || 
+      url.hostname === 'www.googletagmanager.com') {
     event.respondWith(fetch(event.request));
     return;
   }
