@@ -1,0 +1,60 @@
+name: Sync Content from Google Sheets
+
+on:
+  # Run every Monday at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * 1'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+  
+  # Run on push to specific files
+  push:
+    paths:
+      - 'scripts/sync-sheets.ts'
+      - '.github/workflows/sync-content.yml'
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Create credentials file
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS_JSON }}' > scripts/credentials.json
+      
+      - name: Sync from Google Sheets
+        env:
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+        run: npm run sync
+      
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code swankyboyz.db || echo "changed=true" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push changes
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add swankyboyz.db
+          git commit -m "🔄 Auto-sync content from Google Sheets [skip ci]"
+          git push
+      
+      - name: Clean up credentials
+        if: always()
+        run: rm -f scripts/credentials.json

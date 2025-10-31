@@ -23,3 +23,15 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Google Sheets Credentials
+scripts/credentials.json
+
+# Local Database
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Astro
+.astro/
