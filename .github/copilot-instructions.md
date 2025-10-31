@@ -123,7 +123,11 @@ import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import fs from "fs";
 
-const SHEET_ID = process.env.GOOGLE_SHEET_ID || "YOUR_SHEET_ID_HERE";
+const SHEET_ID = process.env.GOOGLE_SHEET_ID;
+
+if (!SHEET_ID) {
+  throw new Error("GOOGLE_SHEET_ID environment variable is required");
+}
 
 async function authorize() {
   const auth = new google.auth.GoogleAuth({
@@ -149,23 +153,27 @@ async function syncToDB() {
     driver: sqlite3.Database 
   });
 
-  console.log("🧾 Syncing Products...");
-  const products = await fetchSheetData("Products");
-  await db.exec("DELETE FROM products");
-  
-  for (const [id, name, brand, description, image, affiliate_url] of products) {
-    await db.run(
-      `INSERT INTO products (id, name, brand, description, image, affiliate_url)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [id, name, brand, description, image, affiliate_url]
-    );
-  }
+  try {
+    // Start transaction for atomic updates
+    await db.exec("BEGIN TRANSACTION");
 
-  console.log("📰 Syncing Articles...");
-  const articles = await fetchSheetData("Articles");
-  await db.exec("DELETE FROM articles");
-  
-  for (const [id, title, slug, excerpt, content, cover_image, visuals, date] of articles) {
+    console.log("🧾 Syncing Products...");
+    const products = await fetchSheetData("Products");
+    await db.exec("DELETE FROM products");
+    
+    for (const [id, name, brand, description, image, affiliate_url] of products) {
+      await db.run(
+        `INSERT INTO products (id, name, brand, description, image, affiliate_url)
+         VALUES (?, ?, ?, ?, ?, ?)`,
+        [id, name, brand, description, image, affiliate_url]
+      );
+    }
+
+    console.log("📰 Syncing Articles...");
+    const articles = await fetchSheetData("Articles");
+    await db.exec("DELETE FROM articles");
+    
+    for (const [id, title, slug, excerpt, content, cover_image, visuals, date] of articles) {
     const visualsJSON = visuals
       ? JSON.stringify(
           visuals.split(",").map((v: string) => ({
@@ -183,8 +191,17 @@ async function syncToDB() {
     );
   }
 
-  console.log("✅ Google Sheets → D1 Sync Complete");
-  await db.close();
+    // Commit transaction if all operations succeed
+    await db.exec("COMMIT");
+    console.log("✅ Google Sheets → D1 Sync Complete");
+  } catch (error) {
+    // Rollback transaction on error to prevent partial updates
+    await db.exec("ROLLBACK");
+    console.error("❌ Sync failed, changes rolled back:", error);
+    throw error;
+  } finally {
+    await db.close();
+  }
 }
 
 syncToDB().catch(console.error);
@@ -205,8 +222,14 @@ Add to `package.json`:
 
 Install required packages:
 ```bash
-npm install googleapis sqlite sqlite3
-npm install -D tsx @types/node
+npm install googleapis sqlite3
+npm install -D tsx @types/node @types/sqlite3
+```
+
+**Note**: The `sqlite` package from npm is used for opening SQLite databases. If you prefer better performance, you can use `better-sqlite3` instead:
+```bash
+npm install googleapis better-sqlite3
+npm install -D tsx @types/node @types/better-sqlite3
 ```
 
 #### 6. Automated Sync (GitHub Actions)
