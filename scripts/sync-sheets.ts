@@ -10,10 +10,10 @@
  */
 
 import { google } from "googleapis";
-import sqlite3 from "sqlite3";
+import * as sqlite3 from "sqlite3";
 import { open } from "sqlite";
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 
 // Configuration
 const SHEET_ID = process.env.GOOGLE_SHEET_ID || "YOUR_SHEET_ID_HERE";
