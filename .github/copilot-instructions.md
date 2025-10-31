@@ -174,22 +174,22 @@ async function syncToDB() {
     await db.exec("DELETE FROM articles");
     
     for (const [id, title, slug, excerpt, content, cover_image, visuals, date] of articles) {
-    const visualsJSON = visuals
-      ? JSON.stringify(
-          visuals.split(",").map((v: string) => ({
-            type: v.trim().endsWith(".mp4") ? "video" : "image",
-            src: `/assets/${v.trim()}`,
-            alt: `${title} visual ${v}`,
-          }))
-        )
-      : "[]";
-      
-    await db.run(
-      `INSERT INTO articles (id, title, slug, excerpt, content, cover_image, visuals, date)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [id, title, slug, excerpt, content, cover_image, visualsJSON, date]
-    );
-  }
+      const visualsJSON = visuals
+        ? JSON.stringify(
+            visuals.split(",").map((v: string) => ({
+              type: v.trim().endsWith(".mp4") ? "video" : "image",
+              src: `/assets/${v.trim()}`,
+              alt: `${title} visual ${v}`,
+            }))
+          )
+        : "[]";
+        
+      await db.run(
+        `INSERT INTO articles (id, title, slug, excerpt, content, cover_image, visuals, date)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [id, title, slug, excerpt, content, cover_image, visualsJSON, date]
+      );
+    }
 
     // Commit transaction if all operations succeed
     await db.exec("COMMIT");
@@ -226,7 +226,7 @@ npm install googleapis sqlite3
 npm install -D tsx @types/node @types/sqlite3
 ```
 
-**Note**: The `sqlite` package from npm is used for opening SQLite databases. If you prefer better performance, you can use `better-sqlite3` instead:
+**Note**: The code uses two packages: `sqlite3` (database driver) and `sqlite` (promise-based wrapper for opening databases). If you prefer better performance and a simpler API, you can use `better-sqlite3` instead:
 ```bash
 npm install googleapis better-sqlite3
 npm install -D tsx @types/node @types/better-sqlite3
