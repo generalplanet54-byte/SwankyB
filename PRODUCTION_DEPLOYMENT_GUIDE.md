@@ -32,9 +32,11 @@
 - [x] JWT_SECRET generated (minimum 32 characters)
 - [x] JWT_SECRET added to Cloudflare Pages (Production)
 - [x] JWT_SECRET added to Cloudflare Pages (Preview)
+- [x] D1 database binding commented out (default - optional for deployment)
 - [ ] **Site redeployed after adding JWT_SECRET**
 - [ ] **Login tested on production URL**
 - [ ] **Default password changed from P@ssW#rd**
+- [ ] **D1 Database set up** (optional - see D1_DATABASE_SETUP.md)
 
 ---
 
@@ -129,6 +131,20 @@ Content-Type: application/json
 ---
 
 ## 🐛 Troubleshooting
+
+### Problem: Deployment fails with "Invalid database UUID" error
+
+**Error Message:**
+```
+Error: Failed to publish your Function. Got error: Error 8000022: Invalid database UUID (your-d1-database-id)
+```
+
+**Solution:**
+This error occurs when the D1 database binding in `wrangler.toml` has a placeholder value. The D1 database is optional and the site works without it.
+
+**✅ Already Fixed**: The D1 binding is now commented out by default, so deployment will succeed.
+
+**To enable D1 later**: See `D1_DATABASE_SETUP.md` for complete setup instructions.
 
 ### Problem: 401 Error on `/api/admin/me` even when logged in
 

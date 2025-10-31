@@ -5,10 +5,16 @@ compatibility_date = "2025-10-13"
 pages_build_output_dir = "dist"
 
 # D1 Database binding
-[[d1_databases]]
-binding = "DB"
-database_name = "swankyboyz_d1_final"
-database_id = "your-d1-database-id"
+# To enable D1 database:
+# 1. Create a D1 database: wrangler d1 create swankyboyz_d1_final
+# 2. Copy the database_id from the output
+# 3. Uncomment the lines below and replace "your-d1-database-id" with the actual database_id
+# 4. Run migrations: wrangler d1 execute swankyboyz_d1_final --file=./migrations/d1/001_initial_schema.sql
+# 
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "swankyboyz_d1_final"
+# database_id = "your-d1-database-id"
 
 # Build configuration is not supported in wrangler.toml for Pages
 # Build command should be configured in Cloudflare Pages dashboard or package.json
