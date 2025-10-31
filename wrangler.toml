@@ -5,8 +5,9 @@ compatibility_date = "2025-10-13"
 pages_build_output_dir = "dist"
 
 # D1 Database binding
-# Database name: swankyboyz_d1_final (configured in GitHub secrets/variables)
+# Database name: swankyboyz_d1_final
 # Replace "your-d1-database-id" with your actual D1 database ID from Cloudflare Dashboard
+# Get the database_id by running: wrangler d1 list
 [[d1_databases]]
 binding = "DB"
 database_name = "swankyboyz_d1_final"

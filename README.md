@@ -115,7 +115,7 @@ git push -u origin main
    In your Pages project settings, go to **Settings > Functions > D1 database bindings**.
    - Click **Add binding**.
    - **Variable name**: `DB`
-   - **D1 database**: Select your D1 database (e.g., `swankyboyz_d1_final`)
+   - **D1 database**: Select your D1 database (`swankyboyz_d1_final` for this project)
    - This connects your database to the Pages project
 
 5. **Deploy**
