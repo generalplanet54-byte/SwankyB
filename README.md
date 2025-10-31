@@ -109,33 +109,26 @@ git push -u origin main
    Node version: 18 or higher
    ```
 
-4. **Add D1 Database Binding (Optional - for full functionality)**
+4. **Configure D1 Database Binding**
    
-   **Note:** The site will deploy without D1, but database-driven features will use fallback data.
+   **Note:** The D1 database is already configured in `wrangler.toml`. You just need to:
    
-   To enable D1 database:
-   
-   a. **Create D1 Database:**
+   a. **Run Migrations** (if not already done):
    ```bash
-   wrangler d1 create swankyboyz_d1_final
-   ```
-   
-   b. **Update wrangler.toml:**
-   - Copy the `database_id` from the command output
-   - Uncomment the D1 binding section in `wrangler.toml`
-   - Replace `"your-d1-database-id"` with your actual database_id
-   
-   c. **Run Migrations:**
-   ```bash
+   # Apply all migrations in order
    wrangler d1 execute swankyboyz_d1_final --file=./migrations/d1/001_initial_schema.sql
-   # Run additional migration files in order (002, 003, etc.)
+   wrangler d1 execute swankyboyz_d1_final --file=./migrations/d1/002_seed_first_articles.sql
+   # Continue with remaining migration files (003-010)
+   # See migrations/d1/ directory for all files
    ```
    
-   d. **Add binding in Cloudflare Pages:**
+   b. **Add binding in Cloudflare Pages:**
    - Go to **Settings > Functions > D1 database bindings**
    - Click **Add binding**
    - **Variable name**: `DB`
    - **D1 database**: Select `swankyboyz_d1_final`
+   
+   **Note:** If you need to use a different database, see `D1_DATABASE_SETUP.md` for instructions on creating and configuring a new D1 database.
 
 5. **Deploy**
    - Click **"Save and Deploy"**
