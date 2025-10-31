@@ -142,9 +142,9 @@ Error: Failed to publish your Function. Got error: Error 8000022: Invalid databa
 **Solution:**
 This error occurs when the D1 database binding in `wrangler.toml` has a placeholder value. The D1 database is optional and the site works without it.
 
-**✅ Already Fixed**: The D1 binding is now commented out by default, so deployment will succeed.
+**✅ Already Fixed**: The D1 binding is now configured with a valid database_id (fb8ab815-af3a-4102-ab39-aeabcb829008), so deployment will succeed.
 
-**To enable D1 later**: See `D1_DATABASE_SETUP.md` for complete setup instructions.
+**Database setup**: The database needs migrations to be applied. See `D1_DATABASE_SETUP.md` for migration instructions.
 
 ### Problem: 401 Error on `/api/admin/me` even when logged in
 
