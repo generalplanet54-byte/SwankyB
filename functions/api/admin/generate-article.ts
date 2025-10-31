@@ -54,7 +54,9 @@ export async function onRequestPost(context: CloudflareContext) {
     }
 
     // Fallback generator (server-side simple template)
-    const readTime = Math.floor(Math.random() * 8) + 4 + ' min read';
+    const MIN_READ_TIME = 4;
+    const READ_TIME_RANGE = 8;
+    const readTime = Math.floor(Math.random() * READ_TIME_RANGE) + MIN_READ_TIME + ' min read';
     const content = `
       <h2>Introduction to ${topic}</h2>
       <p>In this guide, we cover everything you need to know about ${topic} within the ${category} category.</p>
