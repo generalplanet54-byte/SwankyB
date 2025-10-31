@@ -6,20 +6,20 @@
  * Handles email validation, duplicate prevention, and external service integration
  */
 
-interface NewsletterPayload {
-  email: string;
-  firstName?: string;
-  lastName?: string;
-  source?: string;
-  sourcePage?: string;
-  categories?: string[];
-  consent?: boolean;
-}
+// interface NewsletterPayload {
+//   email: string;
+//   firstName?: string;
+//   lastName?: string;
+//   source?: string;
+//   sourcePage?: string;
+//   categories?: string[];
+//   consent?: boolean;
+// }
 
-interface UnsubscribePayload {
-  email: string;
-  reason?: string;
-}
+// interface UnsubscribePayload {
+//   email: string;
+//   reason?: string;
+// }
 
 const MAX_TEXT_LENGTH = 512;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,13 +37,13 @@ const validateEmail = (email: string): boolean => {
   return EMAIL_REGEX.test(email.toLowerCase());
 };
 
-const hashEmail = async (email: string): Promise<string> => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(email.toLowerCase());
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-};
+// const hashEmail = async (email: string): Promise<string> => {
+//   const encoder = new TextEncoder();
+//   const data = encoder.encode(email.toLowerCase());
+//   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+//   const hashArray = Array.from(new Uint8Array(hashBuffer));
+//   return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+// };
 
 const sendToEmailService = async (
   email: string,
@@ -200,7 +200,7 @@ export async function onRequest(context: any) {
   let payload: any = null;
   try {
     payload = await request.json();
-  } catch (error) {
+  } catch (_error) {
     return new Response(JSON.stringify({ error: 'Invalid JSON payload' }), {
       status: 400,
       headers: {

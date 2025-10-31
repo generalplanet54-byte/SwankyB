@@ -37,7 +37,7 @@ export async function onRequestPost(context: any) {
         let parsed: any = null;
         try {
           parsed = JSON.parse(contentText);
-        } catch (e) {
+        } catch (_e) {
           // If parse fails, fall back to simple template
           parsed = null;
         }
@@ -52,7 +52,6 @@ export async function onRequestPost(context: any) {
     }
 
     // Fallback generator (server-side simple template)
-    const slug = topic.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const readTime = Math.floor(Math.random() * 8) + 4 + ' min read';
     const content = `
       <h2>Introduction to ${topic}</h2>

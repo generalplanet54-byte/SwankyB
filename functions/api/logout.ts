@@ -1,4 +1,4 @@
-export async function onRequestPost(context: any) {
+export async function onRequestPost(_context: any) {
   const response = new Response(JSON.stringify({ success: true }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }

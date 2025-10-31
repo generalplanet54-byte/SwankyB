@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, FileText, Package, Settings, BarChart3, Users, Zap } from 'lucide-react';
+import { FileText, Package, Settings, BarChart3, Zap } from 'lucide-react';
 import ArticleManager from './ArticleManager';
 import ProductManager from './ProductManager';
 import AIContentGenerator from './AIContentGenerator';

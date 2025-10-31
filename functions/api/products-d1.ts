@@ -17,7 +17,7 @@ export async function onRequestGet(context: any) {
     const limit = parseInt(url.searchParams.get('limit') || '100');
     const offset = parseInt(url.searchParams.get('offset') || '0');
 
-    let query = `
+    const query = `
       SELECT 
         p.id,
         p.name,

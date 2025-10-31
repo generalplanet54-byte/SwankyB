@@ -95,7 +95,7 @@ export function trackExposure(experimentId: string, variant: string) {
         variant,
       });
     }
-  } catch (e) {
+  } catch (_e) {
     // silent
   }
 }
@@ -111,7 +111,7 @@ export function trackConversion(experimentId: string, variant: string, label?: s
         value: value ?? undefined,
       });
     }
-  } catch (e) {
+  } catch (_e) {
     // silent
   }
 }

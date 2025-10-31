@@ -1,6 +1,5 @@
 export const onRequest = async (context: any) => {
   const { request } = context;
-  const url = new URL(request.url);
 
   // Basic site information for AI crawlers
   const siteInfo = {

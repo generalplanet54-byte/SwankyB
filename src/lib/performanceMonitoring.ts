@@ -30,7 +30,7 @@ function sendToGtag(vitalName: string, vitalValue: number, vitalRating: MetricRa
         event_label: vitalRating === 'good' ? 'pass' : 'fail',
       });
     }
-  } catch (e) {
+  } catch (_e) {
     // silent
   }
 }
@@ -52,7 +52,7 @@ export function observeLCP() {
       });
       observer.observe({ entryTypes: ['largest-contentful-paint'] });
       return observer;
-    } catch (e) {
+    } catch (_e) {
       console.warn('LCP observer not supported');
     }
   }
@@ -78,7 +78,7 @@ export function observeFCP() {
       });
       observer.observe({ entryTypes: ['paint'] });
       return observer;
-    } catch (e) {
+    } catch (_e) {
       console.warn('FCP observer not supported');
     }
   }
@@ -104,7 +104,7 @@ export function observeCLS() {
       });
       observer.observe({ entryTypes: ['layout-shift'] });
       return observer;
-    } catch (e) {
+    } catch (_e) {
       console.warn('CLS observer not supported');
     }
   }
@@ -127,7 +127,7 @@ export function observeINP() {
       });
       observer.observe({ entryTypes: ['event'] });
       return observer;
-    } catch (e) {
+    } catch (_e) {
       console.warn('INP observer not supported');
     }
   }
@@ -188,7 +188,7 @@ export function reportMetric(eventName: string, value: number, label?: string) {
         label: label ?? undefined,
       });
     }
-  } catch (e) {
+  } catch (_e) {
     // silent
   }
 }

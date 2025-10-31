@@ -9,13 +9,16 @@ import { useAbTestContext } from '../context/AbTestProvider';
  */
 export function useAbTest(def: ExperimentDefinition, options?: { trackExposure?: boolean }) {
   const { trackExposure = true } = options ?? {};
-  const ctx = (() => {
-    try {
-      return useAbTestContext();
-    } catch {
-      return null;
-    }
-  })();
+  
+  // Try to use context, but handle gracefully if not available
+  let ctx = null;
+  try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    ctx = useAbTestContext();
+  } catch {
+    // Context not available, will use fallback
+    ctx = null;
+  }
 
   const [variant, setVariant] = useState<string | null>(() => abTesting.getVariant(def.id));
 

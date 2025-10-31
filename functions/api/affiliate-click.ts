@@ -45,7 +45,7 @@ export async function onRequest(context: any) {
   let payload: AffiliateClickPayload | null = null;
   try {
     payload = (await request.json()) as AffiliateClickPayload;
-  } catch (error) {
+  } catch (_error) {
     return new Response(JSON.stringify({ error: 'Invalid JSON payload' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },

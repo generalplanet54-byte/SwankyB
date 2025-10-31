@@ -17,7 +17,7 @@ const ArticleManager: React.FC = () => {
           const data = await res.json();
           setAdminArticles(data.articles || []);
         }
-      } catch (err) {
+      } catch (_err) {
         // ignore, use client-side articles
       }
     })();
@@ -54,7 +54,7 @@ const ArticleManager: React.FC = () => {
           const err = await res.json().catch(() => ({}));
           alert(err.error || 'Failed to delete');
         }
-      } catch (err) {
+      } catch (_err) {
         alert('Network error while deleting article');
       }
     })();
@@ -89,7 +89,7 @@ const ArticleManager: React.FC = () => {
                 const err = await res.json().catch(() => ({}));
                 alert(err.error || 'Failed to create article');
               }
-            } catch (err) { alert('Network error'); }
+            } catch (_err) { alert('Network error'); }
           }
           }
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200"
@@ -216,7 +216,7 @@ const ArticleManager: React.FC = () => {
                             const err = await res.json().catch(() => ({}));
                             alert(err.error || 'Failed to update');
                           }
-                        } catch (err) { alert('Network error'); }
+                        } catch (_err) { alert('Network error'); }
                       }}
                       className="p-1 text-gray-500 hover:text-green-600 transition-colors duration-200"
                       title="Edit Article"
