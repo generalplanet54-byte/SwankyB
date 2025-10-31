@@ -7,7 +7,7 @@ pages_build_output_dir = "dist"
 # D1 Database binding
 [[d1_databases]]
 binding = "DB"
-database_name = "swankyboyz-db"
+database_name = "swankyboyz_d1_final"
 database_id = "your-d1-database-id"
 
 # Build configuration is not supported in wrangler.toml for Pages
