@@ -51,6 +51,9 @@
     
     CONFIG.priceSelectors.forEach(selector => {
       document.querySelectorAll(selector).forEach(el => {
+        // Skip if already processed
+        if (el.dataset.swankyFixed === 'true') return;
+        
         const originalText = el.textContent;
         const fixedText = originalText
           .replace(/\$\$+/g, '$') // Replace multiple $ with single $
@@ -59,6 +62,7 @@
         
         if (originalText !== fixedText) {
           el.textContent = fixedText;
+          el.dataset.swankyFixed = 'true';
           fixedCount++;
         }
       });
@@ -76,6 +80,9 @@
     let fixedCount = 0;
     
     document.querySelectorAll('img').forEach(img => {
+      // Skip if already processed
+      if (img.dataset.swankyFixed === 'true') return;
+      
       // Check if image is broken or has no src
       const isBroken = !img.src || 
                       img.src === window.location.href || 
@@ -86,17 +93,21 @@
         img.src = CONFIG.placeholderImage;
         img.alt = img.alt || 'Product image placeholder';
         img.onerror = null; // Prevent infinite loop
+        img.dataset.swankyFixed = 'true';
         fixedCount++;
       }
       
       // Add error handler for future failures
-      img.onerror = function() {
-        if (this.src !== CONFIG.placeholderImage) {
-          this.src = CONFIG.placeholderImage;
-          this.alt = 'Product image placeholder';
-          fixedCount++;
-        }
-      };
+      if (!img.dataset.swankyErrorHandler) {
+        img.dataset.swankyErrorHandler = 'true';
+        img.onerror = function() {
+          if (this.src !== CONFIG.placeholderImage) {
+            this.src = CONFIG.placeholderImage;
+            this.alt = 'Product image placeholder';
+            this.dataset.swankyFixed = 'true';
+          }
+        };
+      }
     });
     
     if (fixedCount > 0) {
@@ -112,6 +123,9 @@
     
     CONFIG.amazonLinkSelectors.forEach(selector => {
       document.querySelectorAll(selector).forEach(link => {
+        // Skip if already processed
+        if (link.dataset.swankyFixed === 'true') return;
+        
         let url = link.href;
         let wasModified = false;
         
@@ -144,6 +158,7 @@
         }
         
         if (wasModified) {
+          link.dataset.swankyFixed = 'true';
           fixedCount++;
         }
       });
@@ -158,6 +173,10 @@
    * Add tracking for affiliate link clicks
    */
   function addAffiliateTracking() {
+    // Only add the listener once
+    if (window.swankyBoyzTrackingAdded) return;
+    window.swankyBoyzTrackingAdded = true;
+    
     document.addEventListener('click', function(e) {
       const link = e.target.closest('a');
       if (link && (link.href.includes('amazon.com') || link.href.includes('amzn.to'))) {
@@ -198,7 +217,11 @@
    */
   function initSwankyBoyzFixes() {
     try {
-      console.log('🚀 SwankyBoyz: Initializing dynamic fixes...');
+      // Track if this is the first run
+      if (!window.swankyBoyzInitialized) {
+        console.log('🚀 SwankyBoyz: Initializing dynamic fixes...');
+        window.swankyBoyzInitialized = true;
+      }
       
       createPlaceholderImage();
       fixPrices();
@@ -206,7 +229,11 @@
       fixAmazonLinks();
       addAffiliateTracking();
       
-      console.log('✨ SwankyBoyz: All fixes applied successfully!');
+      // Only log success on first run to reduce console noise
+      if (window.swankyBoyzInitialized && !window.swankyBoyzFirstRunComplete) {
+        console.log('✨ SwankyBoyz: All fixes applied successfully!');
+        window.swankyBoyzFirstRunComplete = true;
+      }
     } catch (error) {
       console.error('❌ SwankyBoyz: Error applying fixes:', error);
     }
