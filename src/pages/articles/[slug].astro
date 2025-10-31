@@ -15,11 +15,14 @@ export function getStaticPaths() {
   }));
 }
 
-// Try to get article from D1 if available (for dynamic rendering)
+// Get article from static props first
 let article = Astro.props.article as Article;
 
-// If running on Cloudflare with D1, try to fetch from database
-if (Astro.locals.runtime?.env?.DB && !article) {
+// If running on Cloudflare with D1 and no static article, fetch from database
+const hasD1 = Astro.locals.runtime?.env?.DB;
+const needsD1Fetch = hasD1 && !article;
+
+if (needsD1Fetch) {
   const { slug } = Astro.params;
   try {
     const dbArticle = await Astro.locals.runtime.env.DB.prepare(

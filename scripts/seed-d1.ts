@@ -31,8 +31,11 @@ import fs from "fs";
      VALUES (?, ?, ?, ?, ?, ?)`
   );
   
+  // Map to store product slug -> database ID mapping
+  const productIdMap = new Map();
+  
   for (const product of products) {
-    insertProduct.run(
+    const result = insertProduct.run(
       product.name,
       product.slug,
       product.brand,
@@ -40,6 +43,7 @@ import fs from "fs";
       product.image,
       product.affiliate_url
     );
+    productIdMap.set(product.slug, result.lastInsertRowid);
   }
   console.log(`✅ Inserted ${products.length} products`);
 
@@ -74,8 +78,10 @@ import fs from "fs";
     );
     
     for (let i = 0; i < relatedProducts.length; i++) {
-      const productId = products.indexOf(relatedProducts[i]) + 1; // Product IDs start at 1
-      insertArticleProduct.run(articleId, productId, i);
+      const productId = productIdMap.get(relatedProducts[i].slug);
+      if (productId) {
+        insertArticleProduct.run(articleId, productId, i);
+      }
     }
   }
   console.log(`✅ Inserted ${articles.length} articles`);
