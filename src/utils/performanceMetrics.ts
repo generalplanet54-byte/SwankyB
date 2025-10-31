@@ -125,6 +125,11 @@ export async function analyzeUnusedCode() {
 
 /**
  * Report a custom metric to analytics
+ * 
+ * Note: Google Analytics 4 (GA4) beacon requests to /g/collect return HTTP 204 No Content.
+ * This is the EXPECTED and CORRECT behavior for successful tracking.
+ * A 204 response confirms that Google's servers have successfully received the tracking data.
+ * This is NOT an error - it's the standard success response for GA4 data collection.
  */
 export function reportCustomMetric(metricName: string, value: number, unit = 'ms') {
   try {

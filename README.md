@@ -188,6 +188,23 @@ Articles are also in the D1 database. To add new articles, you can either add th
 </script>
 ```
 
+#### Understanding GA4 Tracking Responses
+
+**Important:** Google Analytics 4 tracking requests return HTTP status code **204 No Content**. This is **NOT an error** - it's the expected and correct behavior:
+
+- **Status 204** = Successful data collection
+- The 204 response confirms that Google's servers have received and processed your tracking data
+- No response body is needed for tracking beacons, hence "No Content"
+- This applies to all GA4 requests to `/g/collect` endpoint
+
+**What you'll see in browser DevTools:**
+- Network tab will show requests to `https://www.google-analytics.com/g/collect`
+- Status: `204 No Content` (this is SUCCESS, not an error)
+- Request includes: page views, events, Core Web Vitals metrics (CLS, FID, LCP, INP)
+- Timing: The request duration is normal and doesn't block page rendering
+
+**Common misconception:** Some developers mistakenly treat 204 as an error because it's not 200 OK. However, for analytics beacons, 204 is the preferred response as it indicates successful processing without unnecessary response data.
+
 ### Google Search Console
 
 1. Visit [Google Search Console](https://search.google.com/search-console)

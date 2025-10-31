@@ -104,6 +104,9 @@ class SwankyOptimizer {
   }
 
   // Send metrics to analytics
+  // Note: Google Analytics 4 beacon requests return 204 No Content status.
+  // This is EXPECTED behavior and indicates successful data collection.
+  // The 204 response confirms the tracking data was received by GA4 servers.
   sendToAnalytics(metric) {
     if (typeof gtag !== 'undefined') {
       gtag('event', metric.name, {
