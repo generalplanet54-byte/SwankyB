@@ -6,7 +6,7 @@ if (missing.length > 0) {
   console.warn('⚠️  Optional environment variables not set:', missing.join(', '));
   console.warn('These are not required for the current build, but may be needed if Supabase features are enabled.');
 } else {
-  console.log('✓ All optional VITE_* environment variables are present.');
+  console.log('✓ All optional Supabase environment variables are present.');
 }
 console.log('✓ Preflight check passed.');
 process.exit(0);
