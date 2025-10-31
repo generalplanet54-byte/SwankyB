@@ -9,7 +9,7 @@ SwankyB (swankyboyz.com) is a premium men's lifestyle affiliate marketing platfo
 - **Frontend Framework**: React 18 with TypeScript
 - **Build Tool**: Vite 5
 - **Styling**: TailwindCSS 3 with custom configuration
-- **Database**: Cloudflare D1 (SQLite-compatible)
+- **Database**: Cloudflare D1 (SQLite-compatible) for server-side data + Supabase for client-side data
 - **Deployment**: Cloudflare Pages
 - **Routing**: React Router DOM
 - **State Management**: React Context API
@@ -24,7 +24,7 @@ SwankyB (swankyboyz.com) is a premium men's lifestyle affiliate marketing platfo
 │   ├── components/        # Reusable UI components
 │   ├── pages/            # Route pages
 │   ├── contexts/         # React Context providers (Affiliate, Content, Theme)
-│   ├── lib/              # Utilities and Supabase client
+│   ├── lib/              # Utilities (email, SEO, analytics, optimization)
 │   ├── hooks/            # Custom React hooks
 │   ├── layouts/          # Page layouts
 │   └── sections/         # Page sections
@@ -353,9 +353,18 @@ The site is deployed on Cloudflare Pages with D1 database binding.
 ### Environment Variables
 Store in `.env` (local) or Cloudflare Dashboard (production):
 ```
+# Supabase (for client-side data fetching)
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_anon_key
-GOOGLE_SHEET_ID=your_sheet_id  # For sync script
+
+# Authentication (server-side)
+JWT_SECRET=your-jwt-secret-minimum-32-characters
+
+# AI Content Generation (optional)
+ANTHROPIC_API_KEY=your-anthropic-api-key
+
+# Google Sheets Sync (optional, for sync script)
+GOOGLE_SHEET_ID=your_sheet_id
 ```
 
 ### Deployment Workflow
