@@ -224,6 +224,7 @@
         console.log('🚀 SwankyBoyz: Initializing dynamic fixes...');
         window.swankyBoyzInitialized = true;
         
+        // Create placeholder only once
         createPlaceholderImage();
         fixPrices();
         fixImages();
@@ -233,7 +234,7 @@
         console.log('✨ SwankyBoyz: All fixes applied successfully!');
       } else {
         // For subsequent runs, just apply fixes without logging initialization
-        createPlaceholderImage();
+        // No need to recreate placeholder image
         fixPrices();
         fixImages();
         fixAmazonLinks();
