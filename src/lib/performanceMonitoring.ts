@@ -120,7 +120,7 @@ export function observeINP() {
     try {
       const observer = new PerformanceObserver((entryList) => {
         const entries = entryList.getEntries();
-        const maxINP = Math.max(...entries.map((e: any) => e.duration));
+        const maxINP = Math.max(...entries.map((e) => (e as PerformanceEntry & { duration: number }).duration));
         const rating = getRating('INP', maxINP);
         sendToGtag('INP', maxINP, rating);
         console.log(`INP: ${maxINP.toFixed(0)}ms (${rating})`);

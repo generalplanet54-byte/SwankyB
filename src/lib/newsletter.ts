@@ -53,10 +53,11 @@ export const subscribeToNewsletter = async (options: SubscribeOptions): Promise<
 
     const data = await response.json();
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to subscribe';
     return {
       success: false,
-      error: error.message || 'Failed to subscribe',
+      error: errorMessage,
     };
   }
 };
@@ -87,10 +88,11 @@ export const unsubscribeFromNewsletter = async (email: string, reason?: string):
 
     const data = await response.json();
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to unsubscribe';
     return {
       success: false,
-      error: error.message || 'Failed to unsubscribe',
+      error: errorMessage,
     };
   }
 };

@@ -1,8 +1,7 @@
-
-
+import type { CloudflareContext } from '../../types';
 import { verifyJWT, changePassword, setJWTSecret } from '../../auth';
 
-export async function onRequestPost(context: any) {
+export async function onRequestPost(context: CloudflareContext) {
   // Set JWT_SECRET from env for Cloudflare Pages Functions
   setJWTSecret(context.env?.JWT_SECRET || '');
   try {

@@ -1,5 +1,7 @@
+import type { CloudflareContext } from '../types';
+
 // API endpoint to fetch products from D1 database
-export async function onRequestGet(context: any) {
+export async function onRequestGet(context: CloudflareContext) {
   try {
     const db = context.env.DB;
     

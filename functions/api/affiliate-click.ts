@@ -24,7 +24,9 @@ const hashIp = async (ip: string) => {
   return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 };
 
-export async function onRequest(context: any) {
+import type { CloudflareContext } from '../types';
+
+export async function onRequest(context: CloudflareContext) {
   const { request, env } = context;
 
   if (request.method !== 'POST') {

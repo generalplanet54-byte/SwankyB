@@ -1,4 +1,6 @@
-export async function onRequestPost(_context: any) {
+import type { CloudflareContext } from '../types';
+
+export async function onRequestPost(_context: CloudflareContext) {
   const response = new Response(JSON.stringify({ success: true }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }

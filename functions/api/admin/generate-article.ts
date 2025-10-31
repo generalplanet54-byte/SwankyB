@@ -1,4 +1,6 @@
-export async function onRequestPost(context: any) {
+import type { CloudflareContext } from '../../types';
+
+export async function onRequestPost(context: CloudflareContext) {
   const { request, env } = context;
   try {
     const body = await request.json().catch(() => ({}));
