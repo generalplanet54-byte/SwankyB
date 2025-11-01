@@ -1,29 +1,36 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "swankyboyz-astro",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
-    "dev": "vite",
-    "dev:full": "concurrently \"wrangler pages dev --port 8788\" \"vite --port 5173\"",
-    "build": "vite build",
-    "postbuild": "tsx scripts/seed-d1.ts",
-    "lint": "eslint .",
-    "preview": "vite preview",
+    "dev": "astro dev",
+    "build": "astro build",
+    "postbuild": "node scripts/seed-d1.js",
+    "build:prod": "astro build",
+    "preview": "astro preview",
     "preview:pages": "wrangler pages dev dist --port 8788",
+    "lint": "eslint .",
     "generate-sitemap": "node scripts/generate-sitemap.js",
+    "link-media": "node scripts/link-media.js",
+    "seed": "node scripts/seed-d1.js",
     "sync": "tsx scripts/sync-sheets.ts",
     "validate-images": "tsx scripts/validate-images.ts"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.10",
+    "@astrojs/tailwind": "^6.0.2",
     "@supabase/supabase-js": "^2.57.4",
+    "astro": "^5.15.3",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.9.2"
+    "react-router-dom": "^7.9.2",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",

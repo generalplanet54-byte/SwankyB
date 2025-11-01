@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#1a1a1a"/>
+  <text x="400" y="300" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" text-anchor="middle">
+    sunglasses-hero
+  </text>
+  <text x="400" y="340" font-family="Arial, sans-serif" font-size="16" fill="#888888" text-anchor="middle">
+    Placeholder Image
+  </text>
+</svg>

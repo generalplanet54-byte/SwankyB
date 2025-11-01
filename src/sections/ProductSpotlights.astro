@@ -1,6 +1,47 @@
 ---
-import { ProductSpotlightsWithSchema } from '../components/ProductSpotlightsWithSchema';
 import { spotlightProducts } from '../data/spotlightProducts';
 ---
 
-<ProductSpotlightsWithSchema client:load products={spotlightProducts} />
+<section class="py-16 bg-[#1a1a1a]">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-bold font-display text-champagne mb-8 text-center">Featured Products</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {spotlightProducts.map((product) => (
+        <article class="bg-[#161616] border border-off-white/10 rounded-lg overflow-hidden">
+          {product.image && (
+            <img 
+              src={product.image} 
+              alt={product.name}
+              class="w-full h-48 object-cover"
+              loading="lazy"
+            />
+          )}
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-off-white mb-2">{product.name}</h3>
+            {product.brand && (
+              <p class="text-sm text-off-white/60 mb-2">{product.brand}</p>
+            )}
+            {product.description && (
+              <p class="text-off-white/80 mb-4 text-sm">{product.description}</p>
+            )}
+            {product.price && (
+              <p class="text-lg font-bold text-champagne mb-4">
+                ${product.price}
+              </p>
+            )}
+            {product.amazon_url && (
+              <a 
+                href={product.amazon_url}
+                target="_blank"
+                rel="nofollow noopener"
+                class="inline-block bg-champagne text-charcoal px-6 py-2 rounded-lg hover:bg-champagne/80 transition font-semibold"
+              >
+                View on Amazon
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
