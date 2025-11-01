@@ -17,6 +17,7 @@
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "sync": "tsx scripts/sync-sheets.ts",
     "import-to-sheets": "tsx scripts/import-to-sheets.ts",
+    "download-images": "tsx scripts/download-product-images.ts",
     "validate-images": "tsx scripts/validate-images.ts"
   },
   "dependencies": {
