@@ -31,8 +31,8 @@ const Footer: React.FC = () => {
         if (!mounted) return;
         setIsAdmin(res.ok);
       } catch (err) {
+        // Silently handle the error - this is expected when not logged in as admin
         if (!mounted) return;
-        console.warn('Admin authentication API not available in development mode:', err);
         setIsAdmin(false);
       }
     })();
