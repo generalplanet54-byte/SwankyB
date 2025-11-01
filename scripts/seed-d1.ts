@@ -77,7 +77,7 @@ async function seedDatabase() {
 }
 
 // Run seed if called directly
-if (require.main === module) {
+if (process.argv[1] && process.argv[1].includes('seed-d1.ts')) {
   seedDatabase().catch(console.error);
 }
 

@@ -132,7 +132,7 @@ async function syncToDB() {
 }
 
 // Run sync if called directly
-if (require.main === module) {
+if (process.argv[1] && process.argv[1].includes('sync-sheets.ts')) {
   syncToDB().catch(console.error);
 }
 

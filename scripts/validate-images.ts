@@ -112,7 +112,7 @@ async function validateAllImages(): Promise<void> {
 }
 
 // Run validation if called directly
-if (require.main === module) {
+if (process.argv[1] && process.argv[1].includes('validate-images.ts')) {
   validateAllImages().catch(console.error);
 }
 
