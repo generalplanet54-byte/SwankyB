@@ -135,32 +135,38 @@ const staticRoutes = [
   {
     url: '/',
     changefreq: 'daily',
-    priority: '1.0'
+    priority: '1.0',
+    lastmod: normaliseDate(TODAY)
   },
   {
     url: '/articles',
     changefreq: 'daily',
-    priority: '0.8'
+    priority: '0.8',
+    lastmod: normaliseDate(TODAY)
   },
   {
     url: '/privacy',
     changefreq: 'monthly',
-    priority: '0.4'
+    priority: '0.4',
+    lastmod: normaliseDate(TODAY)
   },
   {
     url: '/terms',
     changefreq: 'monthly',
-    priority: '0.4'
+    priority: '0.4',
+    lastmod: normaliseDate(TODAY)
   },
   {
     url: '/affiliate-disclosure',
     changefreq: 'monthly',
-    priority: '0.4'
+    priority: '0.4',
+    lastmod: normaliseDate(TODAY)
   },
   {
     url: '/contact',
     changefreq: 'monthly',
-    priority: '0.4'
+    priority: '0.4',
+    lastmod: normaliseDate(TODAY)
   }
 ];
 
