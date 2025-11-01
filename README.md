@@ -109,11 +109,26 @@ git push -u origin main
    Node version: 18 or higher
    ```
 
-4. **Add D1 Database Binding**
-   In your Pages project settings, go to **Settings > Functions > D1 database bindings**.
-   - Click **Add binding**.
+4. **Configure D1 Database Binding**
+   
+   **Note:** The D1 database is already configured in `wrangler.toml`. You just need to:
+   
+   a. **Run Migrations** (if not already done):
+   ```bash
+   # Apply all migrations in order
+   wrangler d1 execute swankyboyz_d1_final --file=./migrations/d1/001_initial_schema.sql
+   wrangler d1 execute swankyboyz_d1_final --file=./migrations/d1/002_seed_first_articles.sql
+   # Continue with remaining migration files (003-010)
+   # See migrations/d1/ directory for all files
+   ```
+   
+   b. **Add binding in Cloudflare Pages:**
+   - Go to **Settings > Functions > D1 database bindings**
+   - Click **Add binding**
    - **Variable name**: `DB`
-   - **D1 database**: Select your D1 database.
+   - **D1 database**: Select `swankyboyz_d1_final`
+   
+   **Note:** If you need to use a different database, see `D1_DATABASE_SETUP.md` for instructions on creating and configuring a new D1 database.
 
 5. **Deploy**
    - Click **"Save and Deploy"**
