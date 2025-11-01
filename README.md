@@ -162,12 +162,40 @@ All content is optimized for search engines:
 
 ## Content Management
 
-### Adding New Products
+### Google Sheets Integration 🚀
 
+This site now supports **automated content management** through Google Sheets! Update your content from anywhere and sync it automatically.
+
+#### Quick Setup
+```bash
+# Sync content from Google Sheets
+npm run sync
+
+# Validate images and create placeholders
+npm run validate-images
+
+# Build with latest content
+npm run build
+```
+
+#### Full Setup Guide
+For complete Google Sheets setup instructions, see: [**GOOGLE_SHEETS_SETUP.md**](./GOOGLE_SHEETS_SETUP.md)
+
+**Features:**
+- ✅ Edit content in familiar Google Sheets interface
+- ✅ Automatic weekly sync via GitHub Actions
+- ✅ Image validation with placeholder generation
+- ✅ Real-time content updates without code changes
+- ✅ Team collaboration on content creation
+
+### Manual Database Management
+
+For advanced users, you can still manage content directly:
+
+#### Adding New Products
 Products are stored in the D1 database. To add new products, you can either add them directly to the database or create a new migration file in `migrations/d1`.
 
-### Adding New Articles
-
+#### Adding New Articles
 Articles are also in the D1 database. To add new articles, you can either add them directly to the database or create a new migration file in `migrations/d1`.
 
 ## Analytics Setup
