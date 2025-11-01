@@ -7,7 +7,9 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "wrangler pages dev dist --port=8788 --d1=DB --local",
+    "dev:vite": "vite",
+    "dev:build": "npm run build && npm run dev",
     "dev:full": "concurrently \"wrangler pages dev --port 8788\" \"vite --port 5173\"",
     "build": "vite build",
     "postbuild": "tsx scripts/seed-d1.ts",
@@ -54,6 +56,6 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",
     "vite": "^5.4.2",
-    "wrangler": "^4.42.0"
+    "wrangler": "^4.45.3"
   }
 }
