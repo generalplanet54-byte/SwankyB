@@ -1,4 +1,4 @@
-
+import type { CloudflareContext } from '../types';
 import { authenticateUser, createJWT, setJWTSecret } from '../auth';
 
 /**
@@ -6,7 +6,7 @@ import { authenticateUser, createJWT, setJWTSecret } from '../auth';
  * Authenticates user and sets secure HttpOnly cookie with JWT token
  * Request body: { username: string, password: string }
  */
-export async function onRequestPost(context: any) {
+export async function onRequestPost(context: CloudflareContext) {
   // Set JWT_SECRET from Cloudflare Pages environment variables
   const jwtSecret = context.env?.JWT_SECRET;
   

@@ -4,7 +4,7 @@
  */
 
 interface SchemaMarkupProps {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**

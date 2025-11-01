@@ -1,3 +1,5 @@
+import type { CloudflareEnv, CloudflareContext } from '../types';
+
 /**
  * Newsletter API Endpoint
  * POST /api/newsletter - Subscribe email to newsletter
@@ -5,21 +7,6 @@
  * 
  * Handles email validation, duplicate prevention, and external service integration
  */
-
-interface NewsletterPayload {
-  email: string;
-  firstName?: string;
-  lastName?: string;
-  source?: string;
-  sourcePage?: string;
-  categories?: string[];
-  consent?: boolean;
-}
-
-interface UnsubscribePayload {
-  email: string;
-  reason?: string;
-}
 
 const MAX_TEXT_LENGTH = 512;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,18 +24,10 @@ const validateEmail = (email: string): boolean => {
   return EMAIL_REGEX.test(email.toLowerCase());
 };
 
-const hashEmail = async (email: string): Promise<string> => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(email.toLowerCase());
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-};
-
 const sendToEmailService = async (
   email: string,
-  payload: any,
-  env: any
+  payload: Record<string, unknown>,
+  env: CloudflareEnv
 ): Promise<{ success: boolean; externalId?: string; error?: string }> => {
   /**
    * Integration point for external email services
@@ -165,12 +144,13 @@ const sendToEmailService = async (
     }
 
     return { success: false, error: `Unknown email service: ${SERVICE}` };
-  } catch (error: any) {
-    return { success: false, error: `Email service error: ${String(error.message || error)}` };
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return { success: false, error: `Email service error: ${errorMessage}` };
   }
 };
 
-export async function onRequest(context: any) {
+export async function onRequest(context: CloudflareContext) {
   const { request, env } = context;
 
   // Handle CORS
@@ -197,10 +177,10 @@ export async function onRequest(context: any) {
     });
   }
 
-  let payload: any = null;
+  let payload: Record<string, unknown> | null = null;
   try {
-    payload = await request.json();
-  } catch (error) {
+    payload = await request.json() as Record<string, unknown>;
+  } catch (_error) {
     return new Response(JSON.stringify({ error: 'Invalid JSON payload' }), {
       status: 400,
       headers: {
@@ -241,7 +221,7 @@ export async function onRequest(context: any) {
     const source = sanitizeText(payload.source, 100) || 'website';
     const sourcePage = sanitizeText(payload.sourcePage, 500);
     const categories = Array.isArray(payload.categories)
-      ? payload.categories.slice(0, 10).map((c: any) => sanitizeText(c, 50)).filter(Boolean)
+      ? payload.categories.slice(0, 10).map((c: unknown) => sanitizeText(c, 50)).filter(Boolean)
       : [];
     const consent = payload.consent === true;
     const ip = request.headers.get('CF-Connecting-IP');
@@ -332,10 +312,11 @@ export async function onRequest(context: any) {
           'Access-Control-Allow-Origin': '*',
         },
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Newsletter subscription error:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
       return new Response(
-        JSON.stringify({ error: `Subscription error: ${String(error.message || error)}` }),
+        JSON.stringify({ error: `Subscription error: ${errorMessage}` }),
         {
           status: 500,
           headers: {
@@ -385,9 +366,10 @@ export async function onRequest(context: any) {
           'Access-Control-Allow-Origin': '*',
         },
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Unsubscribe error:', error);
-      return new Response(JSON.stringify({ error: `Unsubscribe error: ${String(error.message || error)}` }), {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      return new Response(JSON.stringify({ error: `Unsubscribe error: ${errorMessage}` }), {
         status: 500,
         headers: {
           'Content-Type': 'application/json',

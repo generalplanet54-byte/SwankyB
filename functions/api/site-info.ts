@@ -1,6 +1,7 @@
-export const onRequest = async (context: any) => {
+import type { CloudflareContext } from '../types';
+
+export const onRequest = async (context: CloudflareContext) => {
   const { request } = context;
-  const url = new URL(request.url);
 
   // Basic site information for AI crawlers
   const siteInfo = {

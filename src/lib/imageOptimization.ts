@@ -264,7 +264,7 @@ export const reportImageMetrics = () => {
         }
       });
       observer.observe({ entryTypes: ['largest-contentful-paint'] });
-    } catch (e) {
+    } catch (_e) {
       console.warn('LCP Observer not supported');
     }
 
@@ -282,7 +282,7 @@ export const reportImageMetrics = () => {
         }
       });
       clsObserver.observe({ entryTypes: ['layout-shift'] });
-    } catch (e) {
+    } catch (_e) {
       console.warn('CLS Observer not supported');
     }
   }

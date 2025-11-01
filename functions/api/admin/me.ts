@@ -1,4 +1,4 @@
-
+import type { CloudflareContext } from '../../types';
 import { verifyJWT, setJWTSecret } from '../../auth';
 
 /**
@@ -6,7 +6,7 @@ import { verifyJWT, setJWTSecret } from '../../auth';
  * Returns the authenticated user's information from JWT cookie
  * Requires valid auth-token cookie with non-expired JWT
  */
-export async function onRequestGet(context: any) {
+export async function onRequestGet(context: CloudflareContext) {
   // Set JWT_SECRET from Cloudflare Pages environment variables
   const jwtSecret = context.env?.JWT_SECRET;
   

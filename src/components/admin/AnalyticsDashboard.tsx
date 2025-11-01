@@ -12,7 +12,7 @@ const AnalyticsDashboard: React.FC = () => {
     avgTimeOnPage: '2:45'
   };
 
-  const chartData = [
+  const _chartData = [
     { month: 'Jan', views: 12000, clicks: 340, revenue: 890 },
     { month: 'Feb', views: 15000, clicks: 420, revenue: 1120 },
     { month: 'Mar', views: 18000, clicks: 510, revenue: 1340 },

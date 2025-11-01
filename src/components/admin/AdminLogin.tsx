@@ -33,8 +33,9 @@ const AdminLogin: React.FC = () => {
         const json = await res.json().catch(() => ({}));
         setError(json.error || 'Login failed');
       }
-    } catch (err: any) {
-      setError(err.message || 'Network error');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Network error';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

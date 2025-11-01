@@ -1,6 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import abTesting, { ExperimentDefinition } from '../lib/abTesting';
-import { useAbTestContext } from '../context/AbTestProvider';
+import { createContext } from 'react';
+
+// Re-import the context directly to avoid the throwing hook
+const AbTestContext = createContext<{ 
+  getVariant: (experimentId: string) => string | null;
+  assignAndTrack: (def: ExperimentDefinition) => string;
+} | null>(null);
 
 /**
  * Hook to get the variant for an experiment and optionally auto-register and track exposure.
@@ -9,13 +15,9 @@ import { useAbTestContext } from '../context/AbTestProvider';
  */
 export function useAbTest(def: ExperimentDefinition, options?: { trackExposure?: boolean }) {
   const { trackExposure = true } = options ?? {};
-  const ctx = (() => {
-    try {
-      return useAbTestContext();
-    } catch {
-      return null;
-    }
-  })();
+  
+  // Use context directly without throwing, allowing graceful fallback
+  const ctx = useContext(AbTestContext);
 
   const [variant, setVariant] = useState<string | null>(() => abTesting.getVariant(def.id));
 

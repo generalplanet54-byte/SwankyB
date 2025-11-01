@@ -86,7 +86,7 @@ async function getKey(secret: string, usage: KeyUsage): Promise<CryptoKey> {
   );
 }
 
-export async function createJWT(payload: Record<string, any>): Promise<string> {
+export async function createJWT(payload: Record<string, unknown>): Promise<string> {
   const header = { alg: "HS256", typ: "JWT" };
   const iat = Math.floor(Date.now() / 1000);
   const exp = iat + 24 * 60 * 60; // 24h expiry
@@ -105,7 +105,7 @@ export async function createJWT(payload: Record<string, any>): Promise<string> {
   return `${unsigned}.${signatureBase64}`;
 }
 
-export async function verifyJWT(token: string): Promise<any> {
+export async function verifyJWT(token: string): Promise<Record<string, unknown>> {
   const [headerB64, bodyB64, signatureB64] = token.split(".");
   if (!headerB64 || !bodyB64 || !signatureB64) {
     throw new Error("Invalid token format");

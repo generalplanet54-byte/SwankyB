@@ -1,5 +1,7 @@
+import type { CloudflareContext } from '../types';
+
 // API endpoint to fetch products from D1 database
-export async function onRequestGet(context: any) {
+export async function onRequestGet(context: CloudflareContext) {
   try {
     const db = context.env.DB;
     
@@ -17,7 +19,7 @@ export async function onRequestGet(context: any) {
     const limit = parseInt(url.searchParams.get('limit') || '100');
     const offset = parseInt(url.searchParams.get('offset') || '0');
 
-    let query = `
+    const query = `
       SELECT 
         p.id,
         p.name,
