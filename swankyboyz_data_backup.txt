@@ -1,0 +1,28 @@
+┌──────────────────┐
+│       info       │
+├──────────────────┤
+│ === PRODUCTS === │
+└──────────────────┘
+┌──────────┬────────────────────────┬────────────┬─────────────────────────────────────────────────────────────┬─────────────────────┬───────────────┐
+│    id    │          name          │   brand    │                         description                         │        image        │ affiliate_url │
+├──────────┼────────────────────────┼────────────┼─────────────────────────────────────────────────────────────┼─────────────────────┼───────────────┤
+│ sample-1 │ Premium Leather Wallet │ SwankyBoyz │ Handcrafted genuine leather wallet for the modern gentleman │ wallet-sample.jpg   │ #             │
+│ sample-2 │ Classic Watch          │ TimeCore   │ Elegant timepiece that complements any outfit               │ watch-sample.jpg    │ #             │
+│ sample-3 │ Grooming Kit           │ BarberPro  │ Complete grooming essentials for daily care                 │ grooming-sample.jpg │ #             │
+└──────────┴────────────────────────┴────────────┴─────────────────────────────────────────────────────────────┴─────────────────────┴───────────────┘
+┌───────────┐
+│ separator │
+├───────────┤
+│           │
+└───────────┘
+┌──────────────────┐
+│       info       │
+├──────────────────┤
+│ === ARTICLES === │
+└──────────────────┘
+┌───────────┬────────────────────────────────────┬──────────────────────────────┬────────────┐
+│    id     │               title                │             slug             │    date    │
+├───────────┼────────────────────────────────────┼──────────────────────────────┼────────────┤
+│ article-1 │ The Modern Gentleman's Style Guide │ modern-gentleman-style-guide │ 2024-01-15 │
+│ article-2 │ Top 10 Grooming Essentials         │ top-10-grooming-essentials   │ 2024-01-10 │
+└───────────┴────────────────────────────────────┴──────────────────────────────┴────────────┘

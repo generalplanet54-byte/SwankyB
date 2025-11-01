@@ -43,7 +43,7 @@ async function validateImages(images: string[]): Promise<void> {
 async function syncToDB() {
   try {
     // Validation checks before starting sync
-    if (SHEET_ID === "1zP27ODUO6tB6x636DnHALUzhvhrqNjNLKND7fRz-zjk") {
+    if (SHEET_ID === "YOUR_SHEET_ID_HERE") {
       throw new Error("Please set your GOOGLE_SHEET_ID environment variable");
     }
 
