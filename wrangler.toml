@@ -9,10 +9,11 @@ pages_build_output_dir = "dist"
 # 3. Uncomment the lines below and replace "your-d1-database-id" with the actual database_id
 # 4. Run migrations: wrangler d1 execute swankyboyz_d1_final --file=./migrations/d1/001_initial_schema.sql
 
-[[d1_databases]]
-binding = "DB"
-database_name = "swankyboyz_d1_final"
-# database_id = "swankyboyz_d1_final"
 
+"d1_databases": [{
+    "binding": "DB",
+    "database_name": "swankyboyz_d1_final",
+    "database_id": "fb8ab815-af3a-4102-ab39-aeabcb829008"
+ }]
 # Build configuration is not supported in wrangler.toml for Pages
 # Build command should be configured in Cloudflare Pages dashboard or package.json
