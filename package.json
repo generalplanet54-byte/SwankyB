@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
     "dev": "vite",
     "dev:full": "concurrently \"wrangler pages dev --port 8788\" \"vite --port 5173\"",
-    "build": "vite build",
+    "build": "node scripts/generate-sitemap.js && vite build",
     "postbuild": "tsx scripts/seed-d1.ts",
     "lint": "eslint .",
     "preview": "vite preview",
