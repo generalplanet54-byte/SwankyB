@@ -1,0 +1,48 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const fullTitle = `${title} | SwankyBoyz`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    
+    <!-- Basic SEO -->
+    <meta property="og:title" content={fullTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content="article" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    {description && <meta name="twitter:description" content={description} />}
+  </head>
+  <body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <nav class="border-b border-gray-200 dark:border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 py-4">
+        <a href="/" class="text-2xl font-bold">SwankyBoyz</a>
+      </div>
+    </nav>
+    
+    <main>
+      <slot />
+    </main>
+    
+    <footer class="border-t border-gray-200 dark:border-gray-800 mt-16">
+      <div class="max-w-7xl mx-auto px-4 py-8 text-center text-gray-600 dark:text-gray-400">
+        <p>&copy; 2025 SwankyBoyz. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
