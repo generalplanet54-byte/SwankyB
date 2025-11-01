@@ -9,7 +9,7 @@ import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import * as fs from "fs";
 
-const SHEET_ID = process.env.GOOGLE_SHEET_ID || "YOUR_SHEET_ID_HERE";
+const SHEET_ID = process.env.GOOGLE_SHEET_ID || "1zP27ODUO6tB6x636DnHALUzhvhrqNjNLKND7fRz-zjk";
 
 async function authorize() {
   const auth = new google.auth.GoogleAuth({
@@ -43,7 +43,7 @@ async function validateImages(images: string[]): Promise<void> {
 async function syncToDB() {
   try {
     // Validation checks before starting sync
-    if (SHEET_ID === "YOUR_SHEET_ID_HERE") {
+    if (SHEET_ID === "1zP27ODUO6tB6x636DnHALUzhvhrqNjNLKND7fRz-zjk") {
       throw new Error("Please set your GOOGLE_SHEET_ID environment variable");
     }
 
