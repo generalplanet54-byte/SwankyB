@@ -82,7 +82,14 @@ Image: (leave blank - auto-downloaded)
 Run these commands:
 
    npm run sync              # Pull from Google Sheets
-   npm run download-images   # Download product images
+   npm run download-imat
+
+### Automated Product Image Downloader
+A script that automatically fetches **REAL product images** from Amazon for your affiliate marketing site. No more generic stock photos - only actual product images that match exactly what you're promoting!
+
+## Key Features
+
+### ges   # Download product images
    npm run dev              # Preview your site
 
 ┌──────────────────────────────────────────────────────────────┐

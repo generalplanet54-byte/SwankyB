@@ -2,10 +2,6 @@ name = "swankyb"
 compatibility_date = "2025-10-13"
 pages_build_output_dir = "dist"
 
-# Build command for Cloudflare Pages
-[build]
-command = "npm run build"
-
 # D1 Database binding
 # To enable D1 database:
 # 1. Create a D1 database: wrangler d1 create swankyboyz_d1_final
