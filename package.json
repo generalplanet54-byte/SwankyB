@@ -7,7 +7,7 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "dev": "wrangler pages dev dist --port=8788 --d1=DB --local",
+    "dev": "wrangler pages dev dist --port=8788 --d1=DB --local --persist-to=.wrangler/state",
     "dev:vite": "vite",
     "dev:build": "npm run build && npm run dev",
     "dev:full": "concurrently \"wrangler pages dev --port 8788\" \"vite --port 5173\"",

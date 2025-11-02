@@ -11,8 +11,8 @@ pages_build_output_dir = "dist"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "swankyboyz_d1_final"
-database_id = "fb8ab815-af3a-4102-ab39-aeabcb829008"
+database_name = "swankyb_content"
+database_id = "bfc16265-30bd-4bcf-8a72-f2a5a5baf61a"
 
 # Build configuration is not supported in wrangler.toml for Pages
 # Build command should be configured in Cloudflare Pages dashboard or package.json
