@@ -28,8 +28,17 @@ dist-ssr
 scripts/credentials.json
 credentials.json
 
-# Database files (local development)
+# Local database files
 *.db
 *.db-journal
 *.sqlite
 *.sqlite3
+
+# Wrangler temp files
+.wrangler/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
