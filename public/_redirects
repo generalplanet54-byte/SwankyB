@@ -1,11 +1,6 @@
-# Cloudflare Pages automatically handles SPA routing
-# Only add specific redirects if needed (e.g., legacy URLs)
+# Single Page Application (SPA) Routing for React
+# Cloudflare Pages automatically handles this, but we explicitly define it
+# to avoid warnings and ensure consistent behavior
 
-# API routes should not redirect
-/api/* 200
-
-# Static assets should not redirect  
-/assets/* 200
-
-# Everything else goes to index.html for React Router (SPA mode)
-/* /index.html 200
+# SPA fallback: all non-API, non-asset routes serve index.html
+/*    /index.html   200
