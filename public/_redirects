@@ -1,15 +1,11 @@
-# React Router pages - catch-all fallback
-/categories /index.html 200
-/journal /index.html 200
-/articles /index.html 200
-/category/* /index.html 200
-/article/* /index.html 200
-/admin/* /index.html 200
-/privacy /index.html 200
-/terms /index.html 200
-/affiliate-disclosure /index.html 200
-/contact /index.html 200
-/test-fixes /index.html 200
+# Cloudflare Pages automatically handles SPA routing
+# Only add specific redirects if needed (e.g., legacy URLs)
 
-# SPA fallback - catch-all for React Router
+# API routes should not redirect
+/api/* 200
+
+# Static assets should not redirect  
+/assets/* 200
+
+# Everything else goes to index.html for React Router (SPA mode)
 /* /index.html 200
