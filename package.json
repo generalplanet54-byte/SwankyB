@@ -1,5 +1,5 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "swankyboyz",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -38,7 +38,6 @@
     "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.18",
     "concurrently": "^9.2.1",
     "eslint": "^9.9.1",
@@ -55,7 +54,6 @@
     "tsx": "^4.19.2",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",
-    "vite": "^5.4.2",
     "wrangler": "^4.45.3"
   }
 }
