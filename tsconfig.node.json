@@ -18,5 +18,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["astro.config.mjs"]
+  "include": [
+    "astro.config.mjs",
+    "scripts/**/*",
+    "*.config.js",
+    "*.config.mjs",
+    "*.config.ts"
+  ]
 }
