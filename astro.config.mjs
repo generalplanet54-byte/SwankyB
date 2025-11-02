@@ -18,8 +18,16 @@ export default defineConfig({
       extend: {
         exclude: [{ pattern: '/assets/*' }]
       }
+    },
+    platformProxy: {
+      enabled: false
     }
   }),
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/noop'
+    }
+  },
   vite: {
     resolve: {
       alias: {
