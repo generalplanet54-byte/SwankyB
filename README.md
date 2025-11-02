@@ -1,6 +1,6 @@
 # Premium Affiliate Marketing Website
 
-A high-performance affiliate marketing platform featuring SEO-optimized content, product reviews, and seamless Amazon affiliate integration. Built with React, TypeScript, Vite, Tailwind CSS, and Cloudflare D1.
+A high-performance affiliate marketing platform featuring SEO-optimized content, product reviews, and seamless Amazon affiliate integration. Built with Astro, React, TypeScript, Tailwind CSS, and Cloudflare D1.
 
 ## Features
 
@@ -8,16 +8,16 @@ A high-performance affiliate marketing platform featuring SEO-optimized content,
 - **Database-Driven**: All products and articles stored in Cloudflare D1 for easy management
 - **Responsive Design**: Beautiful, modern design that works perfectly on all devices
 - **Amazon Affiliate Integration**: Automatic affiliate link tracking and management
-- **Performance Optimized**: Fast page loads with Vite and optimized images
+- **Performance Optimized**: Fast page loads with Astro SSR and optimized images
 - **Dark Mode Support**: Automatic theme switching based on user preference
 
 ## Tech Stack
 
-- **Frontend**: React 18, TypeScript, Tailwind CSS
-- **Build Tool**: Vite
+- **Framework**: Astro (SSR with Cloudflare adapter)
+- **UI Library**: React 18, TypeScript, Tailwind CSS
 - **Database**: Cloudflare D1
 - **Icons**: Lucide React
-- **Routing**: React Router DOM
+- **Deployment**: Cloudflare Pages
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ This project uses Cloudflare D1. The `wrangler.toml` file is configured to use a
 npm run dev
 ```
 
-This will start the Vite development server and the Wrangler server for Cloudflare functions and D1 access. Visit `http://localhost:8788` to see your site.
+This will start the Astro development server. Visit `http://localhost:4321` to see your site.
 
 ### 4. Build for Production
 
@@ -278,13 +278,13 @@ npm run build
 ```
 Check the error messages and fix type issues.
 
-### Supabase Connection Issues
+### Database Connection Issues
 
-**"Failed to fetch"**
-- Verify VITE_SUPABASE_URL is correct
-- Check VITE_SUPABASE_ANON_KEY is valid
-- Ensure RLS policies allow public read access
-- Check browser console for CORS errors
+**"Failed to fetch" or empty data**
+- Verify Cloudflare D1 database is properly initialized
+- Run database migrations: `npx wrangler d1 execute swankyb_content --file=./migrations/d1/001_initial_schema.sql --remote`
+- Check that the database binding is configured in `wrangler.toml`
+- Review Cloudflare Pages function logs for errors
 
 ### Deployment Issues
 
