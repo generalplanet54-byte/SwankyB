@@ -3,8 +3,8 @@ import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = async ({ request, locals }) => {
   try {
-    // Access the D1 database from Astro's runtime
-    const db = locals.runtime?.env?.DB;
+    // Access the D1 database from Cloudflare runtime
+    const db = locals.runtime?.env?.DB || (locals as any).DB;
     
     if (!db) {
       return new Response(JSON.stringify({ 
