@@ -92,6 +92,11 @@ export function observeFCP() {
 export function observeCLS() {
   if ('PerformanceObserver' in globalThis) {
     try {
+      // Check if layout-shift is supported before observing
+      if (!PerformanceObserver.supportedEntryTypes?.includes('layout-shift')) {
+        return null;
+      }
+      
       let clsValue = 0;
       const observer = new PerformanceObserver((entryList) => {
         for (const entry of entryList.getEntries()) {
@@ -105,7 +110,8 @@ export function observeCLS() {
       observer.observe({ entryTypes: ['layout-shift'] });
       return observer;
     } catch (e) {
-      console.warn('CLS observer not supported');
+      // Silently ignore if not supported
+      return null;
     }
   }
   return null;

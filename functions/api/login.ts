@@ -90,9 +90,14 @@ export async function onRequestPost(context: any) {
     
     // Set secure HTTP-only cookie with JWT token
     // Note: In production, ensure domain matches your actual domain
+    const isProduction = context.request.url.includes('swankyboyz.com');
+    const cookieFlags = isProduction 
+      ? 'HttpOnly; Secure; SameSite=Strict'
+      : 'HttpOnly; SameSite=Lax'; // Remove Secure flag for localhost
+    
     response.headers.set(
       'Set-Cookie', 
-      `auth-token=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=86400; Path=/`
+      `auth-token=${token}; ${cookieFlags}; Max-Age=86400; Path=/`
     );
     
     return response;
