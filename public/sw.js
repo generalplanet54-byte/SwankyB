@@ -1,7 +1,7 @@
 // SwankyBoyz Service Worker
 // Provides offline functionality and caching for better performance
 
-const CACHE_NAME = 'swankyboyz-v1';
+const CACHE_NAME = 'swankyboyz-v2';
 const urlsToCache = [
   '/',
   '/categories',
@@ -35,7 +35,8 @@ self.addEventListener('fetch', (event) => {
         }
 
         return fetch(event.request).then((response) => {
-          // Check if we received a valid response
+          // Check if we received a valid response  
+          // Don't cache 404s or other error responses
           if (!response || response.status !== 200 || response.type !== 'basic') {
             return response;
           }

@@ -1,0 +1,409 @@
+------
+
+import Layout from '../../layouts/Layout.astro';import Layout from '../../layouts/Layout.astro';
+
+import { launchArticles } from '../../data/launchArticles';import { launchArticles } from '../../data/launchArticles';
+
+import { launchProducts } from '../../data/launchProducts';import { launchProducts } from '../../data/launchProducts';
+
+import { slugify } from '../../lib/slugify';import { slugify } from '../../lib/slugify';
+
+
+
+export function getStaticPaths() {export function getStaticPaths() {
+
+  // Get unique categories from articles  // Get unique categories from articles
+
+  const articleCategories = [...new Set(launchArticles.map(a => a.category))];  const articleCategories = [...new Set(launchArticles.map(a => a.category))];
+
+    
+
+  // Get unique categories from products  // Get unique categories from products
+
+  const productCategories = [...new Set(launchProducts.map(p => p.category).filter(Boolean))];  const productCategories = [...new Set(launchProducts.map(p => p.category).filter(Boolean))];
+
+    
+
+  // Combine and deduplicate  // Combine and deduplicate
+
+  const allCategories = [...new Set([...articleCategories, ...productCategories])];  const allCategories = [...new Set([...articleCategories, ...productCategories])];
+
+    
+
+  return allCategories.map(category => ({  return allCategories.map(category => ({
+
+    params: { slug: slugify(category) },    params: { slug: slugify(category) },
+
+    props: { category }    props: { category }
+
+  }));  }));
+
+}}
+
+
+
+const { category } = Astro.props;const { category } = Astro.props;
+
+const { slug } = Astro.params;const { slug } = Astro.params;
+
+
+
+// Filter articles and products for this category// Filter articles and products for this category
+
+const categoryArticles = launchArticles.filter(article => slugify(article.category) === slug);const categoryArticles = launchArticles.filter(article => slugify(article.category) === slug);
+
+const categoryProducts = launchProducts.filter(product => product.category && slugify(product.category) === slug);const categoryProducts = launchProducts.filter(product => product.category && slugify(product.category) === slug);
+
+
+
+// Breadcrumb structured data// Breadcrumb structured data
+
+const breadcrumbStructuredData = {const breadcrumbStructuredData = {
+
+  '@context': 'https://schema.org',  '@context': 'https://schema.org',
+
+  '@type': 'BreadcrumbList',  '@type': 'BreadcrumbList',
+
+  itemListElement: [  itemListElement: [
+
+    {    {
+
+      '@type': 'ListItem',      '@type': 'ListItem',
+
+      position: 1,      position: 1,
+
+      name: 'Home',      name: 'Home',
+
+      item: 'https://swankyboyz.com/'      item: 'https://swankyboyz.com/'
+
+    },    },
+
+    {    {
+
+      '@type': 'ListItem',      '@type': 'ListItem',
+
+      position: 2,      position: 2,
+
+      name: 'Articles',      name: 'Articles',
+
+      item: 'https://swankyboyz.com/articles'      item: 'https://swankyboyz.com/articles'
+
+    },    },
+
+    {    {
+
+      '@type': 'ListItem',      '@type': 'ListItem',
+
+      position: 3,      position: 3,
+
+      name: category,      name: category,
+
+      item: `https://swankyboyz.com/category/${slug}`      item: `https://swankyboyz.com/category/${slug}`
+
+    }    }
+
+  ]  ]
+
+};};
+
+
+
+// Collection page structured data// Collection page structured data
+
+const collectionStructuredData = {const collectionStructuredData = {
+
+  '@context': 'https://schema.org',  '@context': 'https://schema.org',
+
+  '@type': 'CollectionPage',  '@type': 'CollectionPage',
+
+  name: `${category} Category`,  name: `${category} Category`,
+
+  url: `https://swankyboyz.com/category/${slug}`,  url: `https://swankyboyz.com/category/${slug}`,
+
+  description: `Discover the latest products, reviews, and insights in ${category}.`,  description: `Discover the latest products, reviews, and insights in ${category}.`,
+
+  breadcrumb: breadcrumbStructuredData  breadcrumb: breadcrumbStructuredData
+
+};};
+
+
+
+// Article list structured data// Article list structured data
+
+const itemListStructuredData = categoryArticles.length > 0 ? {const itemListStructuredData = categoryArticles.length > 0 ? {
+
+  '@context': 'https://schema.org',  '@context': 'https://schema.org',
+
+  '@type': 'ItemList',  '@type': 'ItemList',
+
+  name: `${category} Articles`,  name: `${category} Articles`,
+
+  itemListElement: categoryArticles.map((article, index) => ({  itemListElement: categoryArticles.map((article, index) => ({
+
+    '@type': 'ListItem',    '@type': 'ListItem',
+
+    position: index + 1,    position: index + 1,
+
+    name: article.title,    name: article.title,
+
+    url: `https://swankyboyz.com/articles/${article.slug}`    url: `https://swankyboyz.com/articles/${article.slug}`
+
+  }))  }))
+
+} : null;} : null;
+
+
+
+const structuredDataArray = [collectionStructuredData, itemListStructuredData].filter(Boolean);const structuredDataArray = [collectionStructuredData, itemListStructuredData].filter(Boolean);
+
+------
+
+
+
+<Layout<Layout
+
+  title={`${category} | SwankyBoyz`}  title={`${category} | SwankyBoyz`}
+
+  description={`Discover the latest products, reviews, and insights in ${category}.`}  description={`Discover the latest products, reviews, and insights in ${category}.`}
+
+  canonical={`/category/${slug}`}  canonical={`/category/${slug}`}
+
+  structuredData={structuredDataArray}  structuredData={structuredDataArray}
+
+>>
+
+  <main class="bg-charcoal py-24">  <main class="bg-charcoal py-24">
+
+    <div class="container space-y-16">    <div class="container space-y-16">
+
+      <!-- Breadcrumbs -->      <!-- Breadcrumbs -->
+
+      <nav aria-label="Breadcrumb" class="mb-8">      <nav aria-label="Breadcrumb" class="mb-8">
+
+        <ol class="flex flex-wrap items-center gap-2 text-sm text-off-white/60">        <ol class="flex flex-wrap items-center gap-2 text-sm text-off-white/60">
+
+          <li class="flex items-center gap-2">          <li class="flex items-center gap-2">
+
+            <a href="/" class="font-medium hover:text-champagne transition-colors">Home</a>            <a href="/" class="font-medium hover:text-champagne transition-colors">Home</a>
+
+            <span class="text-off-white/40">/</span>            <span class="text-off-white/40">/</span>
+
+          </li>          </li>
+
+          <li class="flex items-center gap-2">          <li class="flex items-center gap-2">
+
+            <a href="/articles" class="font-medium hover:text-champagne transition-colors">Articles</a>            <a href="/articles" class="font-medium hover:text-champagne transition-colors">Articles</a>
+
+            <span class="text-off-white/40">/</span>            <span class="text-off-white/40">/</span>
+
+          </li>          </li>
+
+          <li>          <li>
+
+            <span class="font-semibold text-off-white">{category}</span>            <span class="font-semibold text-off-white">{category}</span>
+
+          </li>          </li>
+
+        </ol>        </ol>
+
+      </nav>      </nav>
+
+
+
+      <!-- Category Header -->      <!-- Category Header -->
+
+      <header class="max-w-3xl space-y-4">      <header class="max-w-3xl space-y-4">
+
+        <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">{category}</p>        <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">{category}</p>
+
+        <h1 class="font-display text-4xl leading-tight text-off-white sm:text-5xl">        <h1 class="font-display text-4xl leading-tight text-off-white sm:text-5xl">
+
+          {category}          {category}
+
+        </h1>        </h1>
+
+        <p class="text-base text-off-white/70">        <p class="text-base text-off-white/70">
+
+          Discover the latest products, reviews, and insights in {category.toLowerCase()}.          Discover the latest products, reviews, and insights in {category.toLowerCase()}.
+
+        </p>        </p>
+
+      </header>      </header>
+
+
+
+      <!-- Featured Products Section -->      <!-- Featured Products Section -->
+
+      {categoryProducts.length > 0 && (      {categoryProducts.length > 0 && (
+
+        <section class="space-y-8">        <section class="space-y-8">
+
+          <h2 class="font-display text-3xl text-off-white">Featured Products</h2>          <h2 class="font-display text-3xl text-off-white">Featured Products</h2>
+
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+            {categoryProducts.slice(0, 3).map((product) => (            {categoryProducts.slice(0, 3).map((product) => (
+
+              <article class="flex flex-col overflow-hidden rounded-3xl border border-off-white/10 bg-[#161616]">              <article class="flex flex-col overflow-hidden rounded-3xl border border-off-white/10 bg-[#161616]">
+
+                <div class="aspect-square w-full overflow-hidden bg-[#0d0d0d]">                <div class="aspect-square w-full overflow-hidden bg-[#0d0d0d]">
+
+                  <img                  <img
+
+                    src={product.imageUrl || '/assets/product-placeholder.png'}                    src={product.imageUrl || '/assets/product-placeholder.png'}
+
+                    alt={`Product photo of ${product.name} from SwankyBoyz.com`}                    alt={`Product photo of ${product.name} from SwankyBoyz.com`}
+
+                    loading="lazy"                    loading="lazy"
+
+                    class="h-full w-full object-cover"                    class="h-full w-full object-cover"
+
+                  />                  />
+
+                </div>                </div>
+
+                <div class="flex flex-1 flex-col gap-4 p-6">                <div class="flex flex-1 flex-col gap-4 p-6">
+
+                  <div class="space-y-2">                  <div class="space-y-2">
+
+                    <h3 class="font-display text-xl text-off-white">{product.name}</h3>                    <h3 class="font-display text-xl text-off-white">{product.name}</h3>
+
+                    {product.summary && (                    {product.summary && (
+
+                      <p class="text-sm text-off-white/70 line-clamp-3">{product.summary}</p>                      <p class="text-sm text-off-white/70 line-clamp-3">{product.summary}</p>
+
+                    )}                    )}
+
+                  </div>                  </div>
+
+                  {product.price && (                  {product.price && (
+
+                    <p class="text-lg font-semibold text-champagne">{product.price}</p>                    <p class="text-lg font-semibold text-champagne">{product.price}</p>
+
+                  )}                  )}
+
+                  {product.affiliateUrl && (                  {product.affiliateUrl && (
+
+                    <a                    <a
+
+                      href={product.affiliateUrl}                      href={product.affiliateUrl}
+
+                      target="_blank"                      target="_blank"
+
+                      rel="noopener noreferrer sponsored"                      rel="noopener noreferrer sponsored"
+
+                      class="mt-auto inline-flex items-center justify-center rounded-full bg-champagne px-6 py-3 text-sm font-semibold text-charcoal transition-all hover:bg-champagne/90 hover:scale-[1.02]"                      class="mt-auto inline-flex items-center justify-center rounded-full bg-champagne px-6 py-3 text-sm font-semibold text-charcoal transition-all hover:bg-champagne/90 hover:scale-[1.02]"
+
+                    >                    >
+
+                      View Product                      View Product
+
+                    </a>                    </a>
+
+                  )}                  )}
+
+                </div>                </div>
+
+              </article>              </article>
+
+            ))}            ))}
+
+          </div>          </div>
+
+        </section>        </section>
+
+      )}      )}
+
+
+
+      <!-- Articles Section -->      <!-- Articles Section -->
+
+      <section class="space-y-8">      <section class="space-y-8">
+
+        <h2 class="font-display text-3xl text-off-white">Latest Articles</h2>        <h2 class="font-display text-3xl text-off-white">Latest Articles</h2>
+
+        {categoryArticles.length > 0 ? (        {categoryArticles.length > 0 ? (
+
+          <div class="grid gap-10 lg:grid-cols-2">          <div class="grid gap-10 lg:grid-cols-2">
+
+            {categoryArticles.map((article) => (            {categoryArticles.map((article) => (
+
+              <article class="flex h-full flex-col overflow-hidden rounded-3xl border border-off-white/10 bg-[#161616]">              <article class="flex h-full flex-col overflow-hidden rounded-3xl border border-off-white/10 bg-[#161616]">
+
+                <img                <img
+
+                  src={article.featuredImage}                  src={article.featuredImage}
+
+                  alt={article.title}                  alt={article.title}
+
+                  loading="lazy"                  loading="lazy"
+
+                  class="h-64 w-full object-cover"                  class="h-64 w-full object-cover"
+
+                />                />
+
+                <div class="flex flex-1 flex-col gap-6 p-8">                <div class="flex flex-1 flex-col gap-6 p-8">
+
+                  <div class="space-y-3">                  <div class="space-y-3">
+
+                    <p class="text-xs uppercase tracking-[0.3em] text-champagne/80">{article.category}</p>                    <p class="text-xs uppercase tracking-[0.3em] text-champagne/80">{article.category}</p>
+
+                    <h3 class="font-display text-2xl text-off-white">{article.title}</h3>                    <h3 class="font-display text-2xl text-off-white">{article.title}</h3>
+
+                    <p class="text-sm text-off-white/70">{article.excerpt}</p>                    <p class="text-sm text-off-white/70">{article.excerpt}</p>
+
+                  </div>                  </div>
+
+                  <div class="mt-auto flex items-center justify-between">                  <div class="mt-auto flex items-center justify-between">
+
+                    <span class="text-xs text-off-white/50">{article.readTime}</span>                    <span class="text-xs text-off-white/50">{article.readTime}</span>
+
+                    <a                    <a
+
+                      href={`/articles/${article.slug}`}                      href={`/articles/${article.slug}`}
+
+                      class="group inline-flex items-center gap-2 text-sm font-medium text-champagne transition-colors hover:text-champagne/80"                      class="group inline-flex items-center gap-2 text-sm font-medium text-champagne transition-colors hover:text-champagne/80"
+
+                    >                    >
+
+                      Read Article                      Read Article
+
+                      <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">                      <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+
+                      </svg>                      </svg>
+
+                    </a>                    </a>
+
+                  </div>                  </div>
+
+                </div>                </div>
+
+              </article>              </article>
+
+            ))}            ))}
+
+          </div>          </div>
+
+        ) : (        ) : (
+
+          <div class="text-center py-12 rounded-3xl border border-off-white/10 bg-[#161616]">          <div class="text-center py-12 rounded-3xl border border-off-white/10 bg-[#161616]">
+
+            <p class="text-xl text-off-white/70">            <p class="text-xl text-off-white/70">
+
+              No articles found in this category. Check back soon for new content!              No articles found in this category. Check back soon for new content!
+
+            </p>            </p>
+
+          </div>          </div>
+
+        )}        )}
+
+      </section>      </section>
+
+    </div>    </div>
+
+  </main>  </main>
+
+</Layout></Layout>
