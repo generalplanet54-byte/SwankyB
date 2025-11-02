@@ -4,13 +4,10 @@ export async function onRequestPost(context: any) {
     headers: { 'Content-Type': 'application/json' }
   });
   
-  // Clear the auth cookie (match the same flags used in login)
-  const isProduction = context.request.url.includes('swankyboyz.com');
-  const cookieFlags = isProduction 
-    ? 'HttpOnly; Secure; SameSite=Strict'
-    : 'HttpOnly; SameSite=Lax';
-  
-  response.headers.set('Set-Cookie', `auth-token=; ${cookieFlags}; Max-Age=0; Path=/`);
+  // Clear the auth cookie (Secure flag only on HTTPS)
+  const isProduction = context.request.url.includes('https://');
+  const secureCookie = isProduction ? 'Secure; ' : '';
+  response.headers.set('Set-Cookie', `auth-token=; HttpOnly; ${secureCookie}SameSite=Strict; Max-Age=0; Path=/`);
   
   return response;
 }

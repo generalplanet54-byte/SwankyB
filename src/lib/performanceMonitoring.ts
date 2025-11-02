@@ -92,11 +92,6 @@ export function observeFCP() {
 export function observeCLS() {
   if ('PerformanceObserver' in globalThis) {
     try {
-      // Check if layout-shift is supported before observing
-      if (!PerformanceObserver.supportedEntryTypes?.includes('layout-shift')) {
-        return null;
-      }
-      
       let clsValue = 0;
       const observer = new PerformanceObserver((entryList) => {
         for (const entry of entryList.getEntries()) {
@@ -107,11 +102,16 @@ export function observeCLS() {
           console.log(`CLS: ${clsValue.toFixed(3)} (${rating})`);
         }
       });
-      observer.observe({ entryTypes: ['layout-shift'] });
-      return observer;
+      
+      // Check if layout-shift is supported before observing
+      if (PerformanceObserver.supportedEntryTypes?.includes('layout-shift')) {
+        observer.observe({ entryTypes: ['layout-shift'] });
+        return observer;
+      } else {
+        console.debug('CLS monitoring not supported in this browser');
+      }
     } catch (e) {
-      // Silently ignore if not supported
-      return null;
+      console.debug('CLS observer not supported');
     }
   }
   return null;

@@ -270,18 +270,20 @@ export const reportImageMetrics = () => {
 
     // Layout Shift caused by images
     try {
-      const clsObserver = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          const clsEntry = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number; sources?: unknown[] };
-          if (!clsEntry.hadRecentInput) {
-            console.log('Image CLS:', {
-              value: clsEntry.value,
-              sources: clsEntry.sources,
-            });
+      if (PerformanceObserver.supportedEntryTypes?.includes('layout-shift')) {
+        const clsObserver = new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            const clsEntry = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number; sources?: unknown[] };
+            if (!clsEntry.hadRecentInput) {
+              console.log('Image CLS:', {
+                value: clsEntry.value,
+                sources: clsEntry.sources,
+              });
+            }
           }
-        }
-      });
-      clsObserver.observe({ entryTypes: ['layout-shift'] });
+        });
+        clsObserver.observe({ entryTypes: ['layout-shift'] });
+      }
     } catch (e) {
       console.warn('CLS Observer not supported');
     }

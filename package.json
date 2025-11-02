@@ -7,17 +7,17 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-  "dev": "wrangler pages dev dist --port=8788 --d1=DB --local",
+    "dev": "wrangler pages dev dist --port=8788 --d1=DB --local",
     "dev:vite": "vite",
     "dev:build": "npm run build && npm run dev",
     "dev:full": "concurrently \"wrangler pages dev --port 8788\" \"vite --port 5173\"",
-  "build": "astro build",
-  "postbuild": "node ./scripts/seed-d1.ts",
+    "build": "vite build",
+    "postbuild": "tsx scripts/seed-d1.ts",
     "lint": "eslint .",
     "preview": "vite preview",
     "preview:pages": "wrangler pages dev dist --port 8788",
     "generate-sitemap": "node scripts/generate-sitemap.js",
-  "sync": "node ./scripts/sync-sheets.ts",
+    "sync": "tsx scripts/sync-sheets.ts",
     "import-to-sheets": "tsx scripts/import-to-sheets.ts",
     "download-images": "tsx scripts/download-product-images.ts",
     "validate-images": "tsx scripts/validate-images.ts"

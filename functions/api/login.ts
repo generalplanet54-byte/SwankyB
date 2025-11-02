@@ -89,15 +89,13 @@ export async function onRequestPost(context: any) {
     });
     
     // Set secure HTTP-only cookie with JWT token
-    // Note: In production, ensure domain matches your actual domain
-    const isProduction = context.request.url.includes('swankyboyz.com');
-    const cookieFlags = isProduction 
-      ? 'HttpOnly; Secure; SameSite=Strict'
-      : 'HttpOnly; SameSite=Lax'; // Remove Secure flag for localhost
+    // Note: Secure flag only on HTTPS (production), not localhost
+    const isProduction = context.request.url.includes('https://');
+    const secureCookie = isProduction ? 'Secure; ' : '';
     
     response.headers.set(
       'Set-Cookie', 
-      `auth-token=${token}; ${cookieFlags}; Max-Age=86400; Path=/`
+      `auth-token=${token}; HttpOnly; ${secureCookie}SameSite=Strict; Max-Age=86400; Path=/`
     );
     
     return response;
