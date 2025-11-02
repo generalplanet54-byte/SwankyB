@@ -1,0 +1,205 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { launchArticles } from '../../data/launchArticles';
+import { launchProducts } from '../../data/launchProducts';
+import { slugify } from '../../lib/slugify';
+
+export function getStaticPaths() {
+  // Get unique categories from articles
+  const articleCategories = [...new Set(launchArticles.map(a => a.category))];
+  
+  // Get unique categories from products
+  const productCategories = [...new Set(launchProducts.map(p => p.category).filter(Boolean))];
+  
+  // Combine and deduplicate
+  const allCategories = [...new Set([...articleCategories, ...productCategories])];
+  
+  return allCategories.map(category => ({
+    params: { slug: slugify(category) },
+    props: { category }
+  }));
+}
+
+const { category } = Astro.props;
+const { slug } = Astro.params;
+
+// Filter articles and products for this category
+const categoryArticles = launchArticles.filter(article => slugify(article.category) === slug);
+const categoryProducts = launchProducts.filter(product => product.category && slugify(product.category) === slug);
+
+// Breadcrumb structured data
+const breadcrumbStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://swankyboyz.com/'
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Articles',
+      item: 'https://swankyboyz.com/articles'
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: category,
+      item: `https://swankyboyz.com/category/${slug}`
+    }
+  ]
+};
+
+// Collection page structured data
+const collectionStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `${category} Category`,
+  url: `https://swankyboyz.com/category/${slug}`,
+  description: `Discover the latest products, reviews, and insights in ${category}.`,
+  breadcrumb: breadcrumbStructuredData
+};
+
+// Article list structured data
+const itemListStructuredData = categoryArticles.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${category} Articles`,
+  itemListElement: categoryArticles.map((article, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: article.title,
+    url: `https://swankyboyz.com/articles/${article.slug}`
+  }))
+} : null;
+
+const structuredDataArray = [collectionStructuredData, itemListStructuredData].filter(Boolean);
+---
+
+<Layout
+  title={`${category} | SwankyBoyz`}
+  description={`Discover the latest products, reviews, and insights in ${category}.`}
+  canonical={`/category/${slug}`}
+  structuredData={structuredDataArray}
+>
+  <main class="bg-charcoal py-24">
+    <div class="container space-y-16">
+      {/* Breadcrumbs */}
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex flex-wrap items-center gap-2 text-sm text-off-white/60">
+          <li class="flex items-center gap-2">
+            <a href="/" class="font-medium hover:text-champagne transition-colors">Home</a>
+            <span class="text-off-white/40">/</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <a href="/articles" class="font-medium hover:text-champagne transition-colors">Articles</a>
+            <span class="text-off-white/40">/</span>
+          </li>
+          <li>
+            <span class="font-semibold text-off-white">{category}</span>
+          </li>
+        </ol>
+      </nav>
+
+      {/* Category Header */}
+      <header class="max-w-3xl space-y-4">
+        <p class="uppercase text-xs tracking-[0.5em] text-champagne/70">{category}</p>
+        <h1 class="font-display text-4xl leading-tight text-off-white sm:text-5xl">
+          {category}
+        </h1>
+        <p class="text-base text-off-white/70">
+          Discover the latest products, reviews, and insights in {category.toLowerCase()}.
+        </p>
+      </header>
+
+      {/* Featured Products Section */}
+      {categoryProducts.length > 0 && (
+        <section class="space-y-8">
+          <h2 class="font-display text-3xl text-off-white">Featured Products</h2>
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {categoryProducts.slice(0, 3).map((product) => (
+              <article class="flex flex-col overflow-hidden rounded-3xl border border-off-white/10 bg-[#161616]">
+                <div class="aspect-square w-full overflow-hidden bg-[#0d0d0d]">
+                  <img
+                    src={product.imageUrl || '/assets/product-placeholder.png'}
+                    alt={`Product photo of ${product.name} from SwankyBoyz.com`}
+                    loading="lazy"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+                <div class="flex flex-1 flex-col gap-4 p-6">
+                  <div class="space-y-2">
+                    <h3 class="font-display text-xl text-off-white">{product.name}</h3>
+                    {product.summary && (
+                      <p class="text-sm text-off-white/70 line-clamp-3">{product.summary}</p>
+                    )}
+                  </div>
+                  {product.price && (
+                    <p class="text-lg font-semibold text-champagne">{product.price}</p>
+                  )}
+                  {product.affiliateUrl && (
+                    <a
+                      href={product.affiliateUrl}
+                      target="_blank"
+                      rel="noopener noreferrer sponsored"
+                      class="mt-auto inline-flex items-center justify-center rounded-full bg-champagne px-6 py-3 text-sm font-semibold text-charcoal transition-all hover:bg-champagne/90 hover:scale-[1.02]"
+                    >
+                      View Product
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Articles Section */}
+      <section class="space-y-8">
+        <h2 class="font-display text-3xl text-off-white">Latest Articles</h2>
+        {categoryArticles.length > 0 ? (
+          <div class="grid gap-10 lg:grid-cols-2">
+            {categoryArticles.map((article) => (
+              <article class="flex h-full flex-col overflow-hidden rounded-3xl border border-off-white/10 bg-[#161616]">
+                <img
+                  src={article.featuredImage}
+                  alt={article.title}
+                  loading="lazy"
+                  class="h-64 w-full object-cover"
+                />
+                <div class="flex flex-1 flex-col gap-6 p-8">
+                  <div class="space-y-3">
+                    <p class="text-xs uppercase tracking-[0.3em] text-champagne/80">{article.category}</p>
+                    <h3 class="font-display text-2xl text-off-white">{article.title}</h3>
+                    <p class="text-sm text-off-white/70">{article.excerpt}</p>
+                  </div>
+                  <div class="mt-auto flex items-center justify-between">
+                    <span class="text-xs text-off-white/50">{article.readTime}</span>
+                    <a
+                      href={`/articles/${article.slug}`}
+                      class="group inline-flex items-center gap-2 text-sm font-medium text-champagne transition-colors hover:text-champagne/80"
+                    >
+                      Read Article
+                      <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="text-center py-12 rounded-3xl border border-off-white/10 bg-[#161616]">
+            <p class="text-xl text-off-white/70">
+              No articles found in this category. Check back soon for new content!
+            </p>
+          </div>
+        )}
+      </section>
+    </div>
+  </main>
+</Layout>

@@ -1,7 +1,7 @@
 // SwankyBoyz Service Worker
 // Provides offline functionality and caching for better performance
 
-const CACHE_NAME = 'swankyboyz-v1';
+const CACHE_NAME = 'swankyboyz-v2';
 const urlsToCache = [
   '/',
   '/categories',
@@ -35,8 +35,22 @@ self.addEventListener('fetch', (event) => {
         }
 
         return fetch(event.request).then((response) => {
-          // Check if we received a valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
+          // Don't cache 404 responses or errors
+          if (!response || response.status !== 200) {
+            return response;
+          }
+
+          // Don't cache old JavaScript chunk files (hash-based filenames from previous builds)
+          const url = new URL(event.request.url);
+          if (url.pathname.match(/\/_astro\/.*-[A-Za-z0-9]{8,}\.(js|css)$/)) {
+            // Only cache current build's chunk files, don't cache if response is 404
+            if (response.status === 404) {
+              return response;
+            }
+          }
+
+          // Only cache responses with basic type
+          if (response.type !== 'basic') {
             return response;
           }
 
@@ -49,6 +63,14 @@ self.addEventListener('fetch', (event) => {
             });
 
           return response;
+        }).catch((error) => {
+          // Handle network errors gracefully
+          console.error('Fetch failed:', error);
+          // Return a simple error response instead of throwing
+          return new Response('Network error occurred', {
+            status: 408,
+            statusText: 'Network error'
+          });
         });
       })
   );
