@@ -1,6 +1,0 @@
-# Single Page Application (SPA) Routing for React
-# Cloudflare Pages automatically handles this, but we explicitly define it
-# to avoid warnings and ensure consistent behavior
-
-# SPA fallback: all non-API, non-asset routes serve index.html
-/*    /index.html   200
