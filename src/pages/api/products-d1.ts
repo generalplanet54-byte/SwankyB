@@ -31,7 +31,6 @@ export const GET: APIRoute = async ({ request, locals }) => {
         p.affiliate_url,
         p.price,
         p.category,
-        p.rating,
         p.created_at
       FROM products p
     `;
