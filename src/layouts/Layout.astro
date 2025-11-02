@@ -1,3 +1,4 @@
+---
 import Header from '../components/Header.astro';
 import type { SeoInput } from '../lib/seo';
 import {
@@ -28,7 +29,11 @@ const additionalJsonLd = props.structuredData
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{seo.title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VZHNBYXJ3S"></script>
@@ -39,11 +44,6 @@ const additionalJsonLd = props.structuredData
 
       gtag('config', 'G-VZHNBYXJ3S');
     </script>
-    
-    <meta name="generator" content={Astro.generator} />
-    <title>{seo.title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     {metaTags.map((entry) =>
       entry.tag === 'meta' ? (
