@@ -7,6 +7,7 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import * as fs from "fs";
+import { promises as fsPromises } from "fs";
 import * as https from "https";
 import * as http from "http";
 import { URL } from "url";
@@ -126,8 +127,10 @@ async function downloadProductImages() {
     console.log(`   Found ${products.length} products\n`);
 
     // Create assets directory if it doesn't exist
-    if (!fs.existsSync("./public/assets")) {
-      fs.mkdirSync("./public/assets", { recursive: true });
+    try {
+      await fsPromises.access("./public/assets");
+    } catch {
+      await fsPromises.mkdir("./public/assets", { recursive: true });
       console.log("📁 Created /public/assets/ directory\n");
     }
 
@@ -135,29 +138,37 @@ async function downloadProductImages() {
     let failCount = 0;
     let skipCount = 0;
 
-    // Process each product
-    for (const product of products) {
-      console.log(`\n🔍 Processing: ${product.name} (${product.brand})`);
+    // Process each product (with concurrency limit for better performance)
+    const BATCH_SIZE = 5; // Process 5 products at a time
+    
+    for (let i = 0; i < products.length; i += BATCH_SIZE) {
+      const batch = products.slice(i, i + BATCH_SIZE);
       
-      // Generate filename
-      const filename = generateFilename(product);
-      const filepath = `./public/assets/${filename}`;
-      
-      // Skip if image already exists
-      if (fs.existsSync(filepath)) {
-        console.log(`   ⏭️  Image already exists: ${filename}`);
-        skipCount++;
+      await Promise.all(batch.map(async (product) => {
+        console.log(`\n🔍 Processing: ${product.name} (${product.brand})`);
         
-        // Update database with filename if not set
-        if (!product.image || product.image !== filename) {
-          await db.run(
-            "UPDATE products SET image = ? WHERE id = ?",
-            [filename, product.id]
-          );
-          console.log(`   ✅ Updated database with filename`);
+        // Generate filename
+        const filename = generateFilename(product);
+        const filepath = `./public/assets/${filename}`;
+        
+        // Skip if image already exists (using async check)
+        try {
+          await fsPromises.access(filepath);
+          console.log(`   ⏭️  Image already exists: ${filename}`);
+          skipCount++;
+          
+          // Update database with filename if not set
+          if (!product.image || product.image !== filename) {
+            await db.run(
+              "UPDATE products SET image = ? WHERE id = ?",
+              [filename, product.id]
+            );
+            console.log(`   ✅ Updated database with filename`);
+          }
+          return;
+        } catch {
+          // File doesn't exist, continue with download
         }
-        continue;
-      }
 
       // Extract ASIN from affiliate URL
       const asin = extractASIN(product.affiliate_url);
@@ -199,14 +210,17 @@ async function downloadProductImages() {
         }
       }
 
-      if (!downloaded) {
-        console.log(`   ❌ Failed to download image for ${product.name}`);
-        console.log(`   💡 You may need to manually download from Amazon`);
-        failCount++;
+        if (!downloaded) {
+          console.log(`   ❌ Failed to download image for ${product.name}`);
+          console.log(`   💡 You may need to manually download from Amazon`);
+          failCount++;
+        }
+      }));
+      
+      // Rate limiting between batches - be nice to Amazon's servers
+      if (i + BATCH_SIZE < products.length) {
+        await new Promise(resolve => setTimeout(resolve, 2000));
       }
-
-      // Rate limiting - be nice to Amazon's servers
-      await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
     await db.close();

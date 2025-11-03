@@ -62,7 +62,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
         status: 200,
         headers: { 
           'Content-Type': 'application/json',
-          'Cache-Control': 'public, max-age=300'
+          'Cache-Control': 'public, max-age=3600, s-maxage=7200, stale-while-revalidate=86400'
         }
       });
     }
@@ -75,7 +75,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
       status: 200,
       headers: { 
         'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=60'
+        'Cache-Control': 'public, max-age=300, s-maxage=600, stale-while-revalidate=3600'
       }
     });
 

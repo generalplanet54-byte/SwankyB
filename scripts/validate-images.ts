@@ -4,6 +4,7 @@
  */
 
 import * as fs from "fs";
+import { promises as fsPromises } from "fs";
 import * as path from "path";
 
 const ASSETS_DIR = "./public/assets";
@@ -16,8 +17,10 @@ interface ImageValidationResult {
 }
 
 async function ensureAssetsDirectory(): Promise<void> {
-  if (!fs.existsSync(ASSETS_DIR)) {
-    fs.mkdirSync(ASSETS_DIR, { recursive: true });
+  try {
+    await fsPromises.access(ASSETS_DIR);
+  } catch {
+    await fsPromises.mkdir(ASSETS_DIR, { recursive: true });
     console.log(`📁 Created assets directory: ${ASSETS_DIR}`);
   }
 }
@@ -25,8 +28,11 @@ async function ensureAssetsDirectory(): Promise<void> {
 async function createPlaceholder(filename: string): Promise<void> {
   const placeholderPath = path.join(ASSETS_DIR, filename);
   
-  if (fs.existsSync(placeholderPath)) {
+  try {
+    await fsPromises.access(placeholderPath);
     return; // Placeholder already exists
+  } catch {
+    // File doesn't exist, create it
   }
 
   // Create a simple SVG placeholder
@@ -46,7 +52,7 @@ async function createPlaceholder(filename: string): Promise<void> {
     ? placeholderPath 
     : placeholderPath.replace(/\.[^.]+$/, '.svg');
 
-  fs.writeFileSync(finalPath, svgContent);
+  await fsPromises.writeFile(finalPath, svgContent);
   console.log(`🖼️  Created placeholder: ${path.basename(finalPath)}`);
 }
 
@@ -60,19 +66,36 @@ async function validateImages(imageList: string[]): Promise<ImageValidationResul
     placeholdersCreated: 0
   };
 
-  for (const image of imageList) {
-    if (!image || image.trim() === '') continue;
-    
-    const imagePath = path.join(ASSETS_DIR, image);
-    
-    if (fs.existsSync(imagePath)) {
+  // Check all images in parallel for better performance
+  const validationPromises = imageList
+    .filter(image => image && image.trim() !== '')
+    .map(async (image) => {
+      const imagePath = path.join(ASSETS_DIR, image);
+      
+      try {
+        await fsPromises.access(imagePath);
+        return { image, exists: true };
+      } catch {
+        return { image, exists: false };
+      }
+    });
+
+  const validationResults = await Promise.all(validationPromises);
+  
+  // Process results and create placeholders for missing images in parallel
+  const placeholderPromises = validationResults.map(async ({ image, exists }) => {
+    if (exists) {
       result.existing++;
+      return null;
     } else {
       result.missing.push(image);
       await createPlaceholder(image);
       result.placeholdersCreated++;
+      return image;
     }
-  }
+  });
+
+  await Promise.all(placeholderPromises);
 
   return result;
 }
