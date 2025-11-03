@@ -1,0 +1,43 @@
+---
+/**
+ * Optimized Image Component
+ * Provides automatic lazy loading, blur placeholder, and error handling
+ */
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  width?: number;
+  height?: number;
+  decoding?: 'async' | 'sync' | 'auto';
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const {
+  src,
+  alt,
+  class: className = '',
+  loading = 'lazy',
+  width,
+  height,
+  decoding = 'async',
+  fetchpriority = 'auto',
+} = Astro.props;
+
+// Generate a tiny blur placeholder (low-quality placeholder)
+const blurDataURL = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect width="100%25" height="100%25" fill="%23f3f4f6"/%3E%3C/svg%3E';
+---
+
+<img
+  src={src}
+  alt={alt}
+  class={className}
+  loading={loading}
+  decoding={decoding}
+  fetchpriority={fetchpriority}
+  width={width}
+  height={height}
+  style={loading === 'lazy' ? `background-image: url('${blurDataURL}'); background-size: cover;` : undefined}
+  onerror="this.src='/assets/product-placeholder.png'; this.alt='Product image placeholder';"
+/>
