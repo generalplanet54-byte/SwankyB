@@ -7,6 +7,8 @@ interface PageProps {
   article: Article;
 }
 
+export const prerender = true;
+
 export function getStaticPaths() {
   return launchArticles.map((article) => ({
     params: { slug: article.slug },

@@ -30,13 +30,14 @@ async function fetchSheetData(sheetName: string) {
 }
 
 async function validateImages(images: string[]): Promise<void> {
-  for (const image of images) {
+  // Batch check all images at once instead of one-by-one
+  const missingImages = images.filter(image => {
     const imagePath = `./public/assets/${image}`;
-    if (!fs.existsSync(imagePath)) {
-      console.warn(`⚠️  Missing image: ${image} - creating placeholder`);
-      // Create placeholder logic could be implemented here
-      // For now, just log the warning
-    }
+    return !fs.existsSync(imagePath);
+  });
+  
+  if (missingImages.length > 0) {
+    console.warn(`⚠️  Missing ${missingImages.length} image(s):`, missingImages.join(', '));
   }
 }
 
@@ -90,28 +91,47 @@ async function syncToDB() {
     if (products.length === 0) {
       console.warn("⚠️  No products found in sheet. Check sheet name is 'Products' and has data.");
     } else {
+      // Batch validate all product images upfront
+      const allProductImages = products
+        .filter(row => row.length >= 6 && row[0] && row[4] && row[4].trim())
+        .map(row => row[4].trim());
+      
+      if (allProductImages.length > 0) {
+        await validateImages(allProductImages);
+      }
+      
       await db.exec("DELETE FROM products");
       
+      // Use transaction for batch inserts - much faster than individual inserts
+      await db.exec("BEGIN TRANSACTION");
+      
       let productCount = 0;
+      const stmt = await db.prepare(
+        `INSERT INTO products (id, name, brand, description, image, affiliate_url)
+         VALUES (?, ?, ?, ?, ?, ?)`
+      );
+      
       for (const row of products) {
         if (row.length >= 6 && row[0]) { // Ensure row has data and ID
           const [id, name, brand, description, image, affiliate_url] = row;
           
-          // Validate product image if provided
-          if (image && image.trim()) {
-            await validateImages([image.trim()]);
-          }
-          
-          await db.run(
-            `INSERT INTO products (id, name, brand, description, image, affiliate_url)
-            VALUES (?, ?, ?, ?, ?, ?)`,
-            [id, name || '', brand || '', description || '', image || '', affiliate_url || '']
-          );
+          await stmt.run([
+            id, 
+            name || '', 
+            brand || '', 
+            description || '', 
+            image || '', 
+            affiliate_url || ''
+          ]);
           productCount++;
         } else if (row[0]) { // Skip empty rows but warn about incomplete ones
           console.warn(`⚠️  Skipping incomplete product row: ${row[0]}`);
         }
       }
+      
+      await stmt.finalize();
+      await db.exec("COMMIT");
+      
       console.log(`✅ Synced ${productCount} products`);
     }
 
@@ -121,23 +141,48 @@ async function syncToDB() {
     if (articles.length === 0) {
       console.warn("⚠️  No articles found in sheet. Check sheet name is 'Articles' and has data.");
     } else {
+      // Batch validate all article images upfront
+      const allArticleImages: string[] = [];
+      for (const row of articles) {
+        if (row.length >= 8 && row[0]) {
+          const visuals = row[6];
+          if (visuals && visuals.trim()) {
+            const visualsList = visuals.split(",").map((v: string) => v.trim()).filter((v: string) => v);
+            const imageFiles = visualsList.filter((v: string) => !v.endsWith(".mp4"));
+            allArticleImages.push(...imageFiles);
+          }
+          
+          // Also add cover image if present
+          const cover_image = row[5];
+          if (cover_image && cover_image.trim()) {
+            allArticleImages.push(cover_image.trim());
+          }
+        }
+      }
+      
+      if (allArticleImages.length > 0) {
+        await validateImages(allArticleImages);
+      }
+      
       await db.exec("DELETE FROM articles");
       
+      // Use transaction for batch inserts
+      await db.exec("BEGIN TRANSACTION");
+      
       let articleCount = 0;
+      const stmt = await db.prepare(
+        `INSERT INTO articles (id, title, slug, excerpt, content, cover_image, visuals, date)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+      );
+      
       for (const row of articles) {
         if (row.length >= 8 && row[0]) { // Ensure row has data and ID
           const [id, title, slug, excerpt, content, cover_image, visuals, date] = row;
           
-          // Process visuals and validate images
+          // Process visuals
           let visualsJSON = "[]";
           if (visuals && visuals.trim()) {
             const visualsList = visuals.split(",").map((v: string) => v.trim()).filter((v: string) => v);
-            
-            // Validate image files (skip videos)
-            const imageFiles = visualsList.filter((v: string) => !v.endsWith(".mp4"));
-            if (imageFiles.length > 0) {
-              await validateImages(imageFiles);
-            }
             
             // Ensure minimum 3 visuals requirement
             if (visualsList.length < 3) {
@@ -155,16 +200,25 @@ async function syncToDB() {
             console.warn(`⚠️  Article "${title}" has no visuals (minimum 3 recommended)`);
           }
           
-          await db.run(
-            `INSERT INTO articles (id, title, slug, excerpt, content, cover_image, visuals, date)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-            [id, title || '', slug || '', excerpt || '', content || '', cover_image || '', visualsJSON, date || new Date().toISOString().split('T')[0]]
-          );
+          await stmt.run([
+            id, 
+            title || '', 
+            slug || '', 
+            excerpt || '', 
+            content || '', 
+            cover_image || '', 
+            visualsJSON, 
+            date || new Date().toISOString().split('T')[0]
+          ]);
           articleCount++;
         } else if (row[0]) { // Skip empty rows but warn about incomplete ones
           console.warn(`⚠️  Skipping incomplete article row: ${row[0]}`);
         }
       }
+      
+      await stmt.finalize();
+      await db.exec("COMMIT");
+      
       console.log(`✅ Synced ${articleCount} articles`);
     }
 
