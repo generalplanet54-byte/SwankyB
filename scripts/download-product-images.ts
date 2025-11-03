@@ -144,7 +144,8 @@ async function downloadProductImages() {
     for (let i = 0; i < products.length; i += BATCH_SIZE) {
       const batch = products.slice(i, i + BATCH_SIZE);
       
-      await Promise.all(batch.map(async (product) => {
+      // Process batch and collect results to avoid race conditions on counters
+      const batchResults = await Promise.all(batch.map(async (product) => {
         console.log(`\n🔍 Processing: ${product.name} (${product.brand})`);
         
         // Generate filename
@@ -155,7 +156,6 @@ async function downloadProductImages() {
         try {
           await fsPromises.access(filepath);
           console.log(`   ⏭️  Image already exists: ${filename}`);
-          skipCount++;
           
           // Update database with filename if not set
           if (!product.image || product.image !== filename) {
@@ -165,57 +165,63 @@ async function downloadProductImages() {
             );
             console.log(`   ✅ Updated database with filename`);
           }
-          return;
+          return { status: 'skipped' };
         } catch {
           // File doesn't exist, continue with download
         }
 
-      // Extract ASIN from affiliate URL
-      const asin = extractASIN(product.affiliate_url);
-      
-      if (!asin) {
-        console.log(`   ⚠️  Could not extract ASIN from URL: ${product.affiliate_url}`);
-        console.log(`   💡 Manual action needed: Add valid Amazon product URL`);
-        failCount++;
-        continue;
-      }
-
-      console.log(`   📋 ASIN: ${asin}`);
-
-      // Try multiple image URL patterns
-      const imageURLs = [
-        `https://images-na.ssl-images-amazon.com/images/P/${asin}.01.LZZZZZZZ.jpg`,
-        `https://m.media-amazon.com/images/I/${asin}.jpg`,
-        `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=${asin}&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1`,
-      ];
-
-      let downloaded = false;
-      
-      for (const imageUrl of imageURLs) {
-        console.log(`   🔽 Trying: ${imageUrl}`);
-        downloaded = await downloadImage(imageUrl, filepath);
+        // Extract ASIN from affiliate URL
+        const asin = extractASIN(product.affiliate_url);
         
-        if (downloaded) {
-          console.log(`   ✅ Downloaded: ${filename}`);
-          
-          // Update database
-          await db.run(
-            "UPDATE products SET image = ? WHERE id = ?",
-            [filename, product.id]
-          );
-          console.log(`   ✅ Updated database`);
-          
-          successCount++;
-          break;
+        if (!asin) {
+          console.log(`   ⚠️  Could not extract ASIN from URL: ${product.affiliate_url}`);
+          console.log(`   💡 Manual action needed: Add valid Amazon product URL`);
+          return { status: 'failed' };
         }
-      }
+
+        console.log(`   📋 ASIN: ${asin}`);
+
+        // Try multiple image URL patterns
+        const imageURLs = [
+          `https://images-na.ssl-images-amazon.com/images/P/${asin}.01.LZZZZZZZ.jpg`,
+          `https://m.media-amazon.com/images/I/${asin}.jpg`,
+          `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=${asin}&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1`,
+        ];
+
+        let downloaded = false;
+        
+        for (const imageUrl of imageURLs) {
+          console.log(`   🔽 Trying: ${imageUrl}`);
+          downloaded = await downloadImage(imageUrl, filepath);
+          
+          if (downloaded) {
+            console.log(`   ✅ Downloaded: ${filename}`);
+            
+            // Update database
+            await db.run(
+              "UPDATE products SET image = ? WHERE id = ?",
+              [filename, product.id]
+            );
+            console.log(`   ✅ Updated database`);
+            return { status: 'success' };
+          }
+        }
 
         if (!downloaded) {
           console.log(`   ❌ Failed to download image for ${product.name}`);
           console.log(`   💡 You may need to manually download from Amazon`);
-          failCount++;
+          return { status: 'failed' };
         }
+        
+        return { status: 'failed' };
       }));
+      
+      // Update counters sequentially from batch results (no race conditions)
+      for (const result of batchResults) {
+        if (result.status === 'success') successCount++;
+        else if (result.status === 'failed') failCount++;
+        else if (result.status === 'skipped') skipCount++;
+      }
       
       // Rate limiting between batches - be nice to Amazon's servers
       if (i + BATCH_SIZE < products.length) {

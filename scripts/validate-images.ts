@@ -83,19 +83,30 @@ async function validateImages(imageList: string[]): Promise<ImageValidationResul
   const validationResults = await Promise.all(validationPromises);
   
   // Process results and create placeholders for missing images in parallel
-  const placeholderPromises = validationResults.map(async ({ image, exists }) => {
-    if (exists) {
-      result.existing++;
-      return null;
-    } else {
-      result.missing.push(image);
-      await createPlaceholder(image);
-      result.placeholdersCreated++;
-      return image;
-    }
-  });
+  const placeholderResults = await Promise.all(
+    validationResults.map(async ({ image, exists }) => {
+      if (exists) {
+        return { image, created: false };
+      } else {
+        await createPlaceholder(image);
+        return { image, created: true };
+      }
+    })
+  );
 
-  await Promise.all(placeholderPromises);
+  // Update counters sequentially to avoid race conditions
+  for (const validation of validationResults) {
+    if (validation.exists) {
+      result.existing++;
+    }
+  }
+
+  for (const placeholder of placeholderResults) {
+    if (placeholder.created) {
+      result.missing.push(placeholder.image);
+      result.placeholdersCreated++;
+    }
+  }
 
   return result;
 }

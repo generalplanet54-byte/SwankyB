@@ -39,5 +39,23 @@ const blurDataURL = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg
   width={width}
   height={height}
   style={loading === 'lazy' ? `background-image: url('${blurDataURL}'); background-size: cover;` : undefined}
-  onerror="this.src='/assets/product-placeholder.png'; this.alt='Product image placeholder';"
+  data-fallback-src="/assets/product-placeholder.png"
+  data-fallback-alt="Product image placeholder"
 />
+
+<script>
+  // Handle image loading errors with fallback (CSP-compliant)
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('img[data-fallback-src]');
+    images.forEach((img) => {
+      img.addEventListener('error', function(this: HTMLImageElement) {
+        const fallbackSrc = this.getAttribute('data-fallback-src');
+        const fallbackAlt = this.getAttribute('data-fallback-alt');
+        if (fallbackSrc && this.src !== fallbackSrc) {
+          this.src = fallbackSrc;
+          if (fallbackAlt) this.alt = fallbackAlt;
+        }
+      });
+    });
+  });
+</script>
