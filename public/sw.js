@@ -45,6 +45,7 @@ self.addEventListener("fetch", event => {
   )
 })
 
+
 // Update Service Worker
 self.addEventListener('activate', (event) => {
   const cacheWhitelist = [CACHE_NAME];
