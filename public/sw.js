@@ -25,35 +25,26 @@ self.addEventListener('install', (event) => {
 });
 
 // Fetch Event
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", event => {
+  // Let the browser handle non-GET requests
+  if (event.request.method !== "GET") return
+
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Cache hit - return response
-        if (response) {
-          return response;
+    (async () => {
+      try {
+        return await fetch(event.request)
+      } catch (err) {
+        // 🚑 Prevent infinite failures
+        if (event.request.mode === "navigate") {
+          return caches.match("/index.html")
         }
 
-        return fetch(event.request).then((response) => {
-          // Check if we received a valid response  
-          // Don't cache 404s or other error responses
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
+        return new Response("", { status: 503 })
+      }
+    })()
+  )
+})
 
-          // Clone the response
-          const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
-
-          return response;
-        });
-      })
-  );
-});
 
 // Update Service Worker
 self.addEventListener('activate', (event) => {
