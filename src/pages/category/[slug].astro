@@ -4,6 +4,8 @@ import { launchArticles } from '../../data/launchArticles';
 import { launchProducts } from '../../data/launchProducts';
 import { slugify } from '../../lib/slugify';
 
+export const prerender = true;
+
 export function getStaticPaths() {
   // Get unique categories from articles
   const articleCategories = [...new Set(launchArticles.map(a => a.category))];
